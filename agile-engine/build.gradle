@@ -1,0 +1,29 @@
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+
+    implementation libs.mapstruct
+    implementation libs.springSecurity
+    implementation libs.jakartaServeltApi
+    implementation libs.apacheCommonsLang
+    implementation libs.apacheCommonsCodec
+    implementation libs.springdocOpenApi
+    implementation libs.jpaSpec
+    implementation libs.jpaEntityGraph
+    implementation libs.friendlyId
+
+    runtimeOnly libs.mysqlConnector
+
+    annotationProcessor libs.mapstructProcessor
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
+compileJava {
+    options.compilerArgs += [
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.unmappedTargetPolicy=WARN',
+    ]
+}

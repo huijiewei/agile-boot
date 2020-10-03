@@ -1,0 +1,43 @@
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out
+
+# Eclipse
+.classpath
+.project
+.settings
+!.settings/org.eclipse.jdt.core.prefs
+!.settings/org.eclipse.jdt.ui.prefs
+!.settings/org.eclipse.wst.html.core.prefs
+.springBeans
+bin
+atlassian-ide-plugin.xml
+
+# Gradle
+.gradle
+build
+/build
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.*
+!.gitignore
+*~
+
+application-default.yaml

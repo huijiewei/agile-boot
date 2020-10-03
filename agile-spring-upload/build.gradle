@@ -1,0 +1,11 @@
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+
+    implementation libs.apacheCommonsLang
+    implementation libs.apacheCommonsCodec
+    implementation libs.apacheCommonsIo
+    implementation libs.springWebMvc
+    implementation libs.thumbnailator
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
