@@ -11,34 +11,35 @@ import com.huijiewei.agile.app.admin.domain.AdminAccessTokenEntity;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
+import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
 
 /**
  * @author huijiewei
  */
 
 @Service
-@Validated
 public class AdminIdentityService implements AdminIdentityUseCase {
     private final AdminLogPersistencePort adminLogPersistencePort;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final AdminAccessTokenPersistencePort adminAccessTokenPersistencePort;
+    private final ValidatingService validatingService;
 
-    @Autowired
-    public AdminIdentityService(AdminLogPersistencePort adminLogPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, AdminAccessTokenPersistencePort adminAccessTokenPersistencePort) {
+    public AdminIdentityService(AdminLogPersistencePort adminLogPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, AdminAccessTokenPersistencePort adminAccessTokenPersistencePort, ValidatingService validatingService) {
         this.adminLogPersistencePort = adminLogPersistencePort;
         this.adminGroupPersistencePort = adminGroupPersistencePort;
         this.adminAccessTokenPersistencePort = adminAccessTokenPersistencePort;
+        this.validatingService = validatingService;
     }
 
     @Override
-    public AdminIdentityResponse login(@Valid AdminLoginRequest loginRequest) {
+    public AdminIdentityResponse login(AdminLoginRequest loginRequest) {
+        if (!this.validatingService.validate(loginRequest)) {
+            return null;
+        }
+
         AdminEntity adminEntity = (AdminEntity) loginRequest.getIdentity();
         String accessToken = FriendlyId.createFriendlyId();
 
@@ -85,8 +86,8 @@ public class AdminIdentityService implements AdminIdentityUseCase {
 
         AdminLogEntity adminLogEntity = new AdminLogEntity();
         adminLogEntity.setAdminId(adminIdentity.getAdminEntity().getId());
-        adminLogEntity.setType(IdentityLogType.LOGIN.getValue());
-        adminLogEntity.setStatus(IdentityLogStatus.SUCCESS.getValue());
+        adminLogEntity.setType(IdentityLogType.LOGIN);
+        adminLogEntity.setStatus(IdentityLogStatus.SUCCESS);
         adminLogEntity.setMethod("POST");
         adminLogEntity.setAction("Logout");
         adminLogEntity.setUserAgent(userAgent);

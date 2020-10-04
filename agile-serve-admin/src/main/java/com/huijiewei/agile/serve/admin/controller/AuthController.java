@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthController {
     private final AdminIdentityUseCase adminIdentityUseCase;
 
-    @Autowired
     public AuthController(AdminIdentityUseCase adminIdentityUseCase) {
         this.adminIdentityUseCase = adminIdentityUseCase;
     }

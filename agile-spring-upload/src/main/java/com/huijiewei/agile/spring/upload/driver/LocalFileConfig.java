@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class LocalFileConfig implements WebMvcConfigurer {
     private final LocalFileProperties properties;
 
-    @Autowired
     public LocalFileConfig(LocalFileProperties properties) {
         this.properties = properties;
     }

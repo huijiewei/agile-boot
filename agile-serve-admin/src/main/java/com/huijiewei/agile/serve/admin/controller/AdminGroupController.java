@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminGroupController {
     private final AdminGroupUseCase adminGroupUseCase;
 
-    @Autowired
     public AdminGroupController(AdminGroupUseCase adminGroupUseCase) {
         this.adminGroupUseCase = adminGroupUseCase;
     }

@@ -28,8 +28,9 @@ public class User extends AbstractJpaIdentityEntity {
 
     private String createdFrom;
 
-    @Column(updatable = false)
+    @Column(updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
+    @Column(updatable = false, insertable = false)
     private LocalDateTime updatedAt;
 }

@@ -19,7 +19,6 @@ import java.util.List;
 public class JpaAdminGroupPermissionRepositoryImpl implements BatchRepository<AdminGroupPermission> {
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public JpaAdminGroupPermissionRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

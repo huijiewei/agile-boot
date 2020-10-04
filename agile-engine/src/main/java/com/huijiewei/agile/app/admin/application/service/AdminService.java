@@ -15,7 +15,6 @@ import com.huijiewei.agile.core.until.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     private final ValidatingService validatingService;
     private final AdminRequestMapper adminRequestMapper;
 
-    @Autowired
     public AdminService(AdminPersistencePort adminPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService, AdminRequestMapper adminRequestMapper) {
         this.adminPersistencePort = adminPersistencePort;
         this.adminGroupPersistencePort = adminGroupPersistencePort;

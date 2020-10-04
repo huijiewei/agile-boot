@@ -17,7 +17,6 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     private final AdminPermissionEvaluator adminPermissionEvaluator;
 
-    @Autowired
     public MethodSecurityConfig(AdminPermissionEvaluator adminPermissionEvaluator) {
         this.adminPermissionEvaluator = adminPermissionEvaluator;
     }

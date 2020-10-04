@@ -189,7 +189,7 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
         AbstractIdentityLogEntity identityLog = this.accountUseCase.createLog(this.identity.getId());
 
         if (identityLog != null) {
-            identityLog.setType(IdentityLogType.LOGIN.getValue());
+            identityLog.setType(IdentityLogType.LOGIN);
             identityLog.setMethod("POST");
             identityLog.setAction("Login");
             identityLog.setUserAgent(request.getUserAgent());
@@ -200,12 +200,12 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
 
         if (!valid) {
             if (identityLog != null) {
-                identityLog.setStatus(IdentityLogStatus.FAIL.getValue());
+                identityLog.setStatus(IdentityLogStatus.FAIL);
                 identityLog.setException("密码错误");
             }
         } else {
             if (identityLog != null) {
-                identityLog.setStatus(IdentityLogStatus.SUCCESS.getValue());
+                identityLog.setStatus(IdentityLogStatus.SUCCESS);
             }
         }
 

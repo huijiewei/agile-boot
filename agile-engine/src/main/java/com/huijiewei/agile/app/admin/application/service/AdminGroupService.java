@@ -24,7 +24,6 @@ public class AdminGroupService implements AdminGroupUseCase {
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final ValidatingService validatingService;
 
-    @Autowired
     public AdminGroupService(AdminPersistencePort adminPersistencePort, AdminGroupRequestMapper adminGroupRequestMapper, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService) {
         this.adminPersistencePort = adminPersistencePort;
         this.adminGroupRequestMapper = adminGroupRequestMapper;

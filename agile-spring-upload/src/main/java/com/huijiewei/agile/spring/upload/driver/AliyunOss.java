@@ -31,7 +31,6 @@ public class AliyunOss implements UploadDriver {
 
     private final AliyunOssProperties properties;
 
-    @Autowired
     public AliyunOss(AliyunOssProperties properties) {
         this.properties = properties;
     }

@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 public class PageRepairAspect {
     @Pointcut("!@annotation(com.huijiewei.agile.core.adapter.aspect.PageRepairAspect.DisablePageRepair) " +
             "&& @target(org.springframework.stereotype.Service) " +
-            "&& execution(public com.huijiewei.agile.core.application.response.PageResponse+ *(..,org.springframework.data.domain.Pageable,..))")
+            "&& execution(public com.huijiewei.agile.core.application.response.PageResponse+ *(..))")
     public void methodPointcut() {
     }
 

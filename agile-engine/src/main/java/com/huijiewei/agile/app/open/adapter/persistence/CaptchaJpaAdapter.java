@@ -20,7 +20,6 @@ public class CaptchaJpaAdapter implements CaptchaPersistencePort {
     private final CaptchaMapper captchaMapper;
     private final CaptchaJpaRepository captchaJpaRepository;
 
-    @Autowired
     public CaptchaJpaAdapter(CaptchaMapper captchaMapper, CaptchaJpaRepository captchaJpaRepository) {
         this.captchaMapper = captchaMapper;
         this.captchaJpaRepository = captchaJpaRepository;

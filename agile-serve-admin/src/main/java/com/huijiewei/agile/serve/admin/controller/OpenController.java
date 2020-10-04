@@ -27,7 +27,6 @@ public class OpenController {
     private final UploadDriver uploadDriver;
     private final CaptchaPersistencePort captchaPersistencePort;
 
-    @Autowired
     public OpenController(UploadDriver uploadDriver, CaptchaPersistencePort captchaPersistencePort) {
         this.uploadDriver = uploadDriver;
         this.captchaPersistencePort = captchaPersistencePort;

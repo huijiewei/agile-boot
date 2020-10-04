@@ -32,7 +32,6 @@ public class AdminAccountService implements AccountUseCase<AdminEntity> {
     private final CaptchaPersistencePort captchaPersistencePort;
     private final ConcurrentMapCacheManager concurrentMapCacheManager;
 
-    @Autowired
     public AdminAccountService(AdminPersistencePort adminPersistencePort, AdminLogPersistencePort adminLogPersistencePort, CaptchaPersistencePort captchaPersistencePort, ConcurrentMapCacheManager concurrentMapCacheManager) {
         this.adminPersistencePort = adminPersistencePort;
         this.adminLogPersistencePort = adminLogPersistencePort;

@@ -20,7 +20,6 @@ class JpaAdminAccessTokenAdapter implements AdminAccessTokenPersistencePort {
     private final AdminAccessTokenMapper adminAccessTokenMapper;
     private final JpaAdminAccessTokenRepository jpaAdminAccessTokenRepository;
 
-    @Autowired
     public JpaAdminAccessTokenAdapter(AdminAccessTokenMapper adminAccessTokenMapper, JpaAdminAccessTokenRepository jpaAdminAccessTokenRepository) {
         this.adminAccessTokenMapper = adminAccessTokenMapper;
         this.jpaAdminAccessTokenRepository = jpaAdminAccessTokenRepository;

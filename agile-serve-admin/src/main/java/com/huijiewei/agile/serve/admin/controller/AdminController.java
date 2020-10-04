@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminUseCase adminUseCase;
 
-    @Autowired
     public AdminController(AdminUseCase adminUseCase) {
         this.adminUseCase = adminUseCase;
     }

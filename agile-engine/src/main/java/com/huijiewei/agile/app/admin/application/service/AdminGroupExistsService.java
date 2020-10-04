@@ -15,7 +15,6 @@ import java.util.List;
 public class AdminGroupExistsService implements ExistsUseCase {
     private final AdminGroupExistsPort adminGroupExistsPort;
 
-    @Autowired
     public AdminGroupExistsService(AdminGroupExistsPort adminGroupExistsPort) {
         this.adminGroupExistsPort = adminGroupExistsPort;
     }

@@ -25,7 +25,6 @@ public class TencentCos implements UploadDriver {
 
     private final TencentCosProperties properties;
 
-    @Autowired
     public TencentCos(TencentCosProperties properties) {
         this.properties = properties;
     }

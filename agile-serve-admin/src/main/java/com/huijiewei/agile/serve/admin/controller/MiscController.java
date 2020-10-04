@@ -29,7 +29,6 @@ public class MiscController {
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final UploadDriver uploadDriver;
 
-    @Autowired
     public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadDriver uploadDriver) {
         this.adminGroupPersistencePort = adminGroupPersistencePort;
         this.uploadDriver = uploadDriver;

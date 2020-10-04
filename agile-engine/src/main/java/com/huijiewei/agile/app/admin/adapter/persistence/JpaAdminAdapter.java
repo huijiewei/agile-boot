@@ -30,7 +30,6 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
     private final AdminMapper adminMapper;
     private final JpaAdminRepository adminRepository;
 
-    @Autowired
     public JpaAdminAdapter(AdminMapper adminMapper, JpaAdminRepository adminRepository) {
         this.adminMapper = adminMapper;
         this.adminRepository = adminRepository;

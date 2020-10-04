@@ -12,7 +12,6 @@ import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenuItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenus;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,7 +36,6 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
     private final JpaAdminGroupRepository jpaAdminGroupRepository;
     private final JpaAdminGroupPermissionRepository jpaAdminGroupPermissionRepository;
 
-    @Autowired
     public JpaAdminGroupAdapter(AdminGroupMapper adminGroupMapper, JpaAdminGroupRepository jpaAdminGroupRepository, JpaAdminGroupPermissionRepository jpaAdminGroupPermissionRepository) {
         this.adminGroupMapper = adminGroupMapper;
         this.jpaAdminGroupRepository = jpaAdminGroupRepository;

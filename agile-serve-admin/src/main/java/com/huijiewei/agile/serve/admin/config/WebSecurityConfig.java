@@ -30,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AdminPersistencePort adminPersistencePort;
 
-    @Autowired
     public WebSecurityConfig(SecurityProblemSupport problemSupport, AdminPermissionEvaluator adminPermissionEvaluator, AdminPersistencePort adminPersistencePort) {
         this.problemSupport = problemSupport;
         this.adminPermissionEvaluator = adminPermissionEvaluator;

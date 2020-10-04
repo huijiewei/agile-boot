@@ -40,7 +40,6 @@ public class LocalFile implements UploadDriver {
 
     private final LocalFileProperties properties;
 
-    @Autowired
     public LocalFile(LocalFileProperties properties) {
         this.properties = properties;
     }

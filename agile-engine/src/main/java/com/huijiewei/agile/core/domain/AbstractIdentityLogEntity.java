@@ -1,5 +1,7 @@
 package com.huijiewei.agile.core.domain;
 
+import com.huijiewei.agile.core.consts.IdentityLogStatus;
+import com.huijiewei.agile.core.consts.IdentityLogType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,10 +16,10 @@ import java.time.LocalDateTime;
 @Data
 public abstract class AbstractIdentityLogEntity extends AbstractEntity {
     @Schema(description = "日志类型")
-    private String type;
+    private IdentityLogType type;
 
     @Schema(description = "操作状态")
-    private Integer status;
+    private IdentityLogStatus status;
 
     @Schema(description = "请求方法")
     private String method;

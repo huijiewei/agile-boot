@@ -31,7 +31,6 @@ import java.lang.reflect.Method;
 public class AdminLogAspect {
     private final AdminLogPersistencePort adminLogPersistencePort;
 
-    @Autowired
     public AdminLogAspect(AdminLogPersistencePort adminLogPersistencePort) {
         this.adminLogPersistencePort = adminLogPersistencePort;
     }
@@ -50,7 +49,7 @@ public class AdminLogAspect {
 
             String requestMethod = request.getMethod();
 
-            adminLogEntity.setType("GET".equals(requestMethod) ? IdentityLogType.VISIT.getValue() : IdentityLogType.OPERATE.getValue());
+            adminLogEntity.setType("GET".equals(requestMethod) ? IdentityLogType.VISIT : IdentityLogType.OPERATE);
             adminLogEntity.setMethod(requestMethod);
             adminLogEntity.setUserAgent(HttpUtils.getUserAgent(request));
             adminLogEntity.setRemoteAddr(HttpUtils.getRemoteAddr(request));
@@ -106,11 +105,11 @@ public class AdminLogAspect {
         this.setAdminLog(adminLogEntity, joinPoint);
 
         try {
-            adminLogEntity.setStatus(IdentityLogStatus.SUCCESS.getValue());
+            adminLogEntity.setStatus(IdentityLogStatus.SUCCESS);
 
             return joinPoint.proceed();
         } catch (Exception ex) {
-            adminLogEntity.setStatus(IdentityLogStatus.FAIL.getValue());
+            adminLogEntity.setStatus(IdentityLogStatus.FAIL);
             adminLogEntity.setException(ex.getMessage());
 
             throw ex;

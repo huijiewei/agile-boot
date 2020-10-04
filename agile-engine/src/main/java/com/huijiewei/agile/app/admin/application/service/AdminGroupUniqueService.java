@@ -2,7 +2,6 @@ package com.huijiewei.agile.app.admin.application.service;
 
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupUniquePort;
 import com.huijiewei.agile.core.application.port.inbound.UniqueUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.Map;
 public class AdminGroupUniqueService implements UniqueUseCase {
     private final AdminGroupUniquePort adminGroupUniquePort;
 
-    @Autowired
     public AdminGroupUniqueService(AdminGroupUniquePort adminGroupUniquePort) {
         this.adminGroupUniquePort = adminGroupUniquePort;
     }
