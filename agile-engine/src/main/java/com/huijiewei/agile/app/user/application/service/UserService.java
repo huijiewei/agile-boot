@@ -80,11 +80,12 @@ public class UserService implements UserUseCase {
 
     @Override
     public UserEntity update(Integer id, UserRequest userRequest) {
+        UserEntity currentUserEntity = this.getById(id);
+
         if (!this.validatingService.validate(userRequest, UserRequest.OnUpdate.class)) {
             return null;
         }
 
-        UserEntity currentUserEntity = this.getById(id);
         UserEntity userEntity = this.userRequestMapper.toUserEntity(userRequest, currentUserEntity);
 
         if (StringUtils.isNotEmpty(userRequest.getPassword())) {

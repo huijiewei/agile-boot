@@ -1,0 +1,21 @@
+package com.huijiewei.agile.app.shop.adapter.persistence.mapper;
+
+import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopCategory;
+import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+
+/**
+ * @author huijiewei
+ */
+
+@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface ShopCategoryMapper {
+    @Mapping(target = "parents", ignore = true)
+    @Mapping(target = "children", ignore = true)
+    ShopCategoryEntity toShopCategoryEntity(ShopCategory shopCategory);
+
+    ShopCategory toShopCategory(ShopCategoryEntity shopCategoryEntity);
+}

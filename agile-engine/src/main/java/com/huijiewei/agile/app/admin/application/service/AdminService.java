@@ -98,11 +98,11 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
 
     @Override
     public AdminEntity update(Integer id, AdminRequest adminRequest, Integer identityId) {
+        AdminEntity currentAdminEntity = this.getById(id);
+
         if (!this.validatingService.validate(adminRequest, AdminRequest.OnUpdate.class)) {
             return null;
         }
-
-        AdminEntity currentAdminEntity = this.getById(id);
         AdminEntity adminEntity = this.adminRequestMapper.toAdminEntity(adminRequest, currentAdminEntity);
 
         if (StringUtils.isNotEmpty(adminRequest.getPassword())) {

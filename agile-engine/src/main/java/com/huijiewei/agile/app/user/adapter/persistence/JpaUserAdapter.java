@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
+@Transactional(readOnly = true)
 public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
     private final UserMapper userMapper;
     private final JpaUserRepository userRepository;

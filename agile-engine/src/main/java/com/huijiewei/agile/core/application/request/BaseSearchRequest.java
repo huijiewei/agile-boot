@@ -3,7 +3,6 @@ package com.huijiewei.agile.core.application.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.persistence.MappedSuperclass;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  */
 
 @Data
-@MappedSuperclass
 public abstract class BaseSearchRequest {
     @Schema(hidden = true)
     private List<BaseSearchField<?>> searchFields;
