@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.user.application.request;
 
-import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.core.constraint.FieldMatch;
 import com.huijiewei.agile.core.constraint.Phone;
 import lombok.Data;

@@ -1,7 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
 import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
-import com.github.wenhao.jpa.Sorts;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminLog;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminLogMapper;
@@ -15,6 +14,7 @@ import com.huijiewei.agile.core.until.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,7 +88,7 @@ class JpaAdminLogAdapter implements AdminLogPersistencePort {
     public SearchPageResponse<AdminLogEntity> getAll(Integer page, Integer size, AdminLogSearchRequest searchRequest, Boolean withSearchFields) {
         Page<AdminLog> adminLogPage = this.adminLogRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(page, size, Sorts.builder().desc("id").build()),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")),
                 EntityGraphUtils.fromAttributePaths("admin"));
 
         SearchPageResponse<AdminLogEntity> adminLogEntityResponses = new SearchPageResponse<>();

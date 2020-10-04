@@ -1,8 +1,5 @@
 package com.huijiewei.agile.app.user.adapter.persistence;
 
-import com.github.wenhao.jpa.PredicateBuilder;
-import com.github.wenhao.jpa.Sorts;
-import com.github.wenhao.jpa.Specifications;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.mapper.UserMapper;
 import com.huijiewei.agile.app.user.adapter.persistence.repository.JpaUserRepository;
@@ -16,6 +13,7 @@ import com.huijiewei.agile.core.until.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,33 +41,47 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
     }
 
     private Specification<User> buildSpecification(UserSearchRequest searchRequest) {
-        PredicateBuilder<User> predicateBuilder = Specifications.<User>and()
-                .like(StringUtils.isNotEmpty(searchRequest.getName()), "name", '%' + searchRequest.getName() + '%')
-                .like(StringUtils.isNotEmpty(searchRequest.getPhone()), "phone", '%' + searchRequest.getPhone() + '%')
-                .like(StringUtils.isNotEmpty(searchRequest.getEmail()), "email", '%' + searchRequest.getEmail() + '%');
+        return (Specification<User>) (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new LinkedList<>();
 
-        if (searchRequest.getCreatedFrom() != null && searchRequest.getCreatedFrom().length > 0) {
-            PredicateBuilder<User> createdFromPredicateBuilder = Specifications.or();
-
-            for (String createdFrom : searchRequest.getCreatedFrom()) {
-                createdFromPredicateBuilder.eq(StringUtils.isNotEmpty(createdFrom), "createdFrom", createdFrom);
+            if (StringUtils.isNotBlank(searchRequest.getName())) {
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + searchRequest.getName() + "%"));
             }
 
-            predicateBuilder.predicate(createdFromPredicateBuilder.build());
-        }
+            if (StringUtils.isNotBlank(searchRequest.getEmail())) {
+                predicates.add(criteriaBuilder.like(root.get("email"), "%" + searchRequest.getEmail() + "%"));
+            }
 
-        LocalDateTime[] createdRanges = DateTimeUtils.parseSearchDateRange(searchRequest.getCreatedRange());
+            if (StringUtils.isNotBlank(searchRequest.getPhone())) {
+                predicates.add(criteriaBuilder.like(root.get("phone"), "%" + searchRequest.getPhone() + "%"));
+            }
 
-        if (createdRanges != null) {
-            predicateBuilder.between("createdAt", createdRanges[0], createdRanges[1]);
-        }
+            if (searchRequest.getCreatedFrom() != null && searchRequest.getCreatedFrom().length > 0) {
+                List<Predicate> createdFromPredicates = new LinkedList<>();
 
-        return predicateBuilder.build();
+                for (String createdFrom : searchRequest.getCreatedFrom()) {
+                    createdFromPredicates.add(criteriaBuilder.equal(root.get("createdFrom"), createdFrom));
+                }
+
+                predicates.add(criteriaBuilder.or(createdFromPredicates.toArray(new Predicate[0])));
+            }
+
+            LocalDateTime[] createdRanges = DateTimeUtils.parseSearchDateRange(searchRequest.getCreatedRange());
+
+            if (createdRanges != null) {
+                predicates.add(criteriaBuilder.between(root.get("createdAt"), createdRanges[0], createdRanges[1]));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     @Override
     public SearchPageResponse<UserEntity> getAll(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields) {
-        Page<User> userPage = this.userRepository.findAll(this.buildSpecification(searchRequest), PageRequest.of(page, size, Sorts.builder().desc("id").build()));
+        Page<User> userPage = this.userRepository.findAll(
+                this.buildSpecification(searchRequest),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))
+        );
 
         SearchPageResponse<UserEntity> userEntityResponses = new SearchPageResponse<>();
 

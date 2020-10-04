@@ -10,7 +10,6 @@ dependencies {
     implementation libs.apacheCommonsLang
     implementation libs.apacheCommonsCodec
     implementation libs.springdocOpenApi
-    implementation libs.jpaSpec
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
     implementation libs.easyPoiBase

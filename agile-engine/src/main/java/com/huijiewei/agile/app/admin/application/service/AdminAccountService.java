@@ -10,7 +10,6 @@ import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
 import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.stereotype.Service;
 

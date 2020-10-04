@@ -4,7 +4,6 @@ import com.huijiewei.agile.app.open.adapter.persistence.mapper.CaptchaMapper;
 import com.huijiewei.agile.app.open.adapter.persistence.repository.CaptchaJpaRepository;
 import com.huijiewei.agile.app.open.application.port.CaptchaPersistencePort;
 import com.huijiewei.agile.app.open.domain.CaptchaEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

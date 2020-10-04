@@ -4,7 +4,6 @@ import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminAccessToken
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminAccessTokenRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminAccessTokenPersistencePort;
 import com.huijiewei.agile.app.admin.domain.AdminAccessTokenEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -45,6 +45,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm
     time-zone: Asia/Shanghai
+  main:
+    lazy-initialization: true
 
 agile:
   format:

@@ -8,7 +8,6 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistenceP
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminUniquePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

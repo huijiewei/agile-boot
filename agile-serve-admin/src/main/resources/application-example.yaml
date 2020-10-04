@@ -14,8 +14,6 @@ spring:
         generate_statistics: false
         format_sql: false
     show-sql: true
-  main:
-    lazy-initialization: true
   flyway:
     enabled: true
     clean-disabled: false # 禁止清理数据库表
