@@ -14,7 +14,9 @@ public interface AdminPersistencePort {
 
     Optional<AdminEntity> getById(Integer id);
 
-    void save(AdminEntity adminEntity);
+    Optional<AdminEntity> getByIdWithAdminGroup(Integer id);
+
+    Integer save(AdminEntity adminEntity);
 
     void deleteById(Integer id);
 

@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.admin.application.service;
 
+import com.huijiewei.agile.app.admin.application.mapper.AdminRequestMapper;
 import com.huijiewei.agile.app.admin.application.port.inbound.AdminHasPermissionUseCase;
 import com.huijiewei.agile.app.admin.application.port.inbound.AdminUseCase;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersistencePort;
@@ -7,14 +8,15 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistenceP
 import com.huijiewei.agile.app.admin.application.request.AdminRequest;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.core.application.response.ListResponse;
+import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
+import com.huijiewei.agile.core.until.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -22,15 +24,18 @@ import java.util.List;
  */
 
 @Service
-@Validated
 public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     private final AdminPersistencePort adminPersistencePort;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
+    private final ValidatingService validatingService;
+    private final AdminRequestMapper adminRequestMapper;
 
     @Autowired
-    public AdminService(AdminPersistencePort adminPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort) {
+    public AdminService(AdminPersistencePort adminPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService, AdminRequestMapper adminRequestMapper) {
         this.adminPersistencePort = adminPersistencePort;
         this.adminGroupPersistencePort = adminGroupPersistencePort;
+        this.validatingService = validatingService;
+        this.adminRequestMapper = adminRequestMapper;
     }
 
     @Override
@@ -76,14 +81,48 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     }
 
     @Override
-    @Validated({AdminRequest.OnCreate.class})
-    public AdminEntity create(@Valid AdminRequest adminRequest) {
-        return null;
+    public AdminEntity create(AdminRequest adminRequest) {
+        if (!this.validatingService.validate(adminRequest, AdminRequest.OnCreate.class)) {
+            return null;
+        }
+
+        AdminEntity adminEntity = this.adminRequestMapper.toAdminEntity(adminRequest);
+        adminEntity.setPassword(SecurityUtils.passwordEncode(adminRequest.getPassword()));
+
+        if (!this.validatingService.validate(adminEntity)) {
+            return null;
+        }
+
+        Integer adminId = this.adminPersistencePort.save(adminEntity);
+        adminEntity.setId(adminId);
+
+        return adminEntity;
     }
 
     @Override
-    @Validated({AdminRequest.OnUpdate.class})
-    public AdminEntity update(Integer id, @Valid AdminRequest adminRequest, Integer identityId) {
-        return null;
+    public AdminEntity update(Integer id, AdminRequest adminRequest, Integer identityId) {
+        if (!this.validatingService.validate(adminRequest, AdminRequest.OnUpdate.class)) {
+            return null;
+        }
+
+        AdminEntity currentAdminEntity = this.getById(id);
+        AdminEntity adminEntity = this.adminRequestMapper.toAdminEntity(adminRequest, currentAdminEntity);
+
+        if (StringUtils.isNotEmpty(adminRequest.getPassword())) {
+            adminEntity.setPassword(SecurityUtils.passwordEncode(adminRequest.getPassword()));
+        }
+
+        if (id.equals(identityId)) {
+            adminEntity.setAdminGroupId(currentAdminEntity.getAdminGroupId());
+        }
+
+        if (!this.validatingService.validate(adminEntity)) {
+            return null;
+        }
+
+        Integer adminId = this.adminPersistencePort.save(adminEntity);
+        adminEntity.setId(adminId);
+
+        return adminEntity;
     }
 }

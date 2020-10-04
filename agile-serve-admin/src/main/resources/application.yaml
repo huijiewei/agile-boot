@@ -51,3 +51,7 @@ agile:
     date-format: yyyy-MM-dd
     time-format: HH:mm
     datetime-format: yyyy-MM-dd HH:mm
+
+logging:
+  level:
+    org.hibernate.persister.entity: ERROR

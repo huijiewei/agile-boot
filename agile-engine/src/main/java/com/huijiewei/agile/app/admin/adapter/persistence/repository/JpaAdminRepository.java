@@ -1,6 +1,7 @@
 package com.huijiewei.agile.app.admin.adapter.persistence.repository;
 
 import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminAccessToken;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Repository
 public interface JpaAdminRepository extends
         JpaIdentityRepository<Admin>,
+        EntityGraphJpaRepository<Admin, Integer>,
         EntityGraphJpaSpecificationExecutor<Admin> {
     /**
      * 根据 accessToken 和 clientId 获取管理员

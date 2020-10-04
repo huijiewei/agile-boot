@@ -12,9 +12,6 @@ import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
 
 /**
  * @author huijiewei
@@ -89,9 +86,16 @@ public class AdminGroupService implements AdminGroupUseCase {
     }
 
     @Override
-    @Validated
-    public AdminGroupEntity update(Integer id, @Valid AdminGroupRequest adminGroupRequest) {
+    public AdminGroupEntity update(Integer id, AdminGroupRequest adminGroupRequest) {
+        if (!this.validatingService.validate(adminGroupRequest)) {
+            return null;
+        }
+
         AdminGroupEntity adminGroupEntity = this.adminGroupRequestMapper.toAdminGroupEntity(adminGroupRequest, this.getById(id));
+
+        if (!this.validatingService.validate(adminGroupEntity)) {
+            return null;
+        }
 
         Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
 

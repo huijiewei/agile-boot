@@ -1,11 +1,9 @@
 package com.huijiewei.agile.app.admin.application.request;
 
 import com.huijiewei.agile.app.admin.application.service.AdminGroupExistsService;
-import com.huijiewei.agile.app.admin.application.service.AdminUniqueService;
 import com.huijiewei.agile.core.constraint.Exists;
 import com.huijiewei.agile.core.constraint.FieldMatch;
 import com.huijiewei.agile.core.constraint.Phone;
-import com.huijiewei.agile.core.constraint.Unique;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +21,6 @@ import javax.validation.groups.Default;
 @Getter
 @Setter
 @FieldMatch(field = "password", fieldMatch = "passwordConfirm", message = "密码与密码确认必须相同")
-@Unique.List({
-        @Unique(fields = "phone", uniqueService = AdminUniqueService.class, message = "手机号码已被使用"),
-        @Unique(fields = "email", uniqueService = AdminUniqueService.class, message = "电子邮箱已被使用")
-})
 public class AdminRequest {
     @NotBlank(message = "手机号码不能为空")
     @Phone(message = "无效的手机号码")
@@ -36,10 +30,10 @@ public class AdminRequest {
     @Email(message = "无效的电子邮箱")
     private String email;
 
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空", groups = OnCreate.class)
     private String password;
 
-    @NotBlank(message = "密码确认不能为空")
+    @NotBlank(message = "密码确认不能为空", groups = OnCreate.class)
     private String passwordConfirm;
 
     @NotNull

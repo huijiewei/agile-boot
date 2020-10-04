@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
+import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminMapper;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminRepository;
@@ -41,11 +42,18 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
     }
 
     @Override
+    public Optional<AdminEntity> getByIdWithAdminGroup(Integer id) {
+        return this.adminRepository
+                .findById(id, EntityGraphUtils.fromAttributePaths("adminGroup"))
+                .map(this.adminMapper::toAdminEntityWithAdminGroup);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(AdminEntity adminEntity) {
+    public Integer save(AdminEntity adminEntity) {
         Admin admin = this.adminRepository.save(this.adminMapper.toAdmin(adminEntity));
 
-        adminEntity.setId(admin.getId());
+        return admin.getId();
     }
 
     @Override
@@ -56,12 +64,16 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
 
     @Override
     public List<AdminEntity> getAll() {
-        return this.adminRepository.findAll().stream().map(this.adminMapper::toAdminEntity).collect(Collectors.toList());
+        return this.adminRepository
+                .findAll()
+                .stream()
+                .map(this.adminMapper::toAdminEntityWithAdminGroup)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<AdminEntity> getByAccessToken(String accessToken, String clientId) {
-        return this.adminRepository.findByAccessToken(accessToken, clientId).map(this.adminMapper::toAdminEntity);
+        return this.adminRepository.findByAccessToken(accessToken, clientId).map(this.adminMapper::toAdminEntityWithAdminGroup);
     }
 
     @Override

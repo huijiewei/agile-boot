@@ -1,7 +1,5 @@
 package com.huijiewei.agile.app.admin.application.request;
 
-import com.huijiewei.agile.app.admin.application.service.AdminGroupUniqueService;
-import com.huijiewei.agile.core.constraint.Unique;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

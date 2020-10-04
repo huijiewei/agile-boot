@@ -13,9 +13,12 @@ import org.mapstruct.ReportingPolicy;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AdminMapper {
+    AdminEntity toAdminEntityWithAdminGroup(Admin admin);
+
+    @Mapping(target = "adminGroup", ignore = true)
     AdminEntity toAdminEntity(Admin admin);
 
-    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "adminGroup", ignore = true)
     Admin toAdmin(AdminEntity adminEntity);
 }
 

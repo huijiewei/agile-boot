@@ -1,6 +1,8 @@
 package com.huijiewei.agile.app.admin.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.huijiewei.agile.app.admin.application.service.AdminUniqueService;
+import com.huijiewei.agile.core.constraint.Unique;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -14,6 +16,10 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Unique.List({
+        @Unique(fields = "phone", uniqueService = AdminUniqueService.class, message = "手机号码已被使用"),
+        @Unique(fields = "email", uniqueService = AdminUniqueService.class, message = "电子邮箱已被使用")
+})
 public class AdminEntity extends AbstractIdentityEntity {
     @Schema(description = "姓名")
     private String name;
