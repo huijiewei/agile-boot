@@ -21,7 +21,5 @@ public interface AdminGroupPersistencePort {
 
     List<String> getPermissions(Integer id);
 
-    void updatePermissions(Integer id, List<String> permissions, Boolean delete);
-
     List<AdminGroupMenuItem> getMenus(Integer id);
 }

@@ -7,13 +7,10 @@ import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminRepo
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminUniquePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.jpa.domain.Specification;
+import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -91,20 +88,6 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        Specification<Admin> adminSpecification = (Specification<Admin>) (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
-
-            for (Map.Entry<String, String> entry : values.entrySet()) {
-                predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue()));
-            }
-
-            if (StringUtils.isNotEmpty(primaryValue)) {
-                predicates.add(criteriaBuilder.notEqual(root.get(primaryKey), primaryValue));
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
-
-        return this.adminRepository.count(adminSpecification) == 0;
+        return this.adminRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
     }
 }

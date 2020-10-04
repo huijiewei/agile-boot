@@ -8,6 +8,7 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -131,20 +132,6 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        Specification<User> userSpecification = (Specification<User>) (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
-
-            for (Map.Entry<String, String> entry : values.entrySet()) {
-                predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue()));
-            }
-
-            if (StringUtils.isNotEmpty(primaryValue)) {
-                predicates.add(criteriaBuilder.notEqual(root.get(primaryKey), primaryValue));
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
-
-        return this.userRepository.count(userSpecification) == 0;
+        return this.userRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
     }
 }

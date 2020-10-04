@@ -20,6 +20,6 @@ public class AdminGroupExistsService implements ExistsUseCase {
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.adminGroupExistsPort.exist(targetProperty, values);
+        return this.adminGroupExistsPort.exists(targetProperty, values);
     }
 }

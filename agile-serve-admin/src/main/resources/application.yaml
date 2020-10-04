@@ -7,12 +7,13 @@ spring:
       use-new-id-generator-mappings: false
     properties:
       hibernate:
+        max_fetch_depth: 3
         order_inserts: true
         order_updates: true
-        default_batch_fetch_size: 30
+        default_batch_fetch_size: 100
         jdbc:
-          batch_size: 30
-          fetch_size: 30
+          batch_size: 100
+          fetch_size: 100
           time_zone: Asia/Shanghai
           batch_versioned_data: true
       javax:

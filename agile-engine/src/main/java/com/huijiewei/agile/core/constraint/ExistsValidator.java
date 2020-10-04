@@ -41,7 +41,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
         List<String> search = new ArrayList<>();
 
         if (object instanceof Collection) {
-            for (Object item : Collections.singletonList((Collection<?>) object)) {
+            for (Object item : (Collection<?>) object) {
                 String str = item.toString();
 
                 if (allowValueList.size() == 0 || !allowValueList.contains(str)) {

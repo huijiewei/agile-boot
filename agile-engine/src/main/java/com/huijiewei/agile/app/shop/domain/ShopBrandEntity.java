@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.huijiewei.agile.app.shop.application.service.ShopBrandUniqueService;
 import com.huijiewei.agile.core.constraint.Unique;
@@ -39,4 +40,7 @@ public class ShopBrandEntity extends AbstractEntity {
     @Schema(description = "绑定分类")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShopCategoryEntity> shopCategories;
+
+    @JsonIgnore
+    private List<Integer> shopCategoryIds;
 }

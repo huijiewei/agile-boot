@@ -20,6 +20,6 @@ public class ShopCategoryExistsService implements ExistsUseCase {
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.shopCategoryExistsPort.exist(targetProperty, values);
+        return this.shopCategoryExistsPort.exists(targetProperty, values);
     }
 }

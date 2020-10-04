@@ -6,20 +6,15 @@ import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopCatego
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryExistsPort;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryPersistencePort;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
+import com.huijiewei.agile.core.adapter.persistence.ExistsSpecificationBuilder;
 import com.huijiewei.agile.core.until.TreeUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author huijiewei
@@ -27,46 +22,30 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategoryPersistencePort {
-    public static final String SHOP_CATEGORIES_CACHE_KEY = "shop-categories";
-    private static final String SHOP_CATEGORY_TREE_CACHE_KEY = "shop-category-tree";
 
     private final JpaShopCategoryRepository shopCategoryRepository;
     private final ShopCategoryMapper shopCategoryMapper;
+    private final JpaShopCategoryCacheAdapter jpaShopCategoryCacheAdapter;
 
-    public JpaShopCategoryAdapter(JpaShopCategoryRepository shopCategoryRepository, ShopCategoryMapper shopCategoryMapper) {
+    public JpaShopCategoryAdapter(JpaShopCategoryRepository shopCategoryRepository, ShopCategoryMapper shopCategoryMapper, JpaShopCategoryCacheAdapter jpaShopCategoryCacheAdapter) {
         this.shopCategoryRepository = shopCategoryRepository;
         this.shopCategoryMapper = shopCategoryMapper;
+        this.jpaShopCategoryCacheAdapter = jpaShopCategoryCacheAdapter;
     }
 
     @Override
-    public Boolean exist(String targetProperty, List<String> values) {
-        Specification<ShopCategory> adminGroupSpecification = (Specification<ShopCategory>) (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
-
-            for (String value : values) {
-                predicates.add(criteriaBuilder.equal(root.get(targetProperty), value));
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
-
-        return this.shopCategoryRepository.count(adminGroupSpecification) > 0;
+    public Boolean exists(String targetProperty, List<String> values) {
+        return this.shopCategoryRepository.count(ExistsSpecificationBuilder.build(targetProperty, values)) > 0;
     }
 
     @Override
-    @Cacheable(cacheNames = SHOP_CATEGORIES_CACHE_KEY)
     public List<ShopCategoryEntity> getAll() {
-        return this.shopCategoryRepository
-                .findAll()
-                .stream()
-                .map(this.shopCategoryMapper::toShopCategoryEntity)
-                .collect(Collectors.toList());
+        return this.jpaShopCategoryCacheAdapter.getAll();
     }
 
     @Override
-    @Cacheable(cacheNames = SHOP_CATEGORY_TREE_CACHE_KEY)
+    @Cacheable(cacheNames = JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY)
     public List<ShopCategoryEntity> getTree() {
         return TreeUtils.buildTree(this.getAll());
     }
@@ -78,7 +57,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {SHOP_CATEGORIES_CACHE_KEY, SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {JpaShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public Integer save(ShopCategoryEntity shopCategoryEntity) {
         ShopCategory shopCategory = this.shopCategoryRepository.save(this.shopCategoryMapper.toShopCategory(shopCategoryEntity));
 
@@ -87,7 +66,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {SHOP_CATEGORIES_CACHE_KEY, SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {JpaShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public void deleteById(Integer id) {
         this.shopCategoryRepository.deleteAllByIds(TreeUtils.getChildrenIds(id, true, this.getTree()));
     }

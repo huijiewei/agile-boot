@@ -89,6 +89,8 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        this.shopCategoryPersistencePort.deleteById(this.getById(id).getId());
+        ShopCategoryEntity currentShopCategoryEntity = this.getById(id);
+
+        this.shopCategoryPersistencePort.deleteById(currentShopCategoryEntity.getId());
     }
 }

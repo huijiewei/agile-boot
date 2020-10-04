@@ -13,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ShopBrandMapper {
-    @Mapping(target = "shopCategories", ignore = true)
+    @Mapping(target = "shopCategoryIds", ignore = true)
     ShopBrandEntity toShopBrandEntity(ShopBrand shopBrand);
 
     @Mapping(target = "shopCategories", ignore = true)

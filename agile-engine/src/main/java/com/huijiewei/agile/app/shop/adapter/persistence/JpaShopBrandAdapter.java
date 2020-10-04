@@ -1,6 +1,7 @@
 package com.huijiewei.agile.app.shop.adapter.persistence;
 
 import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopBrand;
+import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopBrandCategory;
 import com.huijiewei.agile.app.shop.adapter.persistence.mapper.ShopBrandMapper;
 import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopBrandCategoryRepository;
 import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopBrandRepository;
@@ -9,6 +10,7 @@ import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandUniquePor
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -19,10 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,21 +43,7 @@ public class JpaShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersis
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        Specification<ShopBrand> shopBrandSpecification = (Specification<ShopBrand>) (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
-
-            for (Map.Entry<String, String> entry : values.entrySet()) {
-                predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue()));
-            }
-
-            if (StringUtils.isNotEmpty(primaryValue)) {
-                predicates.add(criteriaBuilder.notEqual(root.get(primaryKey), primaryValue));
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
-
-        return this.shopBrandRepository.count(shopBrandSpecification) == 0;
+        return this.shopBrandRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
     }
 
     private Specification<ShopBrand> buildSpecification(ShopBrandSearchRequest searchRequest) {
@@ -107,7 +92,30 @@ public class JpaShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersis
     public Integer save(ShopBrandEntity shopBrandEntity) {
         ShopBrand shopBrand = this.shopBrandRepository.save(this.shopBrandMapper.toShopBrand(shopBrandEntity));
 
+        this.updateShopBrandCategories(shopBrand.getId(), shopBrandEntity.getShopCategoryIds(), shopBrandEntity.hasId());
+
         return shopBrand.getId();
+    }
+
+    private void updateShopBrandCategories(Integer id, List<Integer> shopCategoryIds, Boolean delete) {
+        if (delete) {
+            this.shopBrandCategoryRepository.deleteAllByShopBrandId(id);
+        }
+
+        if (shopCategoryIds == null || shopCategoryIds.isEmpty()) {
+            return;
+        }
+
+        List<ShopBrandCategory> shopBrandCategories = new ArrayList<>();
+
+        for (Integer shopCategoryId : shopCategoryIds) {
+            ShopBrandCategory shopBrandCategory = new ShopBrandCategory();
+            shopBrandCategory.setShopBrandId(id);
+            shopBrandCategory.setShopCategoryId(shopCategoryId);
+            shopBrandCategories.add(shopBrandCategory);
+        }
+
+        this.shopBrandCategoryRepository.batchInsert(shopBrandCategories);
     }
 
     @Override

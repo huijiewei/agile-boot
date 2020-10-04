@@ -39,7 +39,6 @@ public class AdminGroupService implements AdminGroupUseCase {
         }
 
         this.adminGroupPersistencePort.deleteById(adminGroupEntity.getId());
-        this.adminGroupPersistencePort.updatePermissions(id, null, true);
     }
 
     @Override
@@ -76,8 +75,6 @@ public class AdminGroupService implements AdminGroupUseCase {
 
         Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
 
-        this.adminGroupPersistencePort.updatePermissions(adminGroupId, adminGroupRequest.getPermissions(), false);
-
         adminGroupEntity.setId(adminGroupId);
 
         return adminGroupEntity;
@@ -98,8 +95,6 @@ public class AdminGroupService implements AdminGroupUseCase {
         }
 
         Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
-
-        this.adminGroupPersistencePort.updatePermissions(adminGroupId, adminGroupRequest.getPermissions(), true);
 
         adminGroupEntity.setId(adminGroupId);
 

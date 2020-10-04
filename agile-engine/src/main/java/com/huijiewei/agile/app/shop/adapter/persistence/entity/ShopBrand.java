@@ -5,10 +5,10 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +38,5 @@ public class ShopBrand extends AbstractJpaEntity {
             joinColumns = @JoinColumn(name = "shopBrandId", insertable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "shopCategoryId", insertable = false, updatable = false)
     )
-    @Setter(AccessLevel.NONE)
     private List<ShopCategory> shopCategories = new ArrayList<>();
 }
