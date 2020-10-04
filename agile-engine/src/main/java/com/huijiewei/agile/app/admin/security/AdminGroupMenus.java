@@ -42,4 +42,44 @@ public class AdminGroupMenus {
 
         return all;
     }
+
+    public static AdminGroupMenuItem getAdminGroupMenuItemInPermissions(AdminGroupMenuItem adminGroupMenuItem, List<String> permissions) {
+        if (adminGroupMenuItem.getUrl() != null
+                && !adminGroupMenuItem.getOpen()
+                && !permissions.contains(adminGroupMenuItem.getUrl())
+        ) {
+            return null;
+        }
+
+        List<AdminGroupMenuItem> children = null;
+
+        if (adminGroupMenuItem.getChildren() != null) {
+            children = new ArrayList<>();
+
+            for (AdminGroupMenuItem child : adminGroupMenuItem.getChildren()) {
+                AdminGroupMenuItem item = AdminGroupMenus.getAdminGroupMenuItemInPermissions(child, permissions);
+
+                if (item != null) {
+                    children.add(item);
+                }
+            }
+
+            if (children.isEmpty()) {
+                return null;
+            }
+        }
+
+        AdminGroupMenuItem result = new AdminGroupMenuItem();
+
+        result.setLabel(adminGroupMenuItem.getLabel());
+        result.setIcon(adminGroupMenuItem.getIcon());
+        result.setOpen(adminGroupMenuItem.getOpen());
+        result.setUrl(adminGroupMenuItem.getUrl());
+
+        if (children != null) {
+            result.setChildren(children);
+        }
+
+        return result;
+    }
 }

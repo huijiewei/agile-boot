@@ -3,7 +3,8 @@ package com.huijiewei.agile.app.admin.application.request;
 import com.huijiewei.agile.app.admin.application.service.AdminGroupUniqueService;
 import com.huijiewei.agile.core.constraint.Unique;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -12,11 +13,9 @@ import java.util.List;
  * @author huijiewei
  */
 
-@Data
-@Unique(fields = "name", uniqueService = AdminGroupUniqueService.class, message = "名称已被使用")
+@Getter
+@Setter
 public class AdminGroupRequest {
-    private Integer id;
-
     @NotBlank
     @Schema(description = "管理组名称", required = true)
     private String name;

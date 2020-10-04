@@ -7,6 +7,7 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistenceP
 import com.huijiewei.agile.app.admin.application.request.AdminGroupRequest;
 import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.core.application.response.ListResponse;
+import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,18 @@ import javax.validation.Valid;
  */
 
 @Service
-@Validated
 public class AdminGroupService implements AdminGroupUseCase {
     private final AdminPersistencePort adminPersistencePort;
     private final AdminGroupRequestMapper adminGroupRequestMapper;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
+    private final ValidatingService validatingService;
 
     @Autowired
-    public AdminGroupService(AdminPersistencePort adminPersistencePort, AdminGroupRequestMapper adminGroupRequestMapper, AdminGroupPersistencePort adminGroupPersistencePort) {
+    public AdminGroupService(AdminPersistencePort adminPersistencePort, AdminGroupRequestMapper adminGroupRequestMapper, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService) {
         this.adminPersistencePort = adminPersistencePort;
         this.adminGroupRequestMapper = adminGroupRequestMapper;
         this.adminGroupPersistencePort = adminGroupPersistencePort;
+        this.validatingService = validatingService;
     }
 
     @Override
@@ -66,8 +68,16 @@ public class AdminGroupService implements AdminGroupUseCase {
     }
 
     @Override
-    public AdminGroupEntity create(@Valid AdminGroupRequest adminGroupRequest) {
+    public AdminGroupEntity create(AdminGroupRequest adminGroupRequest) {
+        if (!this.validatingService.validate(adminGroupRequest)) {
+            return null;
+        }
+
         AdminGroupEntity adminGroupEntity = this.adminGroupRequestMapper.toAdminGroupEntity(adminGroupRequest);
+
+        if (!this.validatingService.validate(adminGroupEntity)) {
+            return null;
+        }
 
         Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
 

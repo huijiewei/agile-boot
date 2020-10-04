@@ -76,13 +76,13 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     }
 
     @Override
-    @Validated({AdminRequest.Create.class})
+    @Validated({AdminRequest.OnCreate.class})
     public AdminEntity create(@Valid AdminRequest adminRequest) {
         return null;
     }
 
     @Override
-    @Validated({AdminRequest.Edit.class})
+    @Validated({AdminRequest.OnUpdate.class})
     public AdminEntity update(Integer id, @Valid AdminRequest adminRequest, Integer identityId) {
         return null;
     }

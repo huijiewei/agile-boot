@@ -111,7 +111,7 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
         List<AdminGroupMenuItem> adminGroupMenuItems = new ArrayList<>();
 
         for (AdminGroupMenuItem adminGroupMenuItem : all) {
-            AdminGroupMenuItem item = this.getAdminGroupMenuItemInPermissions(adminGroupMenuItem, adminGroupPermissions);
+            AdminGroupMenuItem item = AdminGroupMenus.getAdminGroupMenuItemInPermissions(adminGroupMenuItem, adminGroupPermissions);
 
             if (item != null) {
                 adminGroupMenuItems.add(item);
@@ -119,45 +119,6 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
         }
 
         return adminGroupMenuItems;
-    }
-
-    private AdminGroupMenuItem getAdminGroupMenuItemInPermissions(AdminGroupMenuItem adminGroupMenuItem, List<String> permissions) {
-        if (adminGroupMenuItem.getUrl() != null
-                && !adminGroupMenuItem.getOpen()
-                && !permissions.contains(adminGroupMenuItem.getUrl())
-        ) {
-            return null;
-        }
-
-        List<AdminGroupMenuItem> children = null;
-
-        if (adminGroupMenuItem.getChildren() != null) {
-            children = new ArrayList<>();
-
-            for (AdminGroupMenuItem child : adminGroupMenuItem.getChildren()) {
-                AdminGroupMenuItem item = this.getAdminGroupMenuItemInPermissions(child, permissions);
-
-                if (item != null) {
-                    children.add(item);
-                }
-            }
-
-            if (children.isEmpty()) {
-                return null;
-            }
-        }
-
-        AdminGroupMenuItem result = new AdminGroupMenuItem();
-        result.setLabel(adminGroupMenuItem.getLabel());
-        result.setIcon(adminGroupMenuItem.getIcon());
-        result.setOpen(adminGroupMenuItem.getOpen());
-        result.setUrl(adminGroupMenuItem.getUrl());
-
-        if (children != null) {
-            result.setChildren(children);
-        }
-
-        return result;
     }
 
     @Override

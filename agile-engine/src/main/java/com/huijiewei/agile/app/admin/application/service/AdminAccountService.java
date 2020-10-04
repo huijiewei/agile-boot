@@ -102,6 +102,7 @@ public class AdminAccountService implements AccountUseCase<AdminEntity> {
         Objects.requireNonNull(this.concurrentMapCacheManager.getCache(CAPTCHA_CACHE_NAME)).put(key, times);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <E extends AbstractIdentityLogEntity> E createLog(Integer identityId) {
         AdminLogEntity adminLogEntity = new AdminLogEntity();
