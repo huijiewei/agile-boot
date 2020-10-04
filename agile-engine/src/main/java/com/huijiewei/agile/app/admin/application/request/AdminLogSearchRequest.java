@@ -26,7 +26,7 @@ public class AdminLogSearchRequest extends BaseSearchRequest {
                 .addSearchField(new SelectSearchField()
                         .field("type")
                         .label("日志类型")
-                        .multiple(false)
+                        .multiple(true)
                         .options(IdentityLogType.values())
                 )
                 .addSearchField(new SelectSearchField()

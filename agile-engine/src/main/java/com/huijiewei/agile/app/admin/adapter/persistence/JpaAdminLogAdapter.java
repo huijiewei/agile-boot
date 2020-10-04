@@ -1,8 +1,8 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
-import com.github.wenhao.jpa.PredicateBuilder;
+import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
 import com.github.wenhao.jpa.Sorts;
-import com.github.wenhao.jpa.Specifications;
+import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminLog;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminLogMapper;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminLogRepository;
@@ -15,10 +15,16 @@ import com.huijiewei.agile.core.until.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,45 +35,61 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 class JpaAdminLogAdapter implements AdminLogPersistencePort {
     private final AdminLogMapper adminLogMapper;
-    private final JpaAdminLogRepository jpaAdminLogRepository;
+    private final JpaAdminLogRepository adminLogRepository;
 
-    public JpaAdminLogAdapter(AdminLogMapper adminLogMapper, JpaAdminLogRepository jpaAdminLogRepository) {
+    public JpaAdminLogAdapter(AdminLogMapper adminLogMapper, JpaAdminLogRepository adminLogRepository) {
         this.adminLogMapper = adminLogMapper;
-        this.jpaAdminLogRepository = jpaAdminLogRepository;
+        this.adminLogRepository = adminLogRepository;
+    }
+
+    private Specification<AdminLog> buildSpecification(AdminLogSearchRequest searchRequest) {
+        return (Specification<AdminLog>) (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new LinkedList<>();
+
+            if (StringUtils.isNotBlank(searchRequest.getAdmin())) {
+                Join<AdminLog, Admin> joinAdmin = root.join("admin", JoinType.LEFT);
+
+                List<Predicate> adminPredicates = new LinkedList<>();
+
+                String like = "%" + searchRequest.getAdmin() + "%";
+
+                adminPredicates.add(criteriaBuilder.like(joinAdmin.get("name"), like));
+                adminPredicates.add(criteriaBuilder.like(joinAdmin.get("phone"), like));
+                adminPredicates.add(criteriaBuilder.like(joinAdmin.get("email"), like));
+
+                predicates.add(criteriaBuilder.or(adminPredicates.toArray(new Predicate[0])));
+            }
+
+            if (searchRequest.getType() != null && searchRequest.getType().length > 0) {
+                List<Predicate> typePredicates = new LinkedList<>();
+
+                for (String type : searchRequest.getType()) {
+                    typePredicates.add(criteriaBuilder.equal(root.get("type"), type));
+                }
+
+                predicates.add(criteriaBuilder.or(typePredicates.toArray(new Predicate[0])));
+            }
+
+            if (searchRequest.getStatus() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), searchRequest.getStatus()));
+            }
+
+            LocalDateTime[] createdRanges = DateTimeUtils.parseSearchDateRange(searchRequest.getCreatedRange());
+
+            if (createdRanges != null) {
+                predicates.add(criteriaBuilder.between(root.get("createdAt"), createdRanges[0], createdRanges[1]));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     @Override
     public SearchPageResponse<AdminLogEntity> getAll(Integer page, Integer size, AdminLogSearchRequest searchRequest, Boolean withSearchFields) {
-        PredicateBuilder<AdminLog> predicateBuilder = Specifications.<AdminLog>and()
-                .predicate(
-                        StringUtils.isNotEmpty(searchRequest.getAdmin()),
-                        Specifications.or()
-                                .like("admin.name", '%' + searchRequest.getAdmin() + '%')
-                                .like("admin.phone", '%' + searchRequest.getAdmin() + '%')
-                                .like("admin.email", '%' + searchRequest.getAdmin() + '%')
-                                .build()
-                );
-
-        if (searchRequest.getType() != null && searchRequest.getType().length > 0) {
-            PredicateBuilder<AdminLog> createdFromPredicateBuilder = Specifications.or();
-
-            for (String type : searchRequest.getType()) {
-                createdFromPredicateBuilder.eq(StringUtils.isNotEmpty(type), "type", type);
-            }
-
-            predicateBuilder.predicate(createdFromPredicateBuilder.build());
-        }
-        if (searchRequest.getStatus() != null) {
-            predicateBuilder.eq("status", searchRequest.getStatus());
-        }
-
-        LocalDateTime[] createdRanges = DateTimeUtils.parseSearchDateRange(searchRequest.getCreatedRange());
-
-        if (createdRanges != null) {
-            predicateBuilder.between("createdAt", createdRanges[0], createdRanges[1]);
-        }
-
-        Page<AdminLog> adminLogPage = this.jpaAdminLogRepository.findAll(predicateBuilder.build(), PageRequest.of(page, size, Sorts.builder().desc("id").build()));
+        Page<AdminLog> adminLogPage = this.adminLogRepository.findAll(
+                this.buildSpecification(searchRequest),
+                PageRequest.of(page, size, Sorts.builder().desc("id").build()),
+                EntityGraphUtils.fromAttributePaths("admin"));
 
         SearchPageResponse<AdminLogEntity> adminLogEntityResponses = new SearchPageResponse<>();
 
@@ -89,6 +111,6 @@ class JpaAdminLogAdapter implements AdminLogPersistencePort {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(AdminLogEntity adminLogEntity) {
-        this.jpaAdminLogRepository.save(this.adminLogMapper.toAdminLog(adminLogEntity));
+        this.adminLogRepository.save(this.adminLogMapper.toAdminLog(adminLogEntity));
     }
 }

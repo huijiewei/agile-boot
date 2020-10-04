@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.user.application.service;
 
-import com.huijiewei.agile.app.admin.application.port.outbound.AdminUniquePort;
+import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.core.application.port.inbound.UniqueUseCase;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +12,14 @@ import java.util.Map;
 
 @Service
 public class UserUniqueService implements UniqueUseCase {
-    private final AdminUniquePort adminUniquePort;
+    private final UserUniquePort userUniquePort;
 
-    public UserUniqueService(AdminUniquePort adminUniquePort) {
-        this.adminUniquePort = adminUniquePort;
+    public UserUniqueService(UserUniquePort userUniquePort) {
+        this.userUniquePort = userUniquePort;
     }
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.adminUniquePort.unique(values, primaryKey, primaryValue);
+        return this.userUniquePort.unique(values, primaryKey, primaryValue);
     }
 }

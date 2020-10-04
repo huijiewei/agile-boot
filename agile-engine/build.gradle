@@ -13,6 +13,7 @@ dependencies {
     implementation libs.jpaSpec
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
+    implementation libs.easyPoiBase
 
     runtimeOnly libs.mysqlConnector
 

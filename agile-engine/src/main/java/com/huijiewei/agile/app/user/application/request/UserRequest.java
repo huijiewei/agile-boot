@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.user.application.request;
 
+import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.core.constraint.FieldMatch;
 import com.huijiewei.agile.core.constraint.Phone;
 import lombok.Data;
@@ -39,6 +40,6 @@ public class UserRequest {
     public interface OnCreate extends Default {
     }
 
-    public interface OnEdit extends Default {
+    public interface OnUpdate extends Default {
     }
 }

@@ -1,8 +1,8 @@
 package com.huijiewei.agile.app.admin.adapter.persistence.repository;
 
+import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminLog;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * @author huijiewei
@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface JpaAdminLogRepository extends
         JpaRepository<AdminLog, Integer>,
-        JpaSpecificationExecutor<AdminLog> {
+        EntityGraphJpaSpecificationExecutor<AdminLog> {
 }

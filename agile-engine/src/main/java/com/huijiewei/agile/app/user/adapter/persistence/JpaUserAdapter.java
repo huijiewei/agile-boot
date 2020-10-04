@@ -1,6 +1,7 @@
 package com.huijiewei.agile.app.user.adapter.persistence;
 
 import com.github.wenhao.jpa.PredicateBuilder;
+import com.github.wenhao.jpa.Sorts;
 import com.github.wenhao.jpa.Specifications;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.mapper.UserMapper;
@@ -9,9 +10,15 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserPersistencePor
 import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
+import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
@@ -25,6 +32,7 @@ import java.util.stream.Collectors;
  * @author huijiewei
  */
 
+@Component
 public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
     private final UserMapper userMapper;
     private final JpaUserRepository userRepository;
@@ -34,8 +42,7 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public List<UserEntity> getAll(UserSearchRequest searchRequest) {
+    private Specification<User> buildSpecification(UserSearchRequest searchRequest) {
         PredicateBuilder<User> predicateBuilder = Specifications.<User>and()
                 .like(StringUtils.isNotEmpty(searchRequest.getName()), "name", '%' + searchRequest.getName() + '%')
                 .like(StringUtils.isNotEmpty(searchRequest.getPhone()), "phone", '%' + searchRequest.getPhone() + '%')
@@ -57,7 +64,37 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
             predicateBuilder.between("createdAt", createdRanges[0], createdRanges[1]);
         }
 
-        return this.userRepository.findAll(predicateBuilder.build()).stream().map(this.userMapper::toUserEntity).collect(Collectors.toList());
+        return predicateBuilder.build();
+    }
+
+    @Override
+    public SearchPageResponse<UserEntity> getAll(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields) {
+        Page<User> userPage = this.userRepository.findAll(this.buildSpecification(searchRequest), PageRequest.of(page, size, Sorts.builder().desc("id").build()));
+
+        SearchPageResponse<UserEntity> userEntityResponses = new SearchPageResponse<>();
+
+        userEntityResponses.setItems(userPage
+                .getContent()
+                .stream()
+                .map(this.userMapper::toUserEntity)
+                .collect(Collectors.toList()));
+
+        userEntityResponses.setPages(PaginationCover.toPagination(userPage));
+
+        if (withSearchFields != null && withSearchFields) {
+            userEntityResponses.setSearchFields(searchRequest.getSearchFields());
+        }
+
+        return userEntityResponses;
+    }
+
+    @Override
+    public List<UserEntity> getAll(UserSearchRequest searchRequest) {
+        return this.userRepository
+                .findAll(this.buildSpecification(searchRequest))
+                .stream()
+                .map(this.userMapper::toUserEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -66,13 +103,17 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer save(UserEntity userEntity) {
-        return null;
+        User user = this.userRepository.save(this.userMapper.toUser(userEntity));
+
+        return user.getId();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-
+        this.userRepository.deleteById(id);
     }
 
     @Override
