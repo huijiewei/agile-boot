@@ -1,7 +1,7 @@
-package com.huijiewei.agile.app.shop.application.mapper;
+package com.huijiewei.agile.app.open.application.mapper;
 
-import com.huijiewei.agile.app.shop.application.request.ShopCategoryRequest;
-import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
+import com.huijiewei.agile.app.open.application.request.DistrictRequest;
+import com.huijiewei.agile.app.open.domain.DistrictEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -13,13 +13,13 @@ import org.mapstruct.ReportingPolicy;
 
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface ShopCategoryRequestMapper {
+public interface DistrictRequestMapper {
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
-    ShopCategoryEntity toShopCategoryEntity(ShopCategoryRequest shopCategoryRequest);
+    DistrictEntity toDistrictEntity(DistrictRequest districtRequest);
 
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
-    ShopCategoryEntity toShopCategoryEntity(ShopCategoryRequest shopCategoryRequest, @MappingTarget ShopCategoryEntity shopCategoryEntity);
+    DistrictEntity toDistrictEntity(DistrictRequest districtRequest, @MappingTarget DistrictEntity districtEntity);
 
 }

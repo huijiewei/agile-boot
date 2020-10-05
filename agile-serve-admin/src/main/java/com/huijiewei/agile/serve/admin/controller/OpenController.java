@@ -1,6 +1,6 @@
 package com.huijiewei.agile.serve.admin.controller;
 
-import com.huijiewei.agile.app.open.application.port.CaptchaPersistencePort;
+import com.huijiewei.agile.app.open.application.port.outbound.CaptchaPersistencePort;
 import com.huijiewei.agile.app.open.domain.CaptchaEntity;
 import com.huijiewei.agile.core.exception.BadRequestException;
 import com.huijiewei.agile.core.until.HttpUtils;

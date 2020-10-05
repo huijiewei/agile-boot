@@ -4,7 +4,7 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersisten
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
-import com.huijiewei.agile.app.open.application.port.CaptchaPersistencePort;
+import com.huijiewei.agile.app.open.application.port.outbound.CaptchaPersistencePort;
 import com.huijiewei.agile.app.open.domain.CaptchaEntity;
 import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
 import com.huijiewei.agile.core.consts.AccountType;

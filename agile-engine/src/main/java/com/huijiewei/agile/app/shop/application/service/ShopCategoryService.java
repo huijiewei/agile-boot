@@ -50,7 +50,7 @@ public class ShopCategoryService implements ShopCategoryUseCase {
     public ShopCategoryEntity read(Integer id, Boolean withParents) {
         ShopCategoryEntity shopCategoryEntity = this.getById(id);
 
-        if (withParents && shopCategoryEntity.getParentId() > 0) {
+        if (withParents != null && withParents && shopCategoryEntity.getParentId() > 0) {
             shopCategoryEntity.setParents(this.getParentsById(shopCategoryEntity.getParentId()));
         }
 

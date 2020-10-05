@@ -4,6 +4,8 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersist
 import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissionItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissions;
+import com.huijiewei.agile.app.open.application.port.inbound.DistrictUseCase;
+import com.huijiewei.agile.app.open.domain.DistrictEntity;
 import com.huijiewei.agile.app.shop.application.port.inbound.ShopCategoryUseCase;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
@@ -30,11 +32,13 @@ public class MiscController {
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final UploadDriver uploadDriver;
     private final ShopCategoryUseCase shopCategoryUseCase;
+    private final DistrictUseCase districtUseCase;
 
-    public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadDriver uploadDriver, ShopCategoryUseCase shopCategoryUseCase) {
+    public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadDriver uploadDriver, ShopCategoryUseCase shopCategoryUseCase, DistrictUseCase districtUseCase) {
         this.adminGroupPersistencePort = adminGroupPersistencePort;
         this.uploadDriver = uploadDriver;
         this.shopCategoryUseCase = shopCategoryUseCase;
+        this.districtUseCase = districtUseCase;
     }
 
     @GetMapping(
@@ -76,6 +80,37 @@ public class MiscController {
     @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
     public List<ShopCategoryEntity> actionShopCategoryPath(Integer id) {
         return this.shopCategoryUseCase.getPath(id);
+    }
+
+    @GetMapping(
+            value = "/misc/districts",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "地区列表", operationId = "miscDistricts")
+    @ApiResponse(responseCode = "200", description = "地区列表")
+    public List<DistrictEntity> actionDistricts(@RequestParam() Integer parentId) {
+        return this.districtUseCase.getAllByParentId(parentId);
+    }
+
+    @GetMapping(
+            value = "/misc/district-path",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "地区路径", operationId = "miscDistrictPath")
+    @ApiResponse(responseCode = "200", description = "地区路径")
+    @ApiResponse(responseCode = "404", description = "地区不存在", ref = "NotFoundProblem")
+    public List<DistrictEntity> actionDistrictPath(Integer id) {
+        return this.districtUseCase.getPath(id);
+    }
+
+    @GetMapping(
+            value = "/misc/district-search-tree",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "搜索地区树", operationId = "miscDistrictSearchTree")
+    @ApiResponse(responseCode = "200", description = "地区路径")
+    public List<DistrictEntity> actionDistrictSearchPath(@RequestParam() String keyword) {
+        return this.districtUseCase.getTreeByKeyword(keyword);
     }
 
     @GetMapping(

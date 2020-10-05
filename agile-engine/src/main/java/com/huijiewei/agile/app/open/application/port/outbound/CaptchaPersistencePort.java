@@ -1,4 +1,4 @@
-package com.huijiewei.agile.app.open.application.port;
+package com.huijiewei.agile.app.open.application.port.outbound;
 
 import com.huijiewei.agile.app.open.domain.CaptchaEntity;
 
