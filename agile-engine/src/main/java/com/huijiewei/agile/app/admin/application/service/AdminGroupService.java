@@ -82,13 +82,13 @@ public class AdminGroupService implements AdminGroupUseCase {
 
     @Override
     public AdminGroupEntity update(Integer id, AdminGroupRequest adminGroupRequest) {
-        AdminGroupEntity currentAdminGroupEntity = this.getById(id);
+        AdminGroupEntity adminGroupEntity = this.getById(id);
 
         if (!this.validatingService.validate(adminGroupRequest)) {
             return null;
         }
 
-        AdminGroupEntity adminGroupEntity = this.adminGroupRequestMapper.toAdminGroupEntity(adminGroupRequest, currentAdminGroupEntity);
+        this.adminGroupRequestMapper.updateAdminGroupEntity(adminGroupRequest, adminGroupEntity);
 
         if (!this.validatingService.validate(adminGroupEntity)) {
             return null;

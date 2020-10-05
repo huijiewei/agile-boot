@@ -4,7 +4,7 @@ package com.huijiewei.agile.core.consts;
  * @author huijiewei
  */
 
-public class IdentityLogStatus extends ValueDescription<Integer> {
+public class IdentityLogStatus extends ValueDescription<IdentityLogStatus, Integer> {
     public static final IdentityLogStatus FAIL = new IdentityLogStatus(0, "失败");
     public static final IdentityLogStatus SUCCESS = new IdentityLogStatus(1, "成功");
 

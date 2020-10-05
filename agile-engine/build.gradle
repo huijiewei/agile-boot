@@ -6,10 +6,10 @@ dependencies {
 
     implementation "org.springframework.security:spring-security-core"
     implementation "jakarta.servlet:jakarta.servlet-api"
+    implementation "commons-codec:commons-codec"
+    implementation "org.apache.commons:commons-lang3"
 
     implementation libs.mapstruct
-    implementation libs.apacheCommonsLang
-    implementation libs.apacheCommonsCodec
     implementation libs.springdocOpenApi
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
@@ -25,6 +25,5 @@ dependencies {
 compileJava {
     options.compilerArgs += [
             '-Amapstruct.defaultComponentModel=spring',
-            '-Amapstruct.unmappedTargetPolicy=WARN',
     ]
 }

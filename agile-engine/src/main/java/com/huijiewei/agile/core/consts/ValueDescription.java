@@ -12,17 +12,17 @@ import java.util.Map;
  */
 
 @Getter
-public class ValueDescription<T> {
-    private static final Map<String, Map<?, ValueDescription<?>>> ELEMENTS = new HashMap<>();
+public class ValueDescription<T extends ValueDescription<T, E>, E> {
+    private static final Map<String, Map<?, ValueDescription<?, ?>>> ELEMENTS = new HashMap<>();
 
-    private final T value;
+    private final E value;
     private final String description;
 
-    public ValueDescription(T value, String description) {
+    public ValueDescription(E value, String description) {
         this.value = value;
         this.description = description;
 
-        Map<T, ValueDescription<?>> element = getElement();
+        Map<E, ValueDescription<?, ?>> element = getElement();
 
         if (element == null) {
             element = new HashMap<>();
@@ -34,27 +34,27 @@ public class ValueDescription<T> {
     }
 
     @SuppressWarnings("unchecked")
-    protected static <E extends ValueDescription<T>, T> E valueOf(Class<E> enumType, T value) {
-        return (E) ELEMENTS.get(enumType.getName()).get(value);
+    protected static <T extends ValueDescription<T, E>, E> T valueOf(Class<T> enumType, E value) {
+        return (T) ELEMENTS.get(enumType.getName()).get(value);
     }
 
-    public static <E extends ValueDescription<T>, T> E valueOf(T value) {
+    public static <T extends ValueDescription<T, E>, E> T valueOf(E value) {
         throw new IllegalStateException("Sub class of ValueDescription must implement method valueOf()");
     }
 
-    public static <E> ValueDescription<E>[] values() {
+    public static <T extends ValueDescription<T, E>, E> ValueDescription<T, E>[] values() {
         throw new IllegalStateException("Sub class of ValueDescription must implement method values()");
     }
 
     @SuppressWarnings("unchecked")
-    protected static <E> E[] values(Class<E> enumType) {
-        Collection<ValueDescription<?>> values = ELEMENTS.get(enumType.getName()).values();
+    protected static <T extends ValueDescription<T, E>, E> T[] values(Class<T> enumType) {
+        Collection<ValueDescription<?, ?>> values = ELEMENTS.get(enumType.getName()).values();
 
-        E[] typedValues = (E[]) Array.newInstance(enumType, values.size());
+        T[] typedValues = (T[]) Array.newInstance(enumType, values.size());
 
         int i = 0;
 
-        for (ValueDescription<?> value : values) {
+        for (ValueDescription<?, ?> value : values) {
             Array.set(typedValues, i, value);
             i++;
         }
@@ -64,7 +64,11 @@ public class ValueDescription<T> {
 
 
     @SuppressWarnings("unchecked")
-    private Map<T, ValueDescription<?>> getElement() {
-        return (Map<T, ValueDescription<?>>) ELEMENTS.get(getClass().getName());
+    private Map<E, ValueDescription<?, ?>> getElement() {
+        return (Map<E, ValueDescription<?, ?>>) ELEMENTS.get(getClass().getName());
+    }
+
+    public String toString() {
+        return this.value.toString();
     }
 }

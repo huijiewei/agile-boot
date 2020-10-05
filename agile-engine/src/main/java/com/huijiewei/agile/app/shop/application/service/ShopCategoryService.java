@@ -73,13 +73,13 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
     @Override
     public ShopCategoryEntity update(Integer id, ShopCategoryRequest shopCategoryRequest) {
-        ShopCategoryEntity currentShopCategoryEntity = this.getById(id);
+        ShopCategoryEntity shopCategoryEntity = this.getById(id);
 
         if (!this.validatingService.validate(shopCategoryRequest)) {
             return null;
         }
 
-        ShopCategoryEntity shopCategoryEntity = this.shopCategoryRequestMapper.toShopCategoryEntity(shopCategoryRequest, currentShopCategoryEntity);
+        this.shopCategoryRequestMapper.updateShopCategoryEntity(shopCategoryRequest, shopCategoryEntity);
 
         Integer shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
         shopCategoryEntity.setId(shopCategoryId);

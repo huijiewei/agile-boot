@@ -8,12 +8,6 @@ ext.libs = [
         springdocOpenApiUi: [
                 "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
         ],
-        apacheCommonsLang : [
-                "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}"
-        ],
-        apacheCommonsCodec: [
-                "commons-codec:commons-codec:${apacheCommonsCodecVersion}"
-        ],
         apacheCommonsIo   : [
                 "commons-io:commons-io:${apacheCommonsIoVersion}"
         ],
@@ -32,9 +26,6 @@ ext.libs = [
         friendlyId        : [
                 "com.devskiller.friendly-id:friendly-id:${friendlyIdVersion}"
         ],
-        jpaSpec           : [
-                "com.github.wenhao:jpa-spec:${jpaSpecVersion}"
-        ],
         javaFaker         : [
                 "com.github.javafaker:javafaker:${javaFakerVersion}"
         ],
@@ -43,8 +34,5 @@ ext.libs = [
         ],
         jpaEntityGraph    : [
                 "com.cosium.spring.data:spring-data-jpa-entity-graph:${jpaEntityGraphVersion}"
-        ],
-        hibernateValidator: [
-                "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
         ],
 ]

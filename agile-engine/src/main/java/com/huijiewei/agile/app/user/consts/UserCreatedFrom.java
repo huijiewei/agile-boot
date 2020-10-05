@@ -6,7 +6,7 @@ import com.huijiewei.agile.core.consts.ValueDescription;
  * @author huijiewei
  */
 
-public class UserCreatedFrom extends ValueDescription<String> {
+public class UserCreatedFrom extends ValueDescription<UserCreatedFrom, String> {
     public static final UserCreatedFrom APP = new UserCreatedFrom("APP", "应用");
     public static final UserCreatedFrom WEB = new UserCreatedFrom("WEB", "网页");
     public static final UserCreatedFrom WECHAT = new UserCreatedFrom("WECHAT", "微信");

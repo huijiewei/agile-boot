@@ -77,13 +77,13 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public DistrictEntity update(Integer id, DistrictRequest districtRequest) {
-        DistrictEntity currentDistrictEntity = this.getById(id);
+        DistrictEntity districtEntity = this.getById(id);
 
         if (!this.validatingService.validate(districtRequest)) {
             return null;
         }
 
-        DistrictEntity districtEntity = this.districtRequestMapper.toDistrictEntity(districtRequest, currentDistrictEntity);
+        this.districtRequestMapper.updateDistrictEntity(districtRequest, districtEntity);
 
         if (!this.validatingService.validate(districtEntity)) {
             return null;

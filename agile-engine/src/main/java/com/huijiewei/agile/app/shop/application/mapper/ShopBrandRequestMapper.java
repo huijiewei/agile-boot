@@ -5,19 +5,18 @@ import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
 
 /**
  * @author huijiewei
  */
 
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper
 public interface ShopBrandRequestMapper {
     @Mapping(target = "shopCategories", ignore = true)
     ShopBrandEntity toShopBrandEntity(ShopBrandRequest shopBrandRequest);
 
     @Mapping(target = "shopCategories", ignore = true)
-    ShopBrandEntity toShopBrandEntity(ShopBrandRequest shopBrandRequest, @MappingTarget ShopBrandEntity shopBrandEntity);
+    void updateShopBrandEntity(ShopBrandRequest shopBrandRequest, @MappingTarget ShopBrandEntity shopBrandEntity);
 
 }

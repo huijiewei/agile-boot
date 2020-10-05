@@ -2,10 +2,7 @@ package com.huijiewei.agile.app.admin.application.mapper;
 
 import com.huijiewei.agile.app.admin.application.request.AdminRequest;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 /**
  * @author huijiewei
@@ -18,5 +15,6 @@ public interface AdminRequestMapper {
     AdminEntity toAdminEntity(AdminRequest adminRequest);
 
     @Mapping(target = "password", ignore = true)
-    AdminEntity toAdminEntity(AdminRequest adminRequest, @MappingTarget AdminEntity adminEntity);
+    @Mapping(target = "adminGroupId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateAdminEntity(AdminRequest adminRequest, @MappingTarget AdminEntity adminEntity);
 }

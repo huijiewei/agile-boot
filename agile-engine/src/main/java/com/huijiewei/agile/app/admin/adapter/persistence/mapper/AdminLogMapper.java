@@ -6,14 +6,13 @@ import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 /**
  * @author huijiewei
  */
 
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper
 public interface AdminLogMapper {
     @Mapping(target = "admin.adminGroup", ignore = true)
     AdminLogEntity toAdminLogEntity(AdminLog adminLog);

@@ -2,8 +2,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework:spring-webmvc"
 
-    implementation libs.apacheCommonsLang
-    implementation libs.apacheCommonsCodec
+    implementation "commons-codec:commons-codec"
+    implementation "org.apache.commons:commons-lang3"
+
     implementation libs.apacheCommonsIo
     implementation libs.thumbnailator
 

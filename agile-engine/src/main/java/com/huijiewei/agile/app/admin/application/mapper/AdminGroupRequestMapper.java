@@ -15,5 +15,5 @@ import org.mapstruct.ReportingPolicy;
 public interface AdminGroupRequestMapper {
     AdminGroupEntity toAdminGroupEntity(AdminGroupRequest adminGroupRequest);
 
-    AdminGroupEntity toAdminGroupEntity(AdminGroupRequest adminGroupRequest, @MappingTarget AdminGroupEntity adminGroupEntity);
+    void updateAdminGroupEntity(AdminGroupRequest adminGroupRequest, @MappingTarget AdminGroupEntity adminGroupEntity);
 }

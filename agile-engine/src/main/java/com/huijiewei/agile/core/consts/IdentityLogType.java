@@ -4,7 +4,7 @@ package com.huijiewei.agile.core.consts;
  * @author huijiewei
  */
 
-public class IdentityLogType extends ValueDescription<String> {
+public class IdentityLogType extends ValueDescription<IdentityLogType, String> {
     public static final IdentityLogType LOGIN = new IdentityLogType("LOGIN", "登录");
     public static final IdentityLogType VISIT = new IdentityLogType("VISIT", "访问");
     public static final IdentityLogType OPERATE = new IdentityLogType("OPERATE", "操作");

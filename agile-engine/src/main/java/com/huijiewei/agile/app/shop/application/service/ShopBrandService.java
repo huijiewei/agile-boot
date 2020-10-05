@@ -84,13 +84,13 @@ public class ShopBrandService implements ShopBrandUseCase {
 
     @Override
     public ShopBrandEntity update(Integer id, ShopBrandRequest shopBrandRequest) {
-        ShopBrandEntity currentShopBrandEntity = this.getById(id);
+        ShopBrandEntity shopBrandEntity = this.getById(id);
 
         if (!this.validatingService.validate(shopBrandRequest)) {
             return null;
         }
 
-        ShopBrandEntity shopBrandEntity = this.shopBrandRequestMapper.toShopBrandEntity(shopBrandRequest, currentShopBrandEntity);
+        this.shopBrandRequestMapper.updateShopBrandEntity(shopBrandRequest, shopBrandEntity);
 
         if (!this.validatingService.validate(shopBrandEntity)) {
             return null;
