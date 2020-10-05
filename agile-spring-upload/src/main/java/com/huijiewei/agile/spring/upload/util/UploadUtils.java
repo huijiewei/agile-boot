@@ -30,7 +30,7 @@ public class UploadUtils {
             'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'Z'};
-    final static String UPLOAD_PATH_FILE_PREFIX = "file:";
+    final static String UPLOAD_PATH_FILE_PREFIX = "filesystem:";
 
     public static String random(int size) {
         Random random = new Random();

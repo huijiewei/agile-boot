@@ -1,3 +1,6 @@
+apply from: 'dependencies.gradle'
+apply plugin: 'com.github.ben-manes.versions'
+
 buildscript {
     repositories {
         maven {
@@ -5,12 +8,11 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.4.RELEASE"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+        classpath "com.github.ben-manes:gradle-versions-plugin:${gradleVersionsVersion}"
     }
 }
-
-apply from: 'dependencies.gradle'
 
 allprojects {
     group = 'com.huijiewei'
@@ -39,11 +41,11 @@ subprojects {
     }
 
     dependencies {
-        compileOnly libs.lombok
-        annotationProcessor libs.lombok
+        compileOnly "org.projectlombok:lombok"
+        annotationProcessor "org.projectlombok:lombok"
 
-        testCompileOnly libs.lombok
-        testAnnotationProcessor libs.lombok
+        testCompileOnly "org.projectlombok:lombok"
+        testAnnotationProcessor "org.projectlombok:lombok"
     }
 
     configurations {
@@ -54,7 +56,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
         }
     }
 }

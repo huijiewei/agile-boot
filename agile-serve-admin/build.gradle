@@ -13,8 +13,6 @@ configurations.all {
     exclude module: 'spring-boot-starter-tomcat'
 }
 
-ext['undertow.version'] = '2.2.0.Final'
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation "org.springframework.boot:spring-boot-starter-undertow"
@@ -25,13 +23,13 @@ dependencies {
 
     implementation libs.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
-    implementation libs.javaFaker
-    implementation libs.flyway
     implementation libs.easyCaptcha
     implementation libs.jpaEntityGraph
 
     implementation project(':agile-engine')
     implementation project(':agile-spring-upload')
+
+    compile "org.flywaydb:flyway-core"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 

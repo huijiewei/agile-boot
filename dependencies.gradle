@@ -1,34 +1,4 @@
-ext.lombokVersion = '1.18.12'
-ext.springdocOpenApiVersion = '1.4.8'
-ext.validationApiVersion = '2.0.1.Final'
-ext.mysqlConnectorVersion = '8.0.21'
-ext.apacheCommonsLangVersion = '3.11'
-ext.apacheCommonsCodecVersion = '1.15'
-ext.springSecurityVersion = '5.4.0'
-ext.mapstructVersion = '1.4.0.Final'
-ext.zalandoProblemWebVersion = '0.26.2'
-ext.friendlyIdVersion = '1.1.0'
-ext.jpaSpecVersion = '3.2.5'
-ext.javaFakerVersion = '1.0.2'
-ext.flywayVersion = '7.0.0'
-ext.jakartaServeltApiVersion = '4.0.4'
-ext.easyCaptchaVersion = '1.6.2'
-ext.apachePoiVersion = '4.1.2'
-ext.xercesImplVersion = '2.12.0'
-ext.easyPoiBaseVersion = '4.2.0'
-ext.jpaEntityGraphVersion = '2.3.1'
-ext.hibernateValidatorVersion = '6.1.5.Final'
-ext.apacheCommonsIoVersion = '2.8.0'
-ext.springFrameworkVersion = '5.2.9.RELEASE'
-ext.thumbnailatorVersion = '0.4.12'
-
 ext.libs = [
-        lombok            : [
-                "org.projectlombok:lombok:$lombokVersion"
-        ],
-        jakartaServeltApi : [
-                "jakarta.servlet:jakarta.servlet-api:${jakartaServeltApiVersion}"
-        ],
         easyCaptcha       : [
                 "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
         ],
@@ -37,9 +7,6 @@ ext.libs = [
         ],
         springdocOpenApiUi: [
                 "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
-        ],
-        mysqlConnector    : [
-                "mysql:mysql-connector-java:${mysqlConnectorVersion}"
         ],
         apacheCommonsLang : [
                 "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}"
@@ -52,12 +19,6 @@ ext.libs = [
         ],
         thumbnailator     : [
                 "net.coobird:thumbnailator:${thumbnailatorVersion}"
-        ],
-        springSecurity    : [
-                "org.springframework.security:spring-security-core:${springSecurityVersion}"
-        ],
-        springWebMvc      : [
-                "org.springframework:spring-webmvc:${springFrameworkVersion}"
         ],
         mapstruct         : [
                 "org.mapstruct:mapstruct:${mapstructVersion}"
@@ -76,9 +37,6 @@ ext.libs = [
         ],
         javaFaker         : [
                 "com.github.javafaker:javafaker:${javaFakerVersion}"
-        ],
-        flyway            : [
-                "org.flywaydb:flyway-core:${flywayVersion}"
         ],
         easyPoiBase       : [
                 "cn.afterturn:easypoi-base:${easyPoiBaseVersion}"

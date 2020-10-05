@@ -73,12 +73,12 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
 
     @Override
     public Optional<AdminEntity> getByPhone(String phone) {
-        return this.adminRepository.findByPhone(phone).map(this.adminMapper::toAdminEntity);
+        return this.adminRepository.findByPhone(phone).map(this.adminMapper::toAdminEntityWithAdminGroup);
     }
 
     @Override
     public Optional<AdminEntity> getByEmail(String email) {
-        return this.adminRepository.findByEmail(email).map(this.adminMapper::toAdminEntity);
+        return this.adminRepository.findByEmail(email).map(this.adminMapper::toAdminEntityWithAdminGroup);
     }
 
     @Override
