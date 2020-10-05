@@ -1,14 +1,12 @@
 package com.huijiewei.agile.app.shop.adapter.persistence.entity;
 
 import com.huijiewei.agile.core.adapter.persistence.AbstractJpaEntity;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Setter;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 

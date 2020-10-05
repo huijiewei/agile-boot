@@ -12,12 +12,14 @@ import org.mapstruct.Mapping;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface AdminMapper {
+    @Mapping(target = "adminGroup.permissions", ignore = true)
     AdminEntity toAdminEntityWithAdminGroup(Admin admin);
 
     @Mapping(target = "adminGroup", ignore = true)
     AdminEntity toAdminEntity(Admin admin);
 
     @Mapping(target = "adminGroup", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Admin toAdmin(AdminEntity adminEntity);
 }
 

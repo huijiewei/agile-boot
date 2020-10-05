@@ -13,10 +13,12 @@ import org.mapstruct.MappingTarget;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface DistrictRequestMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
     DistrictEntity toDistrictEntity(DistrictRequest districtRequest);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
     void updateDistrictEntity(DistrictRequest districtRequest, @MappingTarget DistrictEntity districtEntity);

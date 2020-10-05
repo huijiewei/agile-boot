@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
  */
 
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
-@Mapper
+@Mapper(uses = ShopCategoryMapper.class)
 public interface ShopBrandMapper {
     @Mapping(target = "shopCategoryIds", ignore = true)
     ShopBrandEntity toShopBrandEntity(ShopBrand shopBrand);

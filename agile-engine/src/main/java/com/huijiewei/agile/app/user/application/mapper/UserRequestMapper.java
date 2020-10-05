@@ -13,9 +13,17 @@ import org.mapstruct.MappingTarget;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface UserRequestMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "createdIp", ignore = true)
+    @Mapping(target = "createdFrom", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     UserEntity toUserEntity(UserRequest userRequest);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "createdIp", ignore = true)
+    @Mapping(target = "createdFrom", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     void updateUserEntity(UserRequest userRequest, @MappingTarget UserEntity userEntity);
 }
