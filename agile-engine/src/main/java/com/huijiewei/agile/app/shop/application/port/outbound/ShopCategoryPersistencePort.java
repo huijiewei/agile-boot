@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.shop.application.port.outbound;
 
-import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 
 import java.util.List;

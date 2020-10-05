@@ -1,7 +1,7 @@
 package com.huijiewei.agile.app.admin.application.request;
 
 import com.huijiewei.agile.app.admin.application.service.AdminAccountService;
-import com.huijiewei.agile.core.application.request.IdentityLoginRequest;
+import com.huijiewei.agile.core.application.request.AbstractIdentityLoginRequest;
 import com.huijiewei.agile.core.constraint.Account;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +18,6 @@ import lombok.Setter;
         accountNotExistMessage = "帐号不存在",
         passwordIncorrectMessage = "密码错误",
         captchaIncorrectMessage = "验证码错误")
-public class AdminLoginRequest extends IdentityLoginRequest {
+public class AdminLoginRequest extends AbstractIdentityLoginRequest {
 }
 

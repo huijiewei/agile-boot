@@ -11,11 +11,11 @@ import java.util.List;
  */
 
 @Data
-public abstract class BaseSearchRequest {
+public abstract class AbstractSearchRequest {
     @Schema(hidden = true)
-    private List<BaseSearchField<?>> searchFields;
+    private List<AbstractSearchField<?>> searchFields;
 
-    public BaseSearchRequest addSearchField(BaseSearchField<?> searchField) {
+    public AbstractSearchRequest addSearchField(AbstractSearchField<?> searchField) {
         if (this.searchFields == null) {
             this.searchFields = new ArrayList<>();
         }

@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.shop.application.request;
 
-import com.huijiewei.agile.core.application.request.BaseSearchRequest;
+import com.huijiewei.agile.core.application.request.AbstractSearchRequest;
 import com.huijiewei.agile.core.application.request.KeywordSearchField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ShopBrandSearchRequest extends BaseSearchRequest {
+public class ShopBrandSearchRequest extends AbstractSearchRequest {
     private String name;
 
     public ShopBrandSearchRequest() {

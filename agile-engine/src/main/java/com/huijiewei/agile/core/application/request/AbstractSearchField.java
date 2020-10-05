@@ -3,15 +3,12 @@ package com.huijiewei.agile.core.application.request;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import javax.persistence.MappedSuperclass;
-
 /**
  * @author huijiewei
  */
 
 @Data
-@MappedSuperclass
-public abstract class BaseSearchField<T extends BaseSearchField<T>> {
+public abstract class AbstractSearchField<T extends AbstractSearchField<T>> {
     private String type;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

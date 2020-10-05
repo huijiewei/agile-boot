@@ -13,7 +13,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class DateTimeRangeSearchField extends BaseSearchField<DateTimeRangeSearchField> {
+public class DateTimeRangeSearchField extends AbstractSearchField<DateTimeRangeSearchField> {
     private String labelStart;
     private String labelEnd;
     private String rangeType;

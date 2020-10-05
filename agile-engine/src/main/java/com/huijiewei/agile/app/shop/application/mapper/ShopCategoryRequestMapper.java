@@ -13,10 +13,12 @@ import org.mapstruct.MappingTarget;
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface ShopCategoryRequestMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
     ShopCategoryEntity toShopCategoryEntity(ShopCategoryRequest shopCategoryRequest);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "parents", ignore = true)
     void updateShopCategoryEntity(ShopCategoryRequest shopCategoryRequest, @MappingTarget ShopCategoryEntity shopCategoryEntity);

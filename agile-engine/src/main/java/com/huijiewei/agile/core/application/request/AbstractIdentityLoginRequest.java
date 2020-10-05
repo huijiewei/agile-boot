@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public abstract class IdentityLoginRequest {
+public abstract class AbstractIdentityLoginRequest {
     @NotBlank(message = "帐号不能为空")
     @Schema(description = "帐号，手机号码或者电子邮箱", required = true)
     private String account;

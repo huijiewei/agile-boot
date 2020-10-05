@@ -1,7 +1,7 @@
 package com.huijiewei.agile.core.constraint;
 
 import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
-import com.huijiewei.agile.core.application.request.IdentityLoginRequest;
+import com.huijiewei.agile.core.application.request.AbstractIdentityLoginRequest;
 import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * @author huijiewei
  */
-public class AccountValidator implements ConstraintValidator<Account, IdentityLoginRequest> {
+public class AccountValidator implements ConstraintValidator<Account, AbstractIdentityLoginRequest> {
     final static int CAPTCHA_RETRY_TIMES = 3;
     private final ApplicationContext applicationContext;
     private AccountUseCase<? extends AbstractIdentityEntity> accountUseCase;
@@ -50,7 +50,7 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
         this.captchaEnable = this.accountUseCase.getCaptchaIsEnable();
     }
 
-    private boolean invalidCaptcha(IdentityLoginRequest request, ConstraintValidatorContext context) {
+    private boolean invalidCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         boolean invalidCaptcha = !this.accountUseCase.verifyCaptcha(
                 request.getCaptcha(),
                 request.getUserAgent(),
@@ -67,7 +67,7 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
         return invalidCaptcha;
     }
 
-    private boolean validPassword(IdentityLoginRequest request, ConstraintValidatorContext context) {
+    private boolean validPassword(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         String password = request.getPassword();
 
         String retryKey = "";
@@ -109,7 +109,7 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
         return true;
     }
 
-    private boolean validAccount(IdentityLoginRequest request, ConstraintValidatorContext context) {
+    private boolean validAccount(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         String account = request.getAccount();
 
         AccountType accountType = new EmailValidator().isValid(account, context) ?
@@ -170,7 +170,7 @@ public class AccountValidator implements ConstraintValidator<Account, IdentityLo
     }
 
     @Override
-    public boolean isValid(IdentityLoginRequest request, ConstraintValidatorContext context) {
+    public boolean isValid(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         String account = request.getAccount();
         String password = request.getPassword();
 

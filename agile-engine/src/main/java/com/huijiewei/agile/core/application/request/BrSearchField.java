@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BrSearchField extends BaseSearchField<BrSearchField> {
+public class BrSearchField extends AbstractSearchField<BrSearchField> {
     public BrSearchField() {
         this.setType("br");
     }

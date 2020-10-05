@@ -12,7 +12,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SelectSearchField extends BaseSearchField<SelectSearchField> {
+public class SelectSearchField extends AbstractSearchField<SelectSearchField> {
     private Boolean multiple = false;
     private List<?> options;
 

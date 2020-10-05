@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AdminLogSearchRequest extends BaseSearchRequest {
+public class AdminLogSearchRequest extends AbstractSearchRequest {
     private String admin;
     private String[] type;
     private Integer status;

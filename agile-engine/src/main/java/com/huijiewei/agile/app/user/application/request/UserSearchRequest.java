@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserSearchRequest extends BaseSearchRequest {
+public class UserSearchRequest extends AbstractSearchRequest {
     private String name;
     private String phone;
     private String email;
