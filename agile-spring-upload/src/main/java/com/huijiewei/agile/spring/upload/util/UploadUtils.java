@@ -5,14 +5,12 @@ import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.system.ApplicationHome;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,7 +28,6 @@ public class UploadUtils {
             'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'Z'};
-    final static String UPLOAD_PATH_FILE_PREFIX = "filesystem:";
 
     public static String random(int size) {
         Random random = new Random();
@@ -77,21 +74,7 @@ public class UploadUtils {
     }
 
     public static String buildAbsoluteUploadPath(String uploadPath) {
-        String absolutePath;
-
-        if (StringUtils.startsWith(uploadPath, UPLOAD_PATH_FILE_PREFIX)) {
-            absolutePath = StringUtils.stripStart(uploadPath, UPLOAD_PATH_FILE_PREFIX);
-        } else {
-            absolutePath = Paths.get(
-                    new ApplicationHome(UploadUtils.class)
-                            .getSource()
-                            .getParentFile()
-                            .toString(),
-                    uploadPath)
-                    .toAbsolutePath()
-                    .normalize()
-                    .toString();
-        }
+        String absolutePath = new File(uploadPath).getAbsolutePath();
 
         return StringUtils.stripEnd(absolutePath, File.separator) + File.separator;
     }

@@ -47,7 +47,7 @@ agile:
         style-delimiter: "!" #图片样式分割符号，默认 ! 叹号
       local-file:
         access-path: 上传文件访问路径 # 比如 /files/**
-        upload-path: 上传目录 # 使用 filesystem: 开头表示相对系统的绝对路径，否则使用 jar 包所在目录的相对路径
+        upload-path: 上传目录 # 使用相对路径或者绝对路径
         corp-action: /open/crop-image # 图片切割 action
         upload-action: /open/upload-file # 图片上传 action
         policy-key: 自定义密钥 # 必须是16位长度

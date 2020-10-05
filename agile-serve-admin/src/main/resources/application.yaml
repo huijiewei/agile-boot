@@ -48,6 +48,8 @@ spring:
     time-zone: Asia/Shanghai
   main:
     lazy-initialization: true
+  flyway:
+    enabled: false
 
 agile:
   format:
