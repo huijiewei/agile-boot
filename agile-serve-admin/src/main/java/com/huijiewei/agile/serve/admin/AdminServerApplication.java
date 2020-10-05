@@ -17,10 +17,10 @@ import org.springframework.data.repository.config.BootstrapMode;
 @EnableCaching
 @SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 @ComponentScan(basePackages = "com.huijiewei.agile")
-@EntityScan(basePackages = "com.huijiewei.agile")
+@EntityScan(basePackages = "com.huijiewei.agile.app.*.adapter.persistence.entity")
 @EnableJpaRepositories(
         repositoryFactoryBeanClass = EntityGraphJpaRepositoryFactoryBean.class,
-        basePackages = "com.huijiewei.agile",
+        basePackages = "com.huijiewei.agile.app.*.adapter.persistence.repository",
         bootstrapMode = BootstrapMode.DEFERRED
 )
 public class AdminServerApplication {

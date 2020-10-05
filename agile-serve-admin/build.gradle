@@ -29,7 +29,7 @@ dependencies {
     implementation project(':agile-engine')
     implementation project(':agile-spring-upload')
 
-    compile "org.flywaydb:flyway-core"
+    implementation "org.flywaydb:flyway-core"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
