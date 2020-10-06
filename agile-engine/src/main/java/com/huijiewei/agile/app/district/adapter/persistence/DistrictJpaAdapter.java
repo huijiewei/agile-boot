@@ -1,11 +1,11 @@
 package com.huijiewei.agile.app.district.adapter.persistence;
 
-import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictJpaRepository;
-import com.huijiewei.agile.app.district.application.port.outbound.DistrictExistsPort;
-import com.huijiewei.agile.app.district.application.port.outbound.DistrictUniquePort;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.mapper.DistrictMapper;
+import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictJpaRepository;
+import com.huijiewei.agile.app.district.application.port.outbound.DistrictExistsPort;
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersistencePort;
+import com.huijiewei.agile.app.district.application.port.outbound.DistrictUniquePort;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.core.adapter.persistence.ExistsSpecificationBuilder;
 import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;

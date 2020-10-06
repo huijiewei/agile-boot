@@ -1,7 +1,7 @@
 package com.huijiewei.agile.spring.upload.driver;
 
-import com.huijiewei.agile.spring.upload.UploadService;
 import com.huijiewei.agile.spring.upload.UploadProperties;
+import com.huijiewei.agile.spring.upload.UploadService;
 import com.huijiewei.agile.spring.upload.request.UploadRequest;
 import com.huijiewei.agile.spring.upload.util.UploadUtils;
 import org.apache.commons.lang3.StringUtils;
