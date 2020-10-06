@@ -47,7 +47,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
         this.passwordIncorrectMessage = constraintAnnotation.passwordIncorrectMessage();
         this.captchaIncorrectMessage = constraintAnnotation.captchaIncorrectMessage();
 
-        this.captchaEnable = this.accountUseCase.getCaptchaIsEnable();
+        this.captchaEnable = this.accountUseCase.isCaptchaEnable();
     }
 
     private boolean invalidCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {

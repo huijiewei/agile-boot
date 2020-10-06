@@ -52,7 +52,7 @@ public class AdminAccountService implements AccountUseCase<AdminEntity> {
     }
 
     @Override
-    public Boolean getCaptchaIsEnable() {
+    public Boolean isCaptchaEnable() {
         return true;
     }
 
