@@ -17,6 +17,9 @@ ext.libs = [
         mapstruct         : [
                 "org.mapstruct:mapstruct:${mapstructVersion}"
         ],
+        jodaTime          : [
+                "joda-time:joda-time:${jodaTimeVersion}"
+        ],
         mapstructProcessor: [
                 "org.mapstruct:mapstruct-processor:${mapstructVersion}"
         ],

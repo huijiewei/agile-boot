@@ -1,6 +1,9 @@
 package com.huijiewei.agile.spring.upload.driver;
 
 import com.huijiewei.agile.spring.upload.*;
+import com.huijiewei.agile.spring.upload.request.ImageCropRequest;
+import com.huijiewei.agile.spring.upload.request.UploadRequest;
+import com.huijiewei.agile.spring.upload.response.UploadResponse;
 import com.huijiewei.agile.spring.upload.util.UploadUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +36,7 @@ import java.util.List;
 
 @Component
 @ConditionalOnProperty(prefix = UploadProperties.PREFIX, name = "driver-name", havingValue = LocalFile.DRIVER_NAME)
-public class LocalFile implements UploadDriver {
+public class LocalFile implements UploadService {
     public static final String DRIVER_NAME = "local-file";
     public final static int POLICY_DATA_LENGTH = 6;
 

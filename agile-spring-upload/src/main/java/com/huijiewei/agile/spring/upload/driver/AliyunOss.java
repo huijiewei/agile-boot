@@ -1,8 +1,8 @@
 package com.huijiewei.agile.spring.upload.driver;
 
-import com.huijiewei.agile.spring.upload.UploadDriver;
+import com.huijiewei.agile.spring.upload.UploadService;
 import com.huijiewei.agile.spring.upload.UploadProperties;
-import com.huijiewei.agile.spring.upload.UploadRequest;
+import com.huijiewei.agile.spring.upload.request.UploadRequest;
 import com.huijiewei.agile.spring.upload.util.UploadUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Component
 @ConditionalOnProperty(prefix = UploadProperties.PREFIX, name = "driver-name", havingValue = AliyunOss.DRIVER_NAME)
-public class AliyunOss implements UploadDriver {
+public class AliyunOss implements UploadService {
     public static final String DRIVER_NAME = "aliyun-oss";
 
     private final AliyunOssProperties properties;

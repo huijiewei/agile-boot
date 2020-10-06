@@ -21,17 +21,15 @@ import java.util.Optional;
  * @author huijiewei
  */
 public class AccountValidator implements ConstraintValidator<Account, AbstractIdentityLoginRequest> {
-    final static int CAPTCHA_RETRY_TIMES = 3;
+    final static int RETRY_TIMES = 3;
+
     private final ApplicationContext applicationContext;
     private AccountUseCase<? extends AbstractIdentityEntity> accountUseCase;
     private String accountTypeMessage;
     private String accountNotExistMessage;
     private String passwordIncorrectMessage;
     private String captchaIncorrectMessage;
-
-    private Boolean captchaEnable;
-
-    private AbstractIdentityEntity identity;
+    private String captchaRequiredMessage;
 
     @Autowired
     public AccountValidator(ApplicationContext applicationContext) {
@@ -46,65 +44,58 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
         this.accountNotExistMessage = constraintAnnotation.accountNotExistMessage();
         this.passwordIncorrectMessage = constraintAnnotation.passwordIncorrectMessage();
         this.captchaIncorrectMessage = constraintAnnotation.captchaIncorrectMessage();
-
-        this.captchaEnable = this.accountUseCase.isCaptchaEnable();
+        this.captchaRequiredMessage = constraintAnnotation.captchaRequiredMessage();
     }
 
-    private boolean invalidCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
-        boolean invalidCaptcha = !this.accountUseCase.verifyCaptcha(
+    private boolean validCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
+        boolean validCaptcha = this.accountUseCase.verifyCaptcha(
                 request.getCaptcha(),
                 request.getUserAgent(),
                 request.getRemoteAddr()
         );
 
-        if (invalidCaptcha) {
+        if (!validCaptcha) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(this.captchaIncorrectMessage)
                     .addPropertyNode("captcha")
                     .addConstraintViolation();
+
+            return false;
         }
 
-        return invalidCaptcha;
+        return true;
     }
 
     private boolean validPassword(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         String password = request.getPassword();
 
-        String retryKey = "";
-        int retryTimes = 0;
+        String retryTimesCacheKey = SecurityUtils.md5(request.getAccount()).substring(0, 8);
 
-        if (this.captchaEnable) {
-            retryKey = "IDENTITY" + this.identity.getId();
-            retryTimes = this.accountUseCase.getCaptchaRetryTimes(retryKey);
+        Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
-            if (retryTimes >= CAPTCHA_RETRY_TIMES && this.invalidCaptcha(request, context)) {
-                return false;
-            }
+        if (retryTimes > RETRY_TIMES && !this.validCaptcha(request, context)) {
+            return false;
         }
 
-        if (!SecurityUtils.passwordMatches(password, this.identity.getPassword())) {
+        if (!SecurityUtils.passwordMatches(password, request.getIdentity().getPassword())) {
             context.disableDefaultConstraintViolation();
             context
                     .buildConstraintViolationWithTemplate(this.passwordIncorrectMessage)
                     .addPropertyNode("password")
                     .addConstraintViolation();
 
-            if (this.captchaEnable) {
-                if (retryTimes >= CAPTCHA_RETRY_TIMES - 1) {
-                    context.buildConstraintViolationWithTemplate("")
-                            .addPropertyNode("captcha")
-                            .addConstraintViolation();
-                }
-
-                this.accountUseCase.setCaptchaRetryTimes(retryKey, retryTimes + 1);
+            if (retryTimes == RETRY_TIMES) {
+                context.buildConstraintViolationWithTemplate(this.captchaRequiredMessage)
+                        .addPropertyNode("captcha")
+                        .addConstraintViolation();
             }
+
+            this.accountUseCase.setRetryTimes(retryTimesCacheKey, retryTimes + 1);
 
             return false;
         }
 
-        if (this.captchaEnable) {
-            this.accountUseCase.setCaptchaRetryTimes(retryKey, 0);
-        }
+        this.accountUseCase.setRetryTimes(retryTimesCacheKey, 0);
 
         return true;
     }
@@ -125,18 +116,11 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
             return false;
         }
 
-        String retryKey = "";
+        String retryTimesCacheKey = SecurityUtils.md5(request.getClientId() + request.getRemoteAddr()).substring(0, 8);
+        Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
-        int retryTimes = 0;
-
-        if (this.captchaEnable) {
-            retryKey = SecurityUtils.md5(request.getClientId() + "_" + request.getRemoteAddr()).substring(0, 8);
-
-            retryTimes = this.accountUseCase.getCaptchaRetryTimes(retryKey);
-
-            if (retryTimes >= CAPTCHA_RETRY_TIMES && this.invalidCaptcha(request, context)) {
-                return false;
-            }
+        if (retryTimes > RETRY_TIMES && !this.validCaptcha(request, context)) {
+            return false;
         }
 
         Optional<? extends AbstractIdentityEntity> identityEntityOptional = this.accountUseCase.getByAccount(account, accountType);
@@ -147,24 +131,20 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
                     .addPropertyNode("account")
                     .addConstraintViolation();
 
-            if (this.captchaEnable) {
-                if (retryTimes >= CAPTCHA_RETRY_TIMES - 1) {
-                    context.buildConstraintViolationWithTemplate("")
-                            .addPropertyNode("captcha")
-                            .addConstraintViolation();
-                }
-
-                this.accountUseCase.setCaptchaRetryTimes(retryKey, retryTimes + 1);
+            if (retryTimes == RETRY_TIMES) {
+                context.buildConstraintViolationWithTemplate(this.captchaRequiredMessage)
+                        .addPropertyNode("captcha")
+                        .addConstraintViolation();
             }
+
+            this.accountUseCase.setRetryTimes(retryTimesCacheKey, retryTimes + 1);
 
             return false;
         }
 
-        this.identity = identityEntityOptional.get();
+        request.setIdentity(identityEntityOptional.get());
 
-        if (this.captchaEnable) {
-            this.accountUseCase.setCaptchaRetryTimes(retryKey, 0);
-        }
+        this.accountUseCase.setRetryTimes(retryTimesCacheKey, 0);
 
         return true;
     }
@@ -186,7 +166,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
             return false;
         }
 
-        AbstractIdentityLogEntity identityLog = this.accountUseCase.createLog(this.identity.getId());
+        AbstractIdentityLogEntity identityLog = this.accountUseCase.createLog(request.getIdentity().getId());
 
         if (identityLog != null) {
             identityLog.setType(IdentityLogType.LOGIN);
@@ -211,10 +191,6 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
 
         if (identityLog != null) {
             this.accountUseCase.saveLog(identityLog);
-        }
-
-        if (valid) {
-            request.setIdentity(this.identity);
         }
 
         return valid;

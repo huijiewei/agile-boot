@@ -1,6 +1,7 @@
 package com.huijiewei.agile.app.admin.application.request;
 
 import com.huijiewei.agile.core.application.request.*;
+import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class AdminLogSearchRequest extends AbstractSearchRequest {
     private String admin;
     private String[] type;
     private Integer status;
-    private String[] createdRange;
+    private String[] createdAtRange;
 
     public AdminLogSearchRequest() {
         this
@@ -35,7 +36,7 @@ public class AdminLogSearchRequest extends AbstractSearchRequest {
                         .options(IdentityLogStatus.values())
                 )
                 .addSearchField(new DateTimeRangeSearchField()
-                        .field("createdRange")
+                        .field("createdAtRange")
                         .rangeType("daterange")
                         .labelStart("开始日期")
                         .labelEnd("结束日期")
@@ -61,5 +62,9 @@ public class AdminLogSearchRequest extends AbstractSearchRequest {
                         )
                 )
                 .addSearchField(new BrSearchField());
+    }
+
+    public DateTimeRange getCreatedAtDateTimeRange() {
+        return DateTimeRange.parse(createdAtRange);
     }
 }

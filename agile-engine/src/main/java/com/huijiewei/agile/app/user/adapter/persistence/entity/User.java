@@ -28,7 +28,7 @@ public class User extends AbstractJpaIdentityEntity {
 
     private String createdFrom;
 
-    @Column(updatable = false, insertable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @Column(updatable = false, insertable = false)

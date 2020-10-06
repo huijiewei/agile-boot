@@ -1,7 +1,9 @@
 package com.huijiewei.agile.spring.upload.driver;
 
+import com.huijiewei.agile.spring.upload.UploadProperties;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,11 +15,12 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = LocalFileProperties.PREFIX)
+@ConditionalOnProperty(prefix = UploadProperties.PREFIX, name = "driver-name", havingValue = LocalFile.DRIVER_NAME)
 public class LocalFileProperties {
     public static final String PREFIX = "agile.spring.upload.local-file";
 
-    private String uploadPath;
-    private String accessPath;
+    private String uploadPath = "./files";
+    private String accessPath = "/files/**";
     private String corpAction;
     private String uploadAction;
     private String policyKey;

@@ -25,7 +25,7 @@ public class Admin extends AbstractJpaIdentityEntity {
 
     private String avatar;
 
-    @Column(insertable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @Column(insertable = false, updatable = false)

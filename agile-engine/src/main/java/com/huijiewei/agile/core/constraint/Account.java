@@ -27,6 +27,8 @@ public @interface Account {
 
     String passwordIncorrectMessage() default "Password is incorrect";
 
+    String captchaRequiredMessage() default "{agile.core.constraints.CaptchaRequired.message}";
+
     String captchaIncorrectMessage() default "Captcha is incorrect";
 
     Class<?>[] groups() default {};

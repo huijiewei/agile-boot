@@ -1,9 +1,11 @@
 package com.huijiewei.agile.core.application.request;
 
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
+import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -23,7 +25,7 @@ public abstract class AbstractIdentityLoginRequest {
     private String password;
 
     @Schema(description = "验证码")
-    private String captcha;
+    private CaptchaRequest captcha;
 
     @Schema(hidden = true)
     private String clientId;
@@ -36,4 +38,8 @@ public abstract class AbstractIdentityLoginRequest {
 
     @Schema(hidden = true)
     private AbstractIdentityEntity identity;
+
+    public Boolean isCaptchaInRequest() {
+        return this.getCaptcha() != null && StringUtils.isNotBlank(this.getCaptcha().getCode());
+    }
 }

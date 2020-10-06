@@ -18,7 +18,7 @@ import static java.lang.annotation.ElementType.*;
 @Constraint(validatedBy = PhoneValidator.class)
 @Documented
 public @interface Phone {
-    String message() default "{com.huijiewei.agile.core.constraints.Phone.message}";
+    String message() default "{agile.core.constraints.Phone.message}";
 
     Class<?>[] groups() default {};
 

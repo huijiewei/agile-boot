@@ -15,7 +15,7 @@ dependencies {
     implementation libs.friendlyId
     implementation libs.easyPoiBase
 
-    runtimeOnly 'mysql:mysql-connector-java'
+    implementation project(':agile-spring-captcha')
 
     annotationProcessor libs.mapstructProcessor
 

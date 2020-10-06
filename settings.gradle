@@ -3,4 +3,5 @@ rootProject.name = 'agile-spring-boot'
 include 'agile-engine'
 include 'agile-serve-admin'
 include 'agile-spring-upload'
+include 'agile-spring-captcha'
 

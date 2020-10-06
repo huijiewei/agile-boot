@@ -1,0 +1,22 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation "org.apache.commons:commons-lang3"
+
+    implementation libs.mapstruct
+    implementation libs.easyCaptcha
+    implementation libs.friendlyId
+
+    implementation "org.flywaydb:flyway-core"
+
+    annotationProcessor libs.mapstructProcessor
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
+compileJava {
+    options.compilerArgs += [
+            '-Amapstruct.defaultComponentModel=spring',
+    ]
+}

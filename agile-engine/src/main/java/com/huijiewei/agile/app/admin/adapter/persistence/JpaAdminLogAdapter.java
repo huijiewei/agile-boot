@@ -10,7 +10,7 @@ import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
-import com.huijiewei.agile.core.until.DateTimeUtils;
+import com.huijiewei.agile.core.consts.DateTimeRange;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,10 +73,10 @@ class JpaAdminLogAdapter implements AdminLogPersistencePort {
                 predicates.add(criteriaBuilder.equal(root.get("status"), searchRequest.getStatus()));
             }
 
-            LocalDateTime[] createdRanges = DateTimeUtils.parseSearchDateRange(searchRequest.getCreatedRange());
+            DateTimeRange dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
 
-            if (createdRanges != null) {
-                predicates.add(criteriaBuilder.between(root.get("createdAt"), createdRanges[0], createdRanges[1]));
+            if (dateTimeRange != null) {
+                predicates.add(criteriaBuilder.between(root.get("createdAt"), dateTimeRange.getBegin(), dateTimeRange.getEnd()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

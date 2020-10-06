@@ -4,16 +4,14 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersisten
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
-import com.huijiewei.agile.app.open.application.port.outbound.CaptchaPersistencePort;
-import com.huijiewei.agile.app.open.domain.CaptchaEntity;
-import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
+import com.huijiewei.agile.core.application.service.AbstractAccountService;
 import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
-import org.apache.commons.lang3.StringUtils;
+import com.huijiewei.agile.spring.captcha.application.port.inbound.CaptchaUseCase;
+import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -21,21 +19,19 @@ import java.util.Optional;
  */
 
 @Service
-public class AdminAccountService implements AccountUseCase<AdminEntity> {
-    final static String CAPTCHA_SPLIT_CHAR = "_";
-    final static Integer CAPTCHA_SPLIT_LENGTH = 2;
-    final static String CAPTCHA_CACHE_NAME = "admin-account-captcha-cache";
+public class AdminAccountService extends AbstractAccountService<AdminEntity> {
+    final static String RETRY_TIMES_CACHE_NAME = "admin-account-retry-times-cache";
 
     private final AdminPersistencePort adminPersistencePort;
     private final AdminLogPersistencePort adminLogPersistencePort;
-    private final CaptchaPersistencePort captchaPersistencePort;
-    private final ConcurrentMapCacheManager concurrentMapCacheManager;
+    private final CaptchaUseCase captchaUseCase;
 
-    public AdminAccountService(AdminPersistencePort adminPersistencePort, AdminLogPersistencePort adminLogPersistencePort, CaptchaPersistencePort captchaPersistencePort, ConcurrentMapCacheManager concurrentMapCacheManager) {
+    public AdminAccountService(AdminPersistencePort adminPersistencePort, AdminLogPersistencePort adminLogPersistencePort, ConcurrentMapCacheManager concurrentMapCacheManager, CaptchaUseCase captchaUseCase) {
+        super(concurrentMapCacheManager);
+
         this.adminPersistencePort = adminPersistencePort;
         this.adminLogPersistencePort = adminLogPersistencePort;
-        this.captchaPersistencePort = captchaPersistencePort;
-        this.concurrentMapCacheManager = concurrentMapCacheManager;
+        this.captchaUseCase = captchaUseCase;
     }
 
     @Override
@@ -52,52 +48,18 @@ public class AdminAccountService implements AccountUseCase<AdminEntity> {
     }
 
     @Override
-    public Boolean isCaptchaEnable() {
+    protected Boolean isCaptchaEnable() {
         return true;
     }
 
     @Override
-    public Boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr) {
-        if (StringUtils.isEmpty(captcha)) {
-            return false;
-        }
-
-        String[] captchaSplit = captcha.split(CAPTCHA_SPLIT_CHAR);
-
-        if (captchaSplit.length != CAPTCHA_SPLIT_LENGTH) {
-            return false;
-        }
-
-        Optional<CaptchaEntity> captchaEntityOptional = this.captchaPersistencePort.getByCode(
-                captchaSplit[0],
-                captchaSplit[1],
-                userAgent,
-                remoteAttr
-        );
-
-        if (captchaEntityOptional.isEmpty()) {
-            return false;
-        }
-
-        this.captchaPersistencePort.deleteById(captchaEntityOptional.get().getId());
-
-        return true;
+    protected Boolean verifyCaptchaImpl(CaptchaRequest captcha, String userAgent, String remoteAttr) {
+        return this.captchaUseCase.verify(captcha, userAgent, remoteAttr);
     }
 
     @Override
-    public Integer getCaptchaRetryTimes(String key) {
-        Integer times = Objects.requireNonNull(this.concurrentMapCacheManager.getCache(CAPTCHA_CACHE_NAME)).get(key, Integer.class);
-
-        if (times == null) {
-            return 0;
-        }
-
-        return times;
-    }
-
-    @Override
-    public void setCaptchaRetryTimes(String key, Integer times) {
-        Objects.requireNonNull(this.concurrentMapCacheManager.getCache(CAPTCHA_CACHE_NAME)).put(key, times);
+    protected String getRetryTimesCacheName() {
+        return RETRY_TIMES_CACHE_NAME;
     }
 
     @SuppressWarnings("unchecked")

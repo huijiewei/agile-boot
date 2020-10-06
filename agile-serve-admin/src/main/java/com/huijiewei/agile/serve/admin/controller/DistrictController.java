@@ -1,8 +1,8 @@
 package com.huijiewei.agile.serve.admin.controller;
 
-import com.huijiewei.agile.app.open.application.port.inbound.DistrictUseCase;
-import com.huijiewei.agile.app.open.application.request.DistrictRequest;
-import com.huijiewei.agile.app.open.domain.DistrictEntity;
+import com.huijiewei.agile.app.district.application.port.inbound.DistrictUseCase;
+import com.huijiewei.agile.app.district.application.request.DistrictRequest;
+import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

@@ -4,13 +4,13 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersist
 import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissionItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissions;
-import com.huijiewei.agile.app.open.application.port.inbound.DistrictUseCase;
-import com.huijiewei.agile.app.open.domain.DistrictEntity;
+import com.huijiewei.agile.app.district.application.port.inbound.DistrictUseCase;
+import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.app.shop.application.port.inbound.ShopCategoryUseCase;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
-import com.huijiewei.agile.spring.upload.UploadDriver;
-import com.huijiewei.agile.spring.upload.UploadRequest;
+import com.huijiewei.agile.spring.upload.UploadService;
+import com.huijiewei.agile.spring.upload.request.UploadRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,13 +30,13 @@ import java.util.List;
 @Tag(name = "misc", description = "杂项接口")
 public class MiscController {
     private final AdminGroupPersistencePort adminGroupPersistencePort;
-    private final UploadDriver uploadDriver;
+    private final UploadService uploadService;
     private final ShopCategoryUseCase shopCategoryUseCase;
     private final DistrictUseCase districtUseCase;
 
-    public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadDriver uploadDriver, ShopCategoryUseCase shopCategoryUseCase, DistrictUseCase districtUseCase) {
+    public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadService uploadService, ShopCategoryUseCase shopCategoryUseCase, DistrictUseCase districtUseCase) {
         this.adminGroupPersistencePort = adminGroupPersistencePort;
-        this.uploadDriver = uploadDriver;
+        this.uploadService = uploadService;
         this.shopCategoryUseCase = shopCategoryUseCase;
         this.districtUseCase = districtUseCase;
     }
@@ -121,7 +121,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "图片上传设置")
     public UploadRequest actionImageUploadOption(@RequestParam(required = false) List<String> thumbs,
                                                  @RequestParam(required = false) Boolean cropper) {
-        return this.uploadDriver.build(
+        return this.uploadService.build(
                 "a" + AdminUserDetails.getCurrentAdminIdentity().getAdminEntity().getId().toString(),
                 2048 * 1024,
                 Arrays.asList("jpg", "jpeg", "gif", "png"),
@@ -137,7 +137,7 @@ public class MiscController {
     @Operation(description = "文件上传设置获取", operationId = "miscFileUploadOption")
     @ApiResponse(responseCode = "200", description = "文件上传设置")
     public UploadRequest actionFileUploadOption() {
-        return this.uploadDriver.build(
+        return this.uploadService.build(
                 "a" + AdminUserDetails.getCurrentAdminIdentity().getAdminEntity().getId().toString(),
                 1024 * 1024 * 10,
                 Arrays.asList("jpg", "jpeg", "gif", "png", "zip", "xlsx", "docx", "pptx")

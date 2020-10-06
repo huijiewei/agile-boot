@@ -16,5 +16,5 @@ import org.springframework.context.annotation.Configuration;
 public class UploadProperties {
     public static final String PREFIX = "agile.spring.upload";
 
-    private String driverName;
+    private String driverName = "local-file";
 }

@@ -2,6 +2,7 @@ package com.huijiewei.agile.app.user.application.request;
 
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.core.application.request.*;
+import com.huijiewei.agile.core.consts.DateTimeRange;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,7 +19,7 @@ public class UserSearchRequest extends AbstractSearchRequest {
     private String phone;
     private String email;
     private String[] createdFrom;
-    private String[] createdRange;
+    private String[] createdAtRange;
 
     public UserSearchRequest() {
         this
@@ -58,5 +59,9 @@ public class UserSearchRequest extends AbstractSearchRequest {
                         )
                 )
                 .addSearchField(new BrSearchField());
+    }
+
+    public DateTimeRange getCreatedAtDateTimeRange() {
+        return DateTimeRange.parse(createdAtRange);
     }
 }

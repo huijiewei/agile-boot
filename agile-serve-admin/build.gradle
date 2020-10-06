@@ -21,15 +21,15 @@ dependencies {
 
     runtimeOnly 'mysql:mysql-connector-java'
 
+    implementation "org.flywaydb:flyway-core"
+
     implementation libs.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
-    implementation libs.easyCaptcha
     implementation libs.jpaEntityGraph
 
-    implementation project(':agile-engine')
     implementation project(':agile-spring-upload')
-
-    implementation "org.flywaydb:flyway-core"
+    implementation project(':agile-spring-captcha')
+    implementation project(':agile-engine')
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
