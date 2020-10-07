@@ -65,7 +65,7 @@ public class DistrictService implements DistrictUseCase {
         if (!this.validatingService.validate(districtRequest)) {
             return null;
         }
-        
+
         if (this.checkParentDistrictIsLeaf(districtRequest.getParentId())) {
             throw new ConflictException("选择的上级地区不允许添加下级地区");
         }
