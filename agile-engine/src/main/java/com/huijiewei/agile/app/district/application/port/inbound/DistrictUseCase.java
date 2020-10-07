@@ -12,7 +12,7 @@ import java.util.List;
 public interface DistrictUseCase {
     List<DistrictEntity> getAllByParentId(Integer parentId);
 
-    List<DistrictEntity> getPath(Integer id);
+    List<DistrictEntity> getPathById(Integer id);
 
     List<DistrictEntity> getTreeByKeyword(String keyword);
 

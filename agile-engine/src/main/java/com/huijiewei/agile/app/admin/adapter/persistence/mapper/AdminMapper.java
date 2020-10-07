@@ -19,6 +19,7 @@ public interface AdminMapper {
     AdminEntity toAdminEntity(Admin admin);
 
     @Mapping(target = "adminGroup", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Admin toAdmin(AdminEntity adminEntity);
 }

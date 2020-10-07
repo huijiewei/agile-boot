@@ -18,5 +18,5 @@ public interface ShopCategoryPersistencePort {
 
     Integer save(ShopCategoryEntity shopCategoryEntity);
 
-    void deleteById(Integer id);
+    void deleteAllById(List<Integer> ids);
 }

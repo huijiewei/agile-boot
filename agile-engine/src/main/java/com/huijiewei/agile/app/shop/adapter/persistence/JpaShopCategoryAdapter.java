@@ -67,7 +67,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = {JpaShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
-    public void deleteById(Integer id) {
-        this.shopCategoryRepository.deleteAllByIds(TreeUtils.getChildrenIds(id, true, this.getTree()));
+    public void deleteAllById(List<Integer> ids) {
+        this.shopCategoryRepository.deleteAllById(ids);
     }
 }

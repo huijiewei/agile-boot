@@ -19,5 +19,5 @@ public interface JpaShopCategoryRepository extends
         JpaSpecificationExecutor<ShopCategory> {
     @Modifying
     @Query("DELETE FROM ShopCategory WHERE id IN ?1")
-    void deleteAllByIds(List<Integer> ids);
+    void deleteAllById(List<Integer> ids);
 }

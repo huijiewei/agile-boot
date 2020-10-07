@@ -12,7 +12,7 @@ import java.util.List;
 public interface ShopCategoryUseCase {
     List<ShopCategoryEntity> getTree();
 
-    List<ShopCategoryEntity> getPath(Integer id);
+    List<ShopCategoryEntity> getPathById(Integer id);
 
     ShopCategoryEntity read(Integer id, Boolean withParents);
 

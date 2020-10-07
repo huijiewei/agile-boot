@@ -195,3 +195,20 @@ CREATE TABLE `${table-prefix}district`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 195275
   DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `${table-prefix}shop_product`
+(
+    `id`             int          NOT NULL AUTO_INCREMENT,
+    `shopCategoryId` int          NOT NULL DEFAULT '0',
+    `shopBrandId`    int          NOT NULL DEFAULT '0',
+    `name`           varchar(100) NOT NULL DEFAULT '',
+    `cover`          varchar(255) NOT NULL DEFAULT '',
+    `detail`         mediumtext,
+    `createdAt`      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `shopCategoryId` (`shopCategoryId`),
+    KEY `shopBrandId` (`shopBrandId`),
+    KEY `name` (`name`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 12230
+  DEFAULT CHARSET = utf8mb4;

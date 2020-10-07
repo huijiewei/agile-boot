@@ -19,7 +19,7 @@ public class TreeUtils {
         return null;
     }
 
-    private static <T extends AbstractTreeEntity<T>> List<Integer> getNodeIdsInTree(List<T> tree) {
+    public static <T extends AbstractTreeEntity<T>> List<Integer> getNodeIdsInTree(List<T> tree) {
         List<Integer> ids = new ArrayList<>();
 
         for (T node : tree) {
@@ -45,7 +45,7 @@ public class TreeUtils {
                 result = node;
                 break;
             } else if (node.getChildren() != null && !node.getChildren().isEmpty()) {
-                result = (T) TreeUtils.getNodeInTreeById(id, node.getChildren());
+                result = TreeUtils.getNodeInTreeById(id, node.getChildren());
             }
         }
 
@@ -104,15 +104,9 @@ public class TreeUtils {
         return new ArrayList<>();
     }
 
-    public static <T extends AbstractTreeEntity<T>> List<Integer> getChildrenIds(Integer id, Boolean withOwner, List<T> tree) {
+    public static <T extends AbstractTreeEntity<T>> List<Integer> getChildrenIds(Integer id, List<T> tree) {
         List<T> children = TreeUtils.getChildren(id, tree);
 
-        List<Integer> childrenIds = TreeUtils.getNodeIdsInTree(children);
-
-        if (withOwner) {
-            childrenIds.add(0, id);
-        }
-
-        return childrenIds;
+        return TreeUtils.getNodeIdsInTree(children);
     }
 }

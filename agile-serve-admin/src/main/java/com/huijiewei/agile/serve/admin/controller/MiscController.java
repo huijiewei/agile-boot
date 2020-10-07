@@ -79,7 +79,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "商品分类路径")
     @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
     public List<ShopCategoryEntity> actionShopCategoryPath(Integer id) {
-        return this.shopCategoryUseCase.getPath(id);
+        return this.shopCategoryUseCase.getPathById(id);
     }
 
     @GetMapping(
@@ -100,7 +100,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "地区路径")
     @ApiResponse(responseCode = "404", description = "地区不存在", ref = "NotFoundProblem")
     public List<DistrictEntity> actionDistrictPath(Integer id) {
-        return this.districtUseCase.getPath(id);
+        return this.districtUseCase.getPathById(id);
     }
 
     @GetMapping(

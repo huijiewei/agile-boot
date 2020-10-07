@@ -4,12 +4,14 @@ import com.huijiewei.agile.app.shop.application.mapper.ShopBrandRequestMapper;
 import com.huijiewei.agile.app.shop.application.port.inbound.ShopBrandUseCase;
 import com.huijiewei.agile.app.shop.application.port.inbound.ShopCategoryUseCase;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandPersistencePort;
+import com.huijiewei.agile.app.shop.application.port.outbound.ShopProductPersistencePort;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandRequest;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
+import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +27,14 @@ public class ShopBrandService implements ShopBrandUseCase {
     private final ShopCategoryUseCase shopCategoryUseCase;
     private final ValidatingService validatingService;
     private final ShopBrandRequestMapper shopBrandRequestMapper;
+    private final ShopProductPersistencePort shopProductPersistencePort;
 
-    public ShopBrandService(ShopBrandPersistencePort shopBrandPersistencePort, ShopCategoryUseCase shopCategoryUseCase, ValidatingService validatingService, ShopBrandRequestMapper shopBrandRequestMapper) {
+    public ShopBrandService(ShopBrandPersistencePort shopBrandPersistencePort, ShopCategoryUseCase shopCategoryUseCase, ValidatingService validatingService, ShopBrandRequestMapper shopBrandRequestMapper, ShopProductPersistencePort shopProductPersistencePort) {
         this.shopBrandPersistencePort = shopBrandPersistencePort;
         this.shopCategoryUseCase = shopCategoryUseCase;
         this.validatingService = validatingService;
         this.shopBrandRequestMapper = shopBrandRequestMapper;
+        this.shopProductPersistencePort = shopProductPersistencePort;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class ShopBrandService implements ShopBrandUseCase {
         if (shopCategoryResponses != null) {
             for (int i = 0; i < shopCategoryResponses.size(); i++) {
                 ShopCategoryEntity shopCategoryEntity = shopCategoryResponses.get(i);
-                shopCategoryEntity.setParents(this.shopCategoryUseCase.getPath(shopCategoryEntity.getParentId()));
+                shopCategoryEntity.setParents(this.shopCategoryUseCase.getPathById(shopCategoryEntity.getParentId()));
                 shopCategoryResponses.set(i, shopCategoryEntity);
             }
 
@@ -104,8 +108,12 @@ public class ShopBrandService implements ShopBrandUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        ShopBrandEntity currentShopBrandEntity = this.getById(id);
+        ShopBrandEntity shopBrandEntity = this.getById(id);
 
-        this.shopBrandPersistencePort.deleteById(currentShopBrandEntity.getId());
+        if (this.shopProductPersistencePort.existsByShopBrandId(shopBrandEntity.getId())) {
+            throw new ConflictException("商品品牌内拥有商品，无法删除");
+        }
+
+        this.shopBrandPersistencePort.deleteById(shopBrandEntity.getId());
     }
 }

@@ -15,6 +15,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
     UserEntity toUserEntity(User user);
 
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     User toUser(UserEntity userEntity);
 

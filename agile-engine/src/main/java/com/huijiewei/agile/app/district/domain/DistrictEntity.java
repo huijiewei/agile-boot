@@ -26,4 +26,9 @@ public class DistrictEntity extends AbstractTreeEntity<DistrictEntity> {
 
     @Schema(description = "区号")
     private String areaCode;
+
+    @Schema(description = "最终节点")
+    public Boolean isLeaf() {
+        return this.code.length() == 9;
+    }
 }

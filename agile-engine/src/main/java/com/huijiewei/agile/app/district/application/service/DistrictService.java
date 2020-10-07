@@ -6,10 +6,13 @@ import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersis
 import com.huijiewei.agile.app.district.application.request.DistrictRequest;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.core.application.service.ValidatingService;
+import com.huijiewei.agile.core.domain.AbstractEntity;
+import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author huijiewei
@@ -37,8 +40,8 @@ public class DistrictService implements DistrictUseCase {
     }
 
     @Override
-    public List<DistrictEntity> getPath(Integer id) {
-        return this.districtPersistencePort.getParentByIdWithParents(id);
+    public List<DistrictEntity> getPathById(Integer id) {
+        return this.districtPersistencePort.getParentsById(id);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class DistrictService implements DistrictUseCase {
         DistrictEntity districtEntity = this.getById(id);
 
         if (withParents != null && withParents && districtEntity.getParentId() > 0) {
-            districtEntity.setParents(this.districtPersistencePort.getParentByIdWithParents(districtEntity.getParentId()));
+            districtEntity.setParents(this.districtPersistencePort.getParentsById(districtEntity.getParentId()));
         }
 
         return districtEntity;
@@ -61,6 +64,10 @@ public class DistrictService implements DistrictUseCase {
     public DistrictEntity create(DistrictRequest districtRequest) {
         if (!this.validatingService.validate(districtRequest)) {
             return null;
+        }
+        
+        if (this.checkParentDistrictIsLeaf(districtRequest.getParentId())) {
+            throw new ConflictException("选择的上级地区不允许添加下级地区");
         }
 
         DistrictEntity districtEntity = this.districtRequestMapper.toDistrictEntity(districtRequest);
@@ -75,12 +82,24 @@ public class DistrictService implements DistrictUseCase {
         return districtEntity;
     }
 
+    private Boolean checkParentDistrictIsLeaf(Integer parentId) {
+        if (parentId == 0) {
+            return false;
+        }
+
+        return this.getById(parentId).isLeaf();
+    }
+
     @Override
     public DistrictEntity update(Integer id, DistrictRequest districtRequest) {
         DistrictEntity districtEntity = this.getById(id);
 
         if (!this.validatingService.validate(districtRequest)) {
             return null;
+        }
+
+        if (this.checkParentDistrictIsLeaf(districtRequest.getParentId())) {
+            throw new ConflictException("选择的上级地区不允许添加下级地区");
         }
 
         this.districtRequestMapper.updateDistrictEntity(districtRequest, districtEntity);
@@ -97,8 +116,16 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        DistrictEntity currentDistrictEntity = this.getById(id);
+        DistrictEntity districtEntity = this.getById(id);
 
-        this.districtPersistencePort.deleteById(currentDistrictEntity.getId());
+        List<Integer> childrenIds = this.districtPersistencePort
+                .getChildrenById(districtEntity.getId())
+                .stream()
+                .map(AbstractEntity::getId)
+                .collect(Collectors.toList());
+
+        childrenIds.add(districtEntity.getId());
+
+        this.districtPersistencePort.deleteAllById(childrenIds);
     }
 }

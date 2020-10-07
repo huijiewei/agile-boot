@@ -51,35 +51,46 @@ public class DistrictJpaAdapter implements DistrictExistsPort, DistrictPersisten
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteById(Integer id) {
-        this.districtJpaRepository.deleteById(id);
-        this.districtJpaRepository.deleteByParentId(id);
+    public void deleteAllById(List<Integer> ids) {
+        this.districtJpaRepository.deleteAllById(ids);
     }
 
     @Override
-    public List<DistrictEntity> getAllByParentId(Integer parentId) {
-        return this.districtJpaRepository
-                .findAllByParentId(parentId)
+    public List<DistrictEntity> getChildrenById(Integer id) {
+        return this.districtJpaRepository.findChildrenById(id)
                 .stream()
                 .map(this.districtMapper::toDistrictEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<DistrictEntity> getParentByIdWithParents(Integer id) {
+    public List<DistrictEntity> getAllByParentId(Integer parentId) {
+        return this.districtJpaRepository
+                .findByParentId(parentId)
+                .stream()
+                .map(this.districtMapper::toDistrictEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DistrictEntity> getParentsById(Integer id) {
         List<DistrictEntity> parents = new ArrayList<>();
 
-        Optional<District> parentOptional = this.districtJpaRepository.findParentByIdWithParents(id);
+        Optional<District> districtOptional = this.districtJpaRepository.findByIdWithParents(id);
 
-        if (parentOptional.isPresent()) {
-            District parent = parentOptional.get();
-            parents.add(this.districtMapper.toDistrictEntity(parent));
+        if (districtOptional.isPresent()) {
+            District district = districtOptional.get();
+            parents.add(this.districtMapper.toDistrictEntity(district));
 
-            if (parent.getParentId() > 0 && parent.getParent() != null) {
-                parents.add(this.districtMapper.toDistrictEntity(parent.getParent()));
+            if (district.getParentId() > 0 && district.getParent() != null) {
+                parents.add(this.districtMapper.toDistrictEntity(district.getParent()));
 
-                if (parent.getParent().getParentId() > 0 && parent.getParent().getParent() != null) {
-                    parents.add(this.districtMapper.toDistrictEntity(parent.getParent().getParent()));
+                if (district.getParent().getParentId() > 0 && district.getParent().getParent() != null) {
+                    parents.add(this.districtMapper.toDistrictEntity(district.getParent().getParent()));
+
+                    if (district.getParent().getParent().getParentId() > 0 && district.getParent().getParent().getParent() != null) {
+                        parents.add(this.districtMapper.toDistrictEntity(district.getParent().getParent().getParent()));
+                    }
                 }
             }
         }
@@ -93,7 +104,7 @@ public class DistrictJpaAdapter implements DistrictExistsPort, DistrictPersisten
 
     @Override
     public List<DistrictEntity> getTreeByKeyword(String keyword) {
-        List<District> districts = this.districtJpaRepository.findAllByKeywordWithParents(keyword);
+        List<District> districts = this.districtJpaRepository.findByKeywordWithParents(keyword);
 
         List<DistrictEntity> districtEntities = new ArrayList<>();
         List<Integer> resultRepeatCheckIds = new ArrayList<>();
