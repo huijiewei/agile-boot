@@ -1,8 +1,11 @@
 package com.huijiewei.agile.serve.admin.controller;
 
 import com.huijiewei.agile.app.admin.application.port.inbound.AdminIdentityUseCase;
+import com.huijiewei.agile.app.admin.application.port.inbound.AdminUseCase;
 import com.huijiewei.agile.app.admin.application.request.AdminLoginRequest;
+import com.huijiewei.agile.app.admin.application.request.AdminRequest;
 import com.huijiewei.agile.app.admin.application.response.AdminIdentityResponse;
+import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.until.HttpUtils;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
@@ -10,10 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,9 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 @Tag(name = "auth", description = "管理员登录注册")
 public class AuthController {
     private final AdminIdentityUseCase adminIdentityUseCase;
+    private final AdminUseCase adminUseCase;
 
-    public AuthController(AdminIdentityUseCase adminIdentityUseCase) {
+    public AuthController(AdminIdentityUseCase adminIdentityUseCase, AdminUseCase adminUseCase) {
         this.adminIdentityUseCase = adminIdentityUseCase;
+        this.adminUseCase = adminUseCase;
     }
 
     @PostMapping(
@@ -57,6 +59,32 @@ public class AuthController {
     )
     public AdminIdentityResponse actionAccount() {
         return this.adminIdentityUseCase.account(AdminUserDetails.getCurrentAdminIdentity());
+    }
+
+    @GetMapping(
+            value = "/auth/profile",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "管理员个人资料", operationId = "authProfileView")
+    @ApiResponse(responseCode = "200", description = "管理员个人资料")
+    public AdminEntity actionProfileView() {
+        return AdminUserDetails.getCurrentAdminIdentity().getAdminEntity();
+    }
+
+    @PutMapping(
+            value = "/auth/profile",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "管理员个人资料更新", operationId = "authProfileEdit")
+    @ApiResponse(responseCode = "200", description = "管理员个人资料")
+    @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
+    public MessageResponse actionProfileEdit(@RequestBody AdminRequest request) {
+        AdminEntity adminEntity = AdminUserDetails.getCurrentAdminIdentity().getAdminEntity();
+
+        this.adminUseCase.update(adminEntity.getId(), request, adminEntity.getId());
+
+        return MessageResponse.of("个人资料更新成功");
     }
 
     @Operation(description = "管理员退出登录", operationId = "authLogout")
