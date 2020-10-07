@@ -2,10 +2,12 @@ package com.huijiewei.agile.serve.admin.security;
 
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * @author huijiewei
@@ -29,7 +31,11 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.getAdminIdentity()
+                .getPermissions()
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,7 +48,7 @@ public class AdminUserDetails implements UserDetails {
         return this.adminIdentity.getAdminEntity().getName();
     }
 
-    AdminIdentity getAdminIdentity() {
+    public AdminIdentity getAdminIdentity() {
         return this.adminIdentity;
     }
 

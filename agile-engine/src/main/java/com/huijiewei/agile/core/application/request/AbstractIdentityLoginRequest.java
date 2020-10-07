@@ -5,7 +5,6 @@ import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -24,7 +23,7 @@ public abstract class AbstractIdentityLoginRequest {
     @Schema(description = "密码", required = true)
     private String password;
 
-    @Schema(description = "验证码")
+    @Schema(description = "验证码", nullable = true)
     private CaptchaRequest captcha;
 
     @Schema(hidden = true)
@@ -38,8 +37,4 @@ public abstract class AbstractIdentityLoginRequest {
 
     @Schema(hidden = true)
     private AbstractIdentityEntity identity;
-
-    public Boolean isCaptchaInRequest() {
-        return this.getCaptcha() != null && StringUtils.isNotBlank(this.getCaptcha().getCode());
-    }
 }

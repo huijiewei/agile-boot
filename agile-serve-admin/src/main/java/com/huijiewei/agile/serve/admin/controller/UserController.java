@@ -53,7 +53,7 @@ public class UserController {
             @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     })
     @ApiResponse(responseCode = "200", description = "用户列表")
-    @PreAuthorize("hasPermission('ADMIN', 'user/index')")
+    @PreAuthorize("hasAuthority('user/index')")
     public SearchPageResponse<UserEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) UserSearchRequest request,

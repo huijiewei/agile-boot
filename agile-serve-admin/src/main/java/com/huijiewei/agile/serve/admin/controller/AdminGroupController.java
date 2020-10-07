@@ -31,7 +31,7 @@ public class AdminGroupController {
     )
     @Operation(description = "管理组列表", operationId = "adminGroupIndex")
     @ApiResponse(responseCode = "200", description = "管理组列表")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-group/index')")
+    @PreAuthorize("hasAuthority('admin-group/index')")
     public ListResponse<AdminGroupEntity> actionIndex() {
         return this.adminGroupUseCase.all();
     }
@@ -43,7 +43,7 @@ public class AdminGroupController {
     @Operation(description = "管理组详情", operationId = "adminGroupView")
     @ApiResponse(responseCode = "200", description = "管理组")
     @ApiResponse(responseCode = "404", description = "管理组不存在", ref = "Problem")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-group/view/:id, admin-group/edit/:id')")
+    @PreAuthorize("hasAnyAuthority('admin-group/view/:id', 'admin-group/edit/:id')")
     public AdminGroupEntity actionView(@PathVariable("id") Integer id) {
         return this.adminGroupUseCase.read(id);
     }
@@ -56,7 +56,7 @@ public class AdminGroupController {
     @Operation(description = "管理组新建", operationId = "adminGroupCreate")
     @ApiResponse(responseCode = "201", description = "管理组")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-group/create')")
+    @PreAuthorize("hasAuthority('admin-group/create')")
     public AdminGroupEntity actionCreate(@RequestBody AdminGroupRequest request) {
         return this.adminGroupUseCase.create(request);
     }
@@ -69,7 +69,7 @@ public class AdminGroupController {
     @Operation(description = "管理组编辑", operationId = "adminGroupEdit")
     @ApiResponse(responseCode = "200", description = "管理组")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-group/edit/:id')")
+    @PreAuthorize("hasAuthority('admin-group/edit/:id')")
     public AdminGroupEntity actionEdit(@PathVariable("id") Integer id, @RequestBody AdminGroupRequest request) {
         return this.adminGroupUseCase.update(id, request);
     }
@@ -82,7 +82,7 @@ public class AdminGroupController {
     @ApiResponse(responseCode = "200", description = "删除成功")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @ApiResponse(responseCode = "409", ref = "ConflictProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-group/delete')")
+    @PreAuthorize("hasAuthority('admin-group/delete')")
     public MessageResponse actionDelete(@PathVariable("id") Integer id) {
         this.adminGroupUseCase.deleteById(id);
 

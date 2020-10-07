@@ -41,7 +41,7 @@ public class AdminLogController {
             @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     })
     @ApiResponse(responseCode = "200", description = "操作日志")
-    @PreAuthorize("hasPermission('ADMIN', 'admin-log/index')")
+    @PreAuthorize("hasAnyAuthority('admin-log/index')")
     public SearchPageResponse<AdminLogEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) AdminLogSearchRequest request,

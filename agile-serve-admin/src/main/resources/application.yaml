@@ -60,3 +60,6 @@ agile:
 logging:
   level:
     org.hibernate.persister.entity: ERROR
+springdoc:
+  api-docs:
+    enabled: false
