@@ -1,12 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 bootJar {
-    exclude "**/application-*.yaml"
     launchScript()
-}
-
-jar {
-    exclude "**/application-*.yaml"
 }
 
 configurations.all {

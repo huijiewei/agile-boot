@@ -1,12 +1,14 @@
 SpringBoot 2.3+ 脚手架项目
 
 ### 子项目列表
-- agile-engine
-- agile-serve-admin
-- agile-spring-upload
+- agile-engine         核心代码
+- agile-console        命令行应用
+- agile-serve-admin    管理后台 API
+- agile-spring-upload  上传功能模块
+- agile-spring-captcha 验证码功能模块
 
 ### 开发环境配置方法
-复制 agile-serve-admin/resources/application-example.yaml 到同目录，命名为 application-default.yaml
+复制 config/application-example.yaml 到同目录，命名为 application-default.yaml
 
 修改 application-default.yaml 里面的相关配置
 
