@@ -2,9 +2,6 @@ ext.libs = [
         easyCaptcha       : [
                 "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
         ],
-        springdocOpenApi  : [
-                "org.springdoc:springdoc-openapi-webmvc-core:${springdocOpenApiVersion}"
-        ],
         springdocOpenApiUi: [
                 "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
         ],
@@ -19,6 +16,9 @@ ext.libs = [
         ],
         jodaTime          : [
                 "joda-time:joda-time:${jodaTimeVersion}"
+        ],
+        swaggerAnnotations: [
+                "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
         ],
         mapstructProcessor: [
                 "org.mapstruct:mapstruct-processor:${mapstructVersion}"

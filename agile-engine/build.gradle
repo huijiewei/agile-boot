@@ -8,9 +8,10 @@ dependencies {
     implementation "jakarta.servlet:jakarta.servlet-api"
     implementation "commons-codec:commons-codec"
     implementation "org.apache.commons:commons-lang3"
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
 
     implementation libs.mapstruct
-    implementation libs.springdocOpenApi
+    implementation libs.swaggerAnnotations
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
     implementation libs.easyPoiBase
