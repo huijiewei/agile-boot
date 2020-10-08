@@ -12,7 +12,7 @@ import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
 @API(status = API.Status.INTERNAL)
 @Configuration
-public class ProblemConfiguration {
+public class ProblemConfig {
     @Bean
     public ProblemModule problemModule() {
         return new ProblemModule();
