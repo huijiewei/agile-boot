@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = TencentCosProperties.PREFIX)
-@ConditionalOnProperty(prefix = UploadProperties.PREFIX, name = "driver-name", havingValue = TencentCos.DRIVER_NAME)
 public class TencentCosProperties {
     public static final String PREFIX = "agile.spring.upload.tencent-cos";
 

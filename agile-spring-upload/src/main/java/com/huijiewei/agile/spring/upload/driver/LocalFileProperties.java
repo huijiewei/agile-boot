@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = LocalFileProperties.PREFIX)
-@ConditionalOnProperty(prefix = UploadProperties.PREFIX, name = "driver-name", havingValue = LocalFile.DRIVER_NAME)
 public class LocalFileProperties {
     public static final String PREFIX = "agile.spring.upload.local-file";
 
