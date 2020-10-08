@@ -15,7 +15,10 @@ import org.springframework.data.repository.config.BootstrapMode;
  * @author huijiewei
  */
 @EnableCaching
-@SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
+@SpringBootApplication(exclude = {
+        ErrorMvcAutoConfiguration.class,
+        UserDetailsServiceAutoConfiguration.class
+})
 @ComponentScan(basePackages = "com.huijiewei.agile")
 @EntityScan(basePackages = "com.huijiewei.agile")
 @EnableJpaRepositories(

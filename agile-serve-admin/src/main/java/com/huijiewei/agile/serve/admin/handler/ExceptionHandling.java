@@ -5,7 +5,6 @@ import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.ForbiddenException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.apiguardian.api.API;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,8 +22,8 @@ import static org.zalando.problem.Status.UNPROCESSABLE_ENTITY;
  * @author huijiewei
  */
 
+@API(status = INTERNAL)
 @ControllerAdvice
-@Order(-99)
 public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
     @Override
     public StatusType defaultConstraintViolationStatus() {
@@ -36,7 +35,6 @@ public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
         return false;
     }
 
-    @API(status = INTERNAL)
     @ExceptionHandler
     public ResponseEntity<Problem> handleNotFound(
             final NotFoundException exception,
@@ -44,7 +42,6 @@ public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
         return create(Status.NOT_FOUND, exception, request);
     }
 
-    @API(status = INTERNAL)
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequest(
             final BadRequestException exception,
@@ -52,7 +49,6 @@ public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
         return create(Status.BAD_REQUEST, exception, request);
     }
 
-    @API(status = INTERNAL)
     @ExceptionHandler
     public ResponseEntity<Problem> handleForbidden(
             final ForbiddenException exception,
@@ -60,7 +56,6 @@ public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
         return create(Status.FORBIDDEN, exception, request);
     }
 
-    @API(status = INTERNAL)
     @ExceptionHandler
     public ResponseEntity<Problem> handleConflict(
             final ConflictException exception,

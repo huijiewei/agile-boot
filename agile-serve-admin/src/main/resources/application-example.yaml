@@ -24,6 +24,10 @@ spring:
   cache:
     type: simple # 缓存类型，默认使用内存
 
+springdoc:
+  api-docs:
+    enabled: false # 是否开启 API 文档
+
 agile:
   database:
     table-prefix: 数据表名前缀

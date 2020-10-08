@@ -24,7 +24,7 @@ ext.libs = [
                 "org.mapstruct:mapstruct-processor:${mapstructVersion}"
         ],
         zalandoProblemWeb : [
-                "org.zalando:problem-spring-web-starter:${zalandoProblemWebVersion}"
+                "org.zalando:problem-spring-web:${zalandoProblemWebVersion}"
         ],
         friendlyId        : [
                 "com.devskiller.friendly-id:friendly-id:${friendlyIdVersion}"

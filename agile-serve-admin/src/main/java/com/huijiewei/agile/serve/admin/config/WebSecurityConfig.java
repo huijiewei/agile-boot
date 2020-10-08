@@ -4,6 +4,7 @@ import com.huijiewei.agile.serve.admin.security.AdminPreAuthenticationFilter;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetailsService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,8 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AdminUserDetailsService adminUserDetailsService;
 
     public WebSecurityConfig(SecurityProblemSupport problemSupport, AdminUserDetailsService adminUserDetailsService) {
-        super(true);
-
         this.problemSupport = problemSupport;
         this.adminUserDetailsService = adminUserDetailsService;
     }
@@ -42,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "**");
         web.ignoring().antMatchers("/favicon.ico", "/files/**");
     }
 
@@ -58,12 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .anonymous()
-                .and()
-                .requestCache()
-                .and()
                 .cors()
                 .and()
+                .csrf().disable()
+                .logout().disable()
+                .formLogin().disable()
+                .sessionManagement().disable()
                 .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
                 .and()
                 .addFilter(new AdminPreAuthenticationFilter(this.authenticationManager()));
