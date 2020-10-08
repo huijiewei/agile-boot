@@ -1,9 +1,7 @@
 package com.huijiewei.agile.spring.upload.driver;
 
-import com.huijiewei.agile.spring.upload.UploadProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
