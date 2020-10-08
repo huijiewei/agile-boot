@@ -2,7 +2,6 @@ package com.huijiewei.agile.core.application.service;
 
 import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
-import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 
 import java.util.Objects;
@@ -22,9 +21,9 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
 
     protected abstract String getRetryTimesCacheName();
 
-    protected abstract Boolean verifyCaptchaImpl(CaptchaRequest captcha, String userAgent, String remoteAttr);
+    protected abstract Boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr);
 
-    public Boolean verifyCaptcha(CaptchaRequest captcha, String userAgent, String remoteAttr) {
+    public Boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr) {
         if (!this.isCaptchaEnable()) {
             return true;
         }

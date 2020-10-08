@@ -47,7 +47,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
         this.captchaRequiredMessage = constraintAnnotation.captchaRequiredMessage();
     }
 
-    private boolean validCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
+    private boolean invalidCaptcha(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
         boolean validCaptcha = this.accountUseCase.verifyCaptcha(
                 request.getCaptcha(),
                 request.getUserAgent(),
@@ -60,10 +60,10 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
                     .addPropertyNode("captcha")
                     .addConstraintViolation();
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     private boolean validPassword(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
@@ -73,7 +73,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
 
         Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
-        if (retryTimes > RETRY_TIMES && !this.validCaptcha(request, context)) {
+        if (retryTimes > RETRY_TIMES && this.invalidCaptcha(request, context)) {
             return false;
         }
 
@@ -84,7 +84,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
                     .addPropertyNode("password")
                     .addConstraintViolation();
 
-            if (retryTimes == RETRY_TIMES) {
+            if (retryTimes >= RETRY_TIMES) {
                 context.buildConstraintViolationWithTemplate(this.captchaRequiredMessage)
                         .addPropertyNode("captcha")
                         .addConstraintViolation();
@@ -119,7 +119,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
         String retryTimesCacheKey = SecurityUtils.md5(request.getClientId() + request.getRemoteAddr()).substring(0, 8);
         Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
-        if (retryTimes > RETRY_TIMES && !this.validCaptcha(request, context)) {
+        if (retryTimes > RETRY_TIMES && this.invalidCaptcha(request, context)) {
             return false;
         }
 
@@ -131,7 +131,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
                     .addPropertyNode("account")
                     .addConstraintViolation();
 
-            if (retryTimes == RETRY_TIMES) {
+            if (retryTimes >= RETRY_TIMES) {
                 context.buildConstraintViolationWithTemplate(this.captchaRequiredMessage)
                         .addPropertyNode("captcha")
                         .addConstraintViolation();

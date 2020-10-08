@@ -3,7 +3,6 @@ package com.huijiewei.agile.core.application.port.inbound;
 import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
 import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
-import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 
 import java.util.Optional;
 
@@ -14,7 +13,7 @@ import java.util.Optional;
 public interface AccountUseCase<T extends AbstractIdentityEntity> {
     Optional<T> getByAccount(String account, AccountType accountType);
 
-    Boolean verifyCaptcha(CaptchaRequest captcha, String userAgent, String remoteAttr);
+    Boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr);
 
     Integer getRetryTimes(String key);
 

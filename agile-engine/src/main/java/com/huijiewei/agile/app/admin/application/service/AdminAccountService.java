@@ -8,7 +8,6 @@ import com.huijiewei.agile.core.application.service.AbstractAccountService;
 import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
 import com.huijiewei.agile.spring.captcha.application.port.inbound.CaptchaUseCase;
-import com.huijiewei.agile.spring.captcha.application.request.CaptchaRequest;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +52,7 @@ public class AdminAccountService extends AbstractAccountService<AdminEntity> {
     }
 
     @Override
-    protected Boolean verifyCaptchaImpl(CaptchaRequest captcha, String userAgent, String remoteAttr) {
+    protected Boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr) {
         return this.captchaUseCase.verify(captcha, userAgent, remoteAttr);
     }
 
