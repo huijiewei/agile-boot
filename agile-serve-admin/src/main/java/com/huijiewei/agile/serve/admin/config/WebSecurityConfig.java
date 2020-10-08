@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
@@ -61,9 +62,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
+                .requestCache()
+                .and()
                 .logout().disable()
                 .formLogin().disable()
-                .sessionManagement().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
                 .and()
                 .addFilter(new AdminPreAuthenticationFilter(this.authenticationManager()));
