@@ -75,7 +75,7 @@ public class UserController {
 
     })
     @ApiResponse(responseCode = "200", description = "用户导出")
-    @PreAuthorize("hasPermission('ADMIN', 'user/export')")
+    @PreAuthorize("hasAuthority('user/export')")
     public void actionExport(
             @Parameter(hidden = true) UserSearchRequest userSearchRequest,
             HttpServletResponse response
@@ -86,7 +86,10 @@ public class UserController {
 
             this.userUseCase.export(userSearchRequest, response.getOutputStream());
 
+            //response.setHeader(HttpHeaders.CONTENT_LENGTH, );
+
             response.getOutputStream().flush();
+            response.getOutputStream().close();
         } catch (Exception ex) {
             throw new BadRequestException("导出错误:" + ex.getMessage());
         }
@@ -99,7 +102,7 @@ public class UserController {
     @Operation(description = "用户详情", operationId = "userView")
     @ApiResponse(responseCode = "200", description = "用户")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'user/view/:id, user/edit/:id')")
+    @PreAuthorize("hasAnyAuthority('user/view/:id', 'user/edit/:id')")
     public UserEntity actionView(@PathVariable("id") Integer id) {
         return this.userUseCase.read(id);
     }
@@ -112,7 +115,7 @@ public class UserController {
     @Operation(description = "用户新建", operationId = "userCreate")
     @ApiResponse(responseCode = "201", description = "用户")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'user/create')")
+    @PreAuthorize("hasAnyAuthority('user/create')")
     public UserEntity actionCreate(@RequestBody UserRequest request, HttpServletRequest servletRequest) {
         return this.userUseCase.create(request, UserCreatedFrom.SYSTEM, HttpUtils.getRemoteAddr(servletRequest));
     }
@@ -126,7 +129,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "用户")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'user/edit/:id')")
+    @PreAuthorize("hasAnyAuthority('user/edit/:id')")
     public UserEntity actionEdit(@PathVariable("id") Integer id, @RequestBody UserRequest request) {
         return this.userUseCase.update(id, request);
     }
@@ -138,7 +141,7 @@ public class UserController {
     @Operation(description = "用户删除", operationId = "userDelete")
     @ApiResponse(responseCode = "200", description = "删除成功")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
-    @PreAuthorize("hasPermission('ADMIN', 'user/delete')")
+    @PreAuthorize("hasAnyAuthority('user/delete')")
     public MessageResponse actionDelete(@PathVariable("id") Integer id) {
         this.userUseCase.deleteById(id);
 

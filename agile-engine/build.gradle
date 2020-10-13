@@ -9,6 +9,7 @@ dependencies {
     implementation "commons-codec:commons-codec"
     implementation "org.apache.commons:commons-lang3"
     implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.github.ben-manes.caffeine:caffeine"
 
     implementation libs.mapstruct
     implementation libs.swaggerAnnotations
