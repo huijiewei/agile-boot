@@ -1,5 +1,6 @@
 server:
   port: 9010
+  forward-headers-strategy: native
   compression:
     enabled: true
 spring:
