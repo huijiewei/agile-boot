@@ -38,4 +38,7 @@ ext.libs = [
         jpaEntityGraph    : [
                 "com.cosium.spring.data:spring-data-jpa-entity-graph:${jpaEntityGraphVersion}"
         ],
+        textIo    : [
+                "org.beryx:text-io:${textIoVersion}"
+        ],
 ]
