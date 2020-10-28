@@ -7,8 +7,7 @@ import com.huijiewei.agile.app.district.application.port.outbound.DistrictExists
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersistencePort;
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictUniquePort;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
-import com.huijiewei.agile.core.adapter.persistence.ExistsSpecificationBuilder;
-import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.until.TreeUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,7 @@ public class DistrictJpaAdapter implements DistrictExistsPort, DistrictPersisten
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.districtJpaRepository.count(ExistsSpecificationBuilder.build(targetProperty, values)) > 0;
+        return this.districtJpaRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
     @Override
@@ -142,6 +141,6 @@ public class DistrictJpaAdapter implements DistrictExistsPort, DistrictPersisten
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.districtJpaRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
+        return this.districtJpaRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

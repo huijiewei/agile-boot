@@ -8,7 +8,7 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
-import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
 import org.apache.commons.lang3.StringUtils;
@@ -131,6 +131,6 @@ public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.userRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
+        return this.userRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

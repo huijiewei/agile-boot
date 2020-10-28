@@ -7,7 +7,7 @@ import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminRepo
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminUniquePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
-import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,6 +88,6 @@ class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.adminRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
+        return this.adminRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

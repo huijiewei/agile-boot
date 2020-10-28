@@ -10,7 +10,7 @@ import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandUniquePor
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
-import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class JpaShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersis
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.shopBrandRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
+        return this.shopBrandRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 
     private Specification<ShopBrand> buildSpecification(ShopBrandSearchRequest searchRequest) {

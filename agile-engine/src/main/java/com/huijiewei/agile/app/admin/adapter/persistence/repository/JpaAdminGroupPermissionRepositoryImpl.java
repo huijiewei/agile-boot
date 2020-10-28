@@ -1,7 +1,7 @@
 package com.huijiewei.agile.app.admin.adapter.persistence.repository;
 
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminGroupPermission;
-import com.huijiewei.agile.core.adapter.persistence.BatchRepository;
+import com.huijiewei.agile.core.adapter.persistence.JpaBatchRepository;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Repository
-public class JpaAdminGroupPermissionRepositoryImpl implements BatchRepository<AdminGroupPermission> {
+public class JpaAdminGroupPermissionRepositoryImpl implements JpaBatchRepository<AdminGroupPermission> {
     private final JdbcTemplate jdbcTemplate;
 
     public JpaAdminGroupPermissionRepositoryImpl(JdbcTemplate jdbcTemplate) {

@@ -9,8 +9,7 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupUniqueP
 import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenuItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenus;
-import com.huijiewei.agile.core.adapter.persistence.ExistsSpecificationBuilder;
-import com.huijiewei.agile.core.adapter.persistence.UniqueSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,11 +94,11 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.jpaAdminGroupRepository.count(ExistsSpecificationBuilder.build(targetProperty, values)) > 0;
+        return this.jpaAdminGroupRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.jpaAdminGroupRepository.count(UniqueSpecificationBuilder.build(values, primaryKey, primaryValue)) == 0;
+        return this.jpaAdminGroupRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }
