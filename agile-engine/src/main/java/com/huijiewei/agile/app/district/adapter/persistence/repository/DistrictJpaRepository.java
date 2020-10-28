@@ -3,6 +3,7 @@ package com.huijiewei.agile.app.district.adapter.persistence.repository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
+import com.huijiewei.agile.core.adapter.persistence.JpaClosureRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,8 @@ import java.util.Optional;
 @Repository
 public interface DistrictJpaRepository extends
         EntityGraphJpaRepository<District, Integer>,
-        EntityGraphJpaSpecificationExecutor<District> {
+        EntityGraphJpaSpecificationExecutor<District>,
+        JpaClosureRepository<District> {
     @Modifying
     @Query("DELETE FROM District WHERE id IN ?1")
     void deleteAllById(List<Integer> ids);

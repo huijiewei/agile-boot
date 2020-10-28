@@ -4,6 +4,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'org.xerial:sqlite-jdbc'
 
     implementation libs.textIo
     implementation libs.javaFaker

@@ -14,4 +14,9 @@ public class CronCommand implements Consumer<TextIO> {
         textIO.getTextTerminal().println("cron");
         textIO.dispose();
     }
+
+    @Override
+    public String toString() {
+        return "计划任务";
+    }
 }

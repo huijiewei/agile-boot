@@ -41,3 +41,4 @@ $RECYCLE.BIN/
 *~
 
 application-default.yaml
+database/district.sqlite

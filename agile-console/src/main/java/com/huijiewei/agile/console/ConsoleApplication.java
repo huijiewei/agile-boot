@@ -2,7 +2,9 @@ package com.huijiewei.agile.console;
 
 import com.cosium.spring.data.jpa.entity.graph.repository.support.EntityGraphJpaRepositoryFactoryBean;
 import com.huijiewei.agile.console.command.CronCommand;
-import com.huijiewei.agile.console.command.FakeUserCommand;
+import com.huijiewei.agile.console.command.DistrictClosureCommand;
+import com.huijiewei.agile.console.command.DistrictImportCommand;
+import com.huijiewei.agile.console.command.UserFakeCommand;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -30,10 +32,14 @@ import java.util.function.Consumer;
         bootstrapMode = BootstrapMode.DEFERRED
 )
 public class ConsoleApplication implements CommandLineRunner {
-    private final FakeUserCommand fakeUserCommand;
+    private final UserFakeCommand userFakeCommand;
+    private final DistrictImportCommand districtImportCommand;
+    private final DistrictClosureCommand districtClosureCommand;
 
-    public ConsoleApplication(FakeUserCommand fakeUserCommand) {
-        this.fakeUserCommand = fakeUserCommand;
+    public ConsoleApplication(UserFakeCommand userFakeCommand, DistrictImportCommand districtImportCommand, DistrictClosureCommand districtClosureCommand) {
+        this.userFakeCommand = userFakeCommand;
+        this.districtImportCommand = districtImportCommand;
+        this.districtClosureCommand = districtClosureCommand;
     }
 
     public static void main(String[] args) {
@@ -45,13 +51,15 @@ public class ConsoleApplication implements CommandLineRunner {
         TextIO textIO = TextIoFactory.getTextIO();
 
         List<Consumer<TextIO>> commands = Arrays.asList(
-                this.fakeUserCommand,
+                this.userFakeCommand,
+                this.districtImportCommand,
+                this.districtClosureCommand,
                 new CronCommand()
         );
 
         Consumer<TextIO> app = textIO.<Consumer<TextIO>>newGenericInputReader(null)
                 .withNumberedPossibleValues(commands)
-                .read("Choose the application to be run");
+                .read("选择一个命令运行");
 
         app.accept(textIO);
     }

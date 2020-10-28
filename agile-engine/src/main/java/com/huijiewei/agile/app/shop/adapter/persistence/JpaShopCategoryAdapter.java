@@ -6,7 +6,7 @@ import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopCatego
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryExistsPort;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryPersistencePort;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
-import com.huijiewei.agile.core.adapter.persistence.ExistsSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.until.TreeUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -36,7 +36,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.shopCategoryRepository.count(ExistsSpecificationBuilder.build(targetProperty, values)) > 0;
+        return this.shopCategoryRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
     @Override

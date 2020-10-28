@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
  * @author huijiewei
  */
 @Component
-public class FakeUserCommand implements Consumer<TextIO> {
+public class UserFakeCommand implements Consumer<TextIO> {
     private final JpaUserRepository userRepository;
 
-    public FakeUserCommand(JpaUserRepository userRepository) {
+    public UserFakeCommand(JpaUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public void accept(TextIO textIO) {
-        Integer count = textIO.newIntInputReader().withDefaultValue(10).read("数量");
+        Integer count = textIO.newIntInputReader().withDefaultValue(10).read("生成数量");
 
         Faker englishFaker = new Faker(Locale.ENGLISH);
         Faker chineseFaker = new Faker(Locale.CHINA);
@@ -99,7 +99,7 @@ public class FakeUserCommand implements Consumer<TextIO> {
             this.userRepository.save(user);
         }
 
-        textIO.getTextTerminal().println("fake-user" + count.toString());
+        textIO.getTextTerminal().println("生成用户数据：" + count.toString());
         textIO.dispose();
     }
 

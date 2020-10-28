@@ -25,6 +25,7 @@ spring:
           validation:
             mode: none
     open-in-view: false
+    show-sql: false
   datasource:
     hikari:
       max-lifetime: 120000

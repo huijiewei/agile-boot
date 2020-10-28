@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.district.adapter.persistence.entity;
 
-import com.huijiewei.agile.core.adapter.persistence.AbstractJpaTreeEntity;
+import com.huijiewei.agile.core.adapter.persistence.AbstractJpaTreeClosureEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-public class District extends AbstractJpaTreeEntity {
+public class District extends AbstractJpaTreeClosureEntity {
     private String name;
 
     private String code;
@@ -32,4 +32,9 @@ public class District extends AbstractJpaTreeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId", insertable = false, updatable = false)
     private District parent;
+
+    @Override
+    protected String getTableName() {
+        return District.tableName(District.class);
+    }
 }

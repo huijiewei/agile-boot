@@ -45,6 +45,12 @@ public class DistrictJpaAdapter implements DistrictExistsPort, DistrictPersisten
     public Integer save(DistrictEntity districtEntity) {
         District district = this.districtJpaRepository.save(this.districtMapper.toDistrict(districtEntity));
 
+        if (districtEntity.hasId()) {
+            this.districtJpaRepository.updateClosures(district);
+        } else {
+            this.districtJpaRepository.insertClosures(district);
+        }
+
         return district.getId();
     }
 
