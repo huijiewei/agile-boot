@@ -29,10 +29,6 @@ public class District extends AbstractJpaTreeClosureEntity {
 
     private String areaCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parentId", insertable = false, updatable = false)
-    private District parent;
-
     @Override
     public String getTableName() {
         return District.tableName(District.class);
