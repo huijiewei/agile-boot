@@ -2,6 +2,7 @@ package com.huijiewei.agile.console.command;
 
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
+import lombok.RequiredArgsConstructor;
 import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,9 @@ import java.util.function.Consumer;
  */
 
 @Component
+@RequiredArgsConstructor
 public class DistrictClosureCommand implements Consumer<TextIO> {
     private final DistrictRepository districtRepository;
-
-    public DistrictClosureCommand(DistrictRepository districtRepository) {
-        this.districtRepository = districtRepository;
-    }
 
     @Override
     public void accept(TextIO textIO) {

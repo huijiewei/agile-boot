@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersistencePort;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.beryx.textio.TextIO;
 import org.springframework.stereotype.Component;
@@ -16,18 +17,15 @@ import java.util.function.Consumer;
  */
 
 @Component
+@RequiredArgsConstructor
 public class DistrictImportCommand implements Consumer<TextIO> {
     private final DistrictPersistencePort districtPersistencePort;
     private final DistrictRepository districtRepository;
 
-    public DistrictImportCommand(DistrictPersistencePort districtPersistencePort, DistrictRepository districtRepository) {
-        this.districtPersistencePort = districtPersistencePort;
-        this.districtRepository = districtRepository;
-    }
-
     @SneakyThrows
     @Override
     public void accept(TextIO textIO) {
+        this.districtRepository.deleteAll();
         this.districtRepository.truncateClosures(new District());
 
         var connection = DriverManager.getConnection("jdbc:sqlite:./database/district.sqlite");

@@ -128,6 +128,24 @@ CREATE TABLE `${table-prefix}user`
   AUTO_INCREMENT = 1981
   DEFAULT CHARSET = utf8mb4;
 
+CREATE TABLE `${table-prefix}user_address`
+(
+    `id`           int          NOT NULL AUTO_INCREMENT,
+    `userId`       int          NOT NULL DEFAULT '0',
+    `districtCode` varchar(9)   NOT NULL DEFAULT '',
+    `alias`        varchar(12)  NOT NULL DEFAULT '',
+    `name`         varchar(32)  NOT NULL DEFAULT '',
+    `phone`        varchar(20)  NOT NULL DEFAULT '',
+    `address`      varchar(160) NOT NULL DEFAULT '',
+    `createdAt`    timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt`    timestamp    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `userId` (`userId`),
+    KEY `districtCode` (`districtCode`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1021
+  DEFAULT CHARSET = utf8mb4;
+
 CREATE TABLE `${table-prefix}shop_brand`
 (
     `id`          int          NOT NULL AUTO_INCREMENT,
@@ -193,7 +211,20 @@ CREATE TABLE `${table-prefix}district`
     UNIQUE KEY `code` (`code`) USING BTREE,
     KEY `parentId` (`parentId`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 195275
+  AUTO_INCREMENT = 1221
+  DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `${table-prefix}_district_closure`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `ancestor`   int NOT NULL DEFAULT '0',
+    `descendant` int NOT NULL DEFAULT '0',
+    `distance`   int NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `ancestor` (`ancestor`, `descendant`),
+    UNIQUE KEY `descendant` (`descendant`, `distance`),
+    KEY `distance` (`distance`)
+) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `${table-prefix}shop_product`
