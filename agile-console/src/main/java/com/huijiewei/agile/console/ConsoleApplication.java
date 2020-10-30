@@ -35,6 +35,7 @@ public class ConsoleApplication implements CommandLineRunner {
     private final UserAddressFakeCommand userAddressFakeCommand;
     private final DistrictImportCommand districtImportCommand;
     private final DistrictClosureCommand districtClosureCommand;
+    private final DatabaseInitCommand databaseInitCommand;
 
     public static void main(String[] args) {
         SpringApplication.exit(SpringApplication.run(ConsoleApplication.class, args));
@@ -49,7 +50,7 @@ public class ConsoleApplication implements CommandLineRunner {
                 this.userAddressFakeCommand,
                 this.districtImportCommand,
                 this.districtClosureCommand,
-                new CronCommand()
+                this.databaseInitCommand
         );
 
         Consumer<TextIO> app = textIO.<Consumer<TextIO>>newGenericInputReader(null)

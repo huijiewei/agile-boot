@@ -6,6 +6,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'org.xerial:sqlite-jdbc'
 
+    implementation "org.flywaydb:flyway-core"
+
     implementation libs.textIo
     implementation libs.javaFaker
     implementation libs.jpaEntityGraph

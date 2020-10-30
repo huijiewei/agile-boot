@@ -214,7 +214,7 @@ CREATE TABLE `${table-prefix}district`
   AUTO_INCREMENT = 1221
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `${table-prefix}_district_closure`
+CREATE TABLE `${table-prefix}district_closure`
 (
     `id`         int NOT NULL AUTO_INCREMENT,
     `ancestor`   int NOT NULL DEFAULT '0',

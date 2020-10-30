@@ -16,8 +16,6 @@ dependencies {
 
     runtimeOnly 'mysql:mysql-connector-java'
 
-    implementation "org.flywaydb:flyway-core"
-
     implementation libs.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
     implementation libs.jpaEntityGraph

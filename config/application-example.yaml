@@ -16,7 +16,7 @@ spring:
         format_sql: false
     show-sql: true
   flyway:
-    enabled: true
+    enabled: false # 不自动初始化数据库
     clean-disabled: false # 禁止清理数据库表
     baseline-on-migrate: false # 如果不是项目初期引入，而是在数据库已有表的情况下引入时必须设置 true
     locations: # 数据库脚本所在地址
