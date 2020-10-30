@@ -66,7 +66,7 @@ public class UserAddressService implements UserAddressUseCase {
 
     @Override
     public UserAddressEntity read(Integer id) {
-        return this.getById(id);
+        return this.fillDistrictPath(this.getById(id));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UserAddressService implements UserAddressUseCase {
         Integer userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
         userAddressEntity.setId(userAddressId);
 
-        return userAddressEntity;
+        return this.fillDistrictPath(userAddressEntity);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class UserAddressService implements UserAddressUseCase {
         Integer userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
         userAddressEntity.setId(userAddressId);
 
-        return userAddressEntity;
+        return this.fillDistrictPath(userAddressEntity);
     }
 
     @Override

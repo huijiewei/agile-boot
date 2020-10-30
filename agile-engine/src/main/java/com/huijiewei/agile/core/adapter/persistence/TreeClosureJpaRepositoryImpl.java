@@ -54,7 +54,7 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeClosureEntity
                 .createNativeQuery(String.format("DELETE C FROM %s AS C " +
                         "INNER JOIN %s AS D ON C.descendant = D.descendant " +
                         "LEFT JOIN %s AS A ON A.ancestor = D.ancestor AND A.descendant = C.ancestor " +
-                        "WHERE D.ancestor = :id AND A.ancestor = 0", tableName, tableName, tableName))
+                        "WHERE D.ancestor = :id AND A.ancestor IS NULL", tableName, tableName, tableName))
                 .setParameter("id", entity.getId())
                 .executeUpdate();
 
