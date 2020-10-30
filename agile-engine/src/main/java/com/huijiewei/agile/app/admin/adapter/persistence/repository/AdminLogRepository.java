@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author huijiewei
  */
 
-public interface JpaAdminLogRepository extends
+public interface AdminLogRepository extends
         JpaRepository<AdminLog, Integer>,
         EntityGraphJpaSpecificationExecutor<AdminLog> {
 }

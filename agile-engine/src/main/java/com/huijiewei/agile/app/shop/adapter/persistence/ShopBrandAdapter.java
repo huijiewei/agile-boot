@@ -3,15 +3,16 @@ package com.huijiewei.agile.app.shop.adapter.persistence;
 import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopBrand;
 import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopBrandCategory;
 import com.huijiewei.agile.app.shop.adapter.persistence.mapper.ShopBrandMapper;
-import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopBrandCategoryRepository;
-import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopBrandRepository;
+import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopBrandCategoryRepository;
+import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopBrandRepository;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandPersistencePort;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandUniquePort;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,16 +31,11 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-public class JpaShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersistencePort {
-    private final JpaShopBrandRepository shopBrandRepository;
+@RequiredArgsConstructor
+public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersistencePort {
+    private final ShopBrandRepository shopBrandRepository;
     private final ShopBrandMapper shopBrandMapper;
-    private final JpaShopBrandCategoryRepository shopBrandCategoryRepository;
-
-    public JpaShopBrandAdapter(JpaShopBrandRepository shopBrandRepository, ShopBrandMapper shopBrandMapper, JpaShopBrandCategoryRepository shopBrandCategoryRepository) {
-        this.shopBrandRepository = shopBrandRepository;
-        this.shopBrandMapper = shopBrandMapper;
-        this.shopBrandCategoryRepository = shopBrandCategoryRepository;
-    }
+    private final ShopBrandCategoryRepository shopBrandCategoryRepository;
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {

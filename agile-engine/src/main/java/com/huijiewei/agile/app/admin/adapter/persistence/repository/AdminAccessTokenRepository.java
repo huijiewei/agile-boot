@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface JpaAdminAccessTokenRepository extends
+public interface AdminAccessTokenRepository extends
         CrudRepository<AdminAccessToken, Integer> {
     Optional<AdminAccessToken> findByAdminIdAndClientId(Integer adminId, String clientId);
 

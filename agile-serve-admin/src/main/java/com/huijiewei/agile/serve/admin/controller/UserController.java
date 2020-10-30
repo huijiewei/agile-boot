@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -32,12 +33,9 @@ import java.nio.charset.StandardCharsets;
 
 @RestController
 @Tag(name = "user", description = "用户接口")
+@RequiredArgsConstructor
 public class UserController {
     private final UserUseCase userUseCase;
-
-    public UserController(UserUseCase userUseCase) {
-        this.userUseCase = userUseCase;
-    }
 
     @GetMapping(
             value = "/users",

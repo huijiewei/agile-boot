@@ -1,7 +1,7 @@
 package com.huijiewei.agile.console.command;
 
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
-import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictJpaRepository;
+import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
 import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -15,21 +15,21 @@ import java.util.function.Consumer;
 
 @Component
 public class DistrictClosureCommand implements Consumer<TextIO> {
-    private final DistrictJpaRepository districtJpaRepository;
+    private final DistrictRepository districtRepository;
 
-    public DistrictClosureCommand(DistrictJpaRepository districtJpaRepository) {
-        this.districtJpaRepository = districtJpaRepository;
+    public DistrictClosureCommand(DistrictRepository districtRepository) {
+        this.districtRepository = districtRepository;
     }
 
     @Override
     public void accept(TextIO textIO) {
-        List<District> districts = this.districtJpaRepository
+        List<District> districts = this.districtRepository
                 .findAll(Sort.by(Sort.Direction.ASC, "parentId", "id"));
 
-        this.districtJpaRepository.truncateClosures(new District());
+        this.districtRepository.truncateClosures(new District());
 
         for (District district : districts) {
-            this.districtJpaRepository.insertClosures(district);
+            this.districtRepository.insertClosures(district);
         }
     }
 

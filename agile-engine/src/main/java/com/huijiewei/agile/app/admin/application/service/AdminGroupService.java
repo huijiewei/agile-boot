@@ -10,6 +10,7 @@ import com.huijiewei.agile.core.application.response.ListResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,18 +18,12 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class AdminGroupService implements AdminGroupUseCase {
     private final AdminPersistencePort adminPersistencePort;
     private final AdminGroupRequestMapper adminGroupRequestMapper;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final ValidatingService validatingService;
-
-    public AdminGroupService(AdminPersistencePort adminPersistencePort, AdminGroupRequestMapper adminGroupRequestMapper, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService) {
-        this.adminPersistencePort = adminPersistencePort;
-        this.adminGroupRequestMapper = adminGroupRequestMapper;
-        this.adminGroupPersistencePort = adminGroupPersistencePort;
-        this.validatingService = validatingService;
-    }
 
     @Override
     public void deleteById(Integer id) {

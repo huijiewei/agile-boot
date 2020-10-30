@@ -1,5 +1,6 @@
 package com.huijiewei.agile.core.application.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -12,12 +13,9 @@ import java.util.Set;
  */
 
 @Service
+@RequiredArgsConstructor
 public class ValidatingService {
     private final Validator validator;
-
-    ValidatingService(Validator validator) {
-        this.validator = validator;
-    }
 
     public <T> Boolean validate(T entity, Class<?>... groups) {
         Set<ConstraintViolation<T>> violations = validator.validate(entity, groups);

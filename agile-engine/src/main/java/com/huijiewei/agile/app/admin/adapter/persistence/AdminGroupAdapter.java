@@ -2,7 +2,7 @@ package com.huijiewei.agile.app.admin.adapter.persistence;
 
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminGroup;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminGroupMapper;
-import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminGroupRepository;
+import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminGroupRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupExistsPort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersistencePort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupUniquePort;
@@ -10,6 +10,7 @@ import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenuItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupMenus;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,28 +27,23 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPort, AdminGroupUniquePort {
+@RequiredArgsConstructor
+class AdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPort, AdminGroupUniquePort {
     private final AdminGroupMapper adminGroupMapper;
-    private final JpaAdminGroupRepository jpaAdminGroupRepository;
-    private final JpaAdminGroupCacheAdapter jpaAdminGroupCacheAdapter;
-
-    public JpaAdminGroupAdapter(AdminGroupMapper adminGroupMapper, JpaAdminGroupRepository jpaAdminGroupRepository, JpaAdminGroupCacheAdapter jpaAdminGroupCacheAdapter) {
-        this.adminGroupMapper = adminGroupMapper;
-        this.jpaAdminGroupRepository = jpaAdminGroupRepository;
-        this.jpaAdminGroupCacheAdapter = jpaAdminGroupCacheAdapter;
-    }
+    private final AdminGroupRepository adminGroupRepository;
+    private final AdminGroupCacheAdapter adminGroupCacheAdapter;
 
     @Override
     public Optional<AdminGroupEntity> getById(Integer id) {
-        return this.jpaAdminGroupRepository.findById(id).map(this.adminGroupMapper::toAdminGroupEntity);
+        return this.adminGroupRepository.findById(id).map(this.adminGroupMapper::toAdminGroupEntity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(AdminGroupEntity adminGroupEntity) {
-        AdminGroup adminGroup = this.jpaAdminGroupRepository.save(this.adminGroupMapper.toAdminGroup(adminGroupEntity));
+        AdminGroup adminGroup = this.adminGroupRepository.save(this.adminGroupMapper.toAdminGroup(adminGroupEntity));
 
-        this.jpaAdminGroupCacheAdapter.updatePermissions(adminGroup.getId(), adminGroupEntity.getPermissions(), adminGroupEntity.hasId());
+        this.adminGroupCacheAdapter.updatePermissions(adminGroup.getId(), adminGroupEntity.getPermissions(), adminGroupEntity.hasId());
 
         return adminGroup.getId();
     }
@@ -55,17 +51,17 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-        this.jpaAdminGroupRepository.deleteById(id);
-        this.jpaAdminGroupCacheAdapter.updatePermissions(id, null, true);
+        this.adminGroupRepository.deleteById(id);
+        this.adminGroupCacheAdapter.updatePermissions(id, null, true);
     }
 
     @Override
     public List<String> getPermissions(Integer id) {
-        return this.jpaAdminGroupCacheAdapter.getPermissions(id);
+        return this.adminGroupCacheAdapter.getPermissions(id);
     }
 
     @Override
-    @Cacheable(cacheNames = JpaAdminGroupCacheAdapter.ADMIN_GROUP_MENUS_CACHE_KEY, key = "#id")
+    @Cacheable(cacheNames = AdminGroupCacheAdapter.ADMIN_GROUP_MENUS_CACHE_KEY, key = "#id")
     public List<AdminGroupMenuItem> getMenus(Integer id) {
         List<AdminGroupMenuItem> all = AdminGroupMenus.getAll();
         List<String> adminGroupPermissions = this.getPermissions(id);
@@ -85,7 +81,7 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
 
     @Override
     public List<AdminGroupEntity> getAll() {
-        return this.jpaAdminGroupRepository
+        return this.adminGroupRepository
                 .findAll()
                 .stream()
                 .map(this.adminGroupMapper::toAdminGroupEntity)
@@ -94,11 +90,11 @@ class JpaAdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExist
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
-        return this.jpaAdminGroupRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
+        return this.adminGroupRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return this.jpaAdminGroupRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
+        return this.adminGroupRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

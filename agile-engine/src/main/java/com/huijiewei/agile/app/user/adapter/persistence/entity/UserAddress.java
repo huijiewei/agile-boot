@@ -9,10 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author huijiewei
@@ -35,10 +33,10 @@ public class UserAddress extends AbstractJpaEntity {
 
     private String districtCode;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "districtCode", referencedColumnName = "code", insertable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    private District district;
+    private List<District> districtPath;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", insertable = false, updatable = false)

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,12 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "shop-brand", description = "商品品牌接口")
+@RequiredArgsConstructor
 public class ShopBrandController {
     private final ShopBrandUseCase shopBrandUseCase;
-
-    public ShopBrandController(ShopBrandUseCase shopBrandUseCase) {
-        this.shopBrandUseCase = shopBrandUseCase;
-    }
 
     @GetMapping(
             value = "/shop-brands",

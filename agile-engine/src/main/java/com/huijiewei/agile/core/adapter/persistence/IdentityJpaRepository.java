@@ -1,6 +1,5 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
@@ -10,7 +9,7 @@ import java.util.Optional;
  */
 
 @NoRepositoryBean
-public interface JpaIdentityRepository<T extends AbstractJpaIdentityEntity> extends JpaRepository<T, Integer> {
+public interface IdentityJpaRepository<T extends AbstractJpaIdentityEntity> {
     /**
      * 手机号查询
      *

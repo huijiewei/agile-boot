@@ -4,13 +4,14 @@ import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminLog;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminLogMapper;
-import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminLogRepository;
+import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminLogRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersistencePort;
 import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,14 +33,10 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-class JpaAdminLogAdapter implements AdminLogPersistencePort {
+@RequiredArgsConstructor
+class AdminLogAdapter implements AdminLogPersistencePort {
     private final AdminLogMapper adminLogMapper;
-    private final JpaAdminLogRepository adminLogRepository;
-
-    public JpaAdminLogAdapter(AdminLogMapper adminLogMapper, JpaAdminLogRepository adminLogRepository) {
-        this.adminLogMapper = adminLogMapper;
-        this.adminLogRepository = adminLogRepository;
-    }
+    private final AdminLogRepository adminLogRepository;
 
     private Specification<AdminLog> buildSpecification(AdminLogSearchRequest searchRequest) {
         return (Specification<AdminLog>) (root, query, criteriaBuilder) -> {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface JpaUserRepository extends
+public interface UserRepository extends
         EntityGraphJpaRepository<User, Integer>,
         EntityGraphJpaSpecificationExecutor<User> {
 }

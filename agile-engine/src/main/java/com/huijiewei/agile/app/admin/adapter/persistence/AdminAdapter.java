@@ -3,11 +3,12 @@ package com.huijiewei.agile.app.admin.adapter.persistence;
 import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminMapper;
-import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminRepository;
+import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminUniquePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +23,10 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-class JpaAdminAdapter implements AdminPersistencePort, AdminUniquePort {
+@RequiredArgsConstructor
+class AdminAdapter implements AdminPersistencePort, AdminUniquePort {
     private final AdminMapper adminMapper;
-    private final JpaAdminRepository adminRepository;
-
-    public JpaAdminAdapter(AdminMapper adminMapper, JpaAdminRepository adminRepository) {
-        this.adminMapper = adminMapper;
-        this.adminRepository = adminRepository;
-    }
+    private final AdminRepository adminRepository;
 
     @Override
     public Optional<AdminEntity> getById(Integer id) {

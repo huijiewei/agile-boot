@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 @Repository
-public interface JpaShopProductRepository extends
+public interface ShopProductRepository extends
         EntityGraphJpaRepository<ShopProduct, Integer>,
         EntityGraphJpaSpecificationExecutor<ShopProduct> {
     Boolean existsByShopBrandId(Integer shopBrandId);

@@ -14,6 +14,7 @@ import com.huijiewei.agile.spring.upload.request.UploadRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,18 +29,12 @@ import java.util.List;
 
 @RestController
 @Tag(name = "misc", description = "杂项接口")
+@RequiredArgsConstructor
 public class MiscController {
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final UploadService uploadService;
     private final ShopCategoryUseCase shopCategoryUseCase;
     private final DistrictUseCase districtUseCase;
-
-    public MiscController(AdminGroupPersistencePort adminGroupPersistencePort, UploadService uploadService, ShopCategoryUseCase shopCategoryUseCase, DistrictUseCase districtUseCase) {
-        this.adminGroupPersistencePort = adminGroupPersistencePort;
-        this.uploadService = uploadService;
-        this.shopCategoryUseCase = shopCategoryUseCase;
-        this.districtUseCase = districtUseCase;
-    }
 
     @GetMapping(
             value = "/misc/admin-group-permissions",

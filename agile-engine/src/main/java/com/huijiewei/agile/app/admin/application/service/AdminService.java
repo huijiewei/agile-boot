@@ -12,6 +12,7 @@ import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import com.huijiewei.agile.core.until.SecurityUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +23,12 @@ import java.util.List;
  */
 
 @Service
+@RequiredArgsConstructor
 public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     private final AdminPersistencePort adminPersistencePort;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final ValidatingService validatingService;
     private final AdminRequestMapper adminRequestMapper;
-
-    public AdminService(AdminPersistencePort adminPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, ValidatingService validatingService, AdminRequestMapper adminRequestMapper) {
-        this.adminPersistencePort = adminPersistencePort;
-        this.adminGroupPersistencePort = adminGroupPersistencePort;
-        this.validatingService = validatingService;
-        this.adminRequestMapper = adminRequestMapper;
-    }
 
     @Override
     public boolean hasPermissions(AdminEntity admin, String[] permissions) {

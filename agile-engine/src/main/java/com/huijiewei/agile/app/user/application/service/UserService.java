@@ -12,6 +12,7 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import com.huijiewei.agile.core.until.SecurityUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +24,12 @@ import java.io.OutputStream;
  */
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserUseCase {
     private final UserPersistencePort userPersistencePort;
     private final ValidatingService validatingService;
     private final UserRequestMapper userRequestMapper;
     private final UserExportPort userExportPort;
-
-    public UserService(UserPersistencePort userPersistencePort, ValidatingService validatingService, UserRequestMapper userRequestMapper, UserExportPort userExportPort) {
-        this.userPersistencePort = userPersistencePort;
-        this.validatingService = validatingService;
-        this.userRequestMapper = userRequestMapper;
-        this.userExportPort = userExportPort;
-    }
 
     @Override
     public SearchPageResponse<UserEntity> all(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields) {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface JpaShopBrandRepository extends
+public interface ShopBrandRepository extends
         EntityGraphJpaRepository<ShopBrand, Integer>,
         EntityGraphJpaSpecificationExecutor<ShopBrand> {
 }

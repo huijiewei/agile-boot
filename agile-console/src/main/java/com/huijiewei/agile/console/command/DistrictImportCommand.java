@@ -1,7 +1,7 @@
 package com.huijiewei.agile.console.command;
 
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
-import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictJpaRepository;
+import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersistencePort;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import lombok.SneakyThrows;
@@ -18,17 +18,17 @@ import java.util.function.Consumer;
 @Component
 public class DistrictImportCommand implements Consumer<TextIO> {
     private final DistrictPersistencePort districtPersistencePort;
-    private final DistrictJpaRepository districtJpaRepository;
+    private final DistrictRepository districtRepository;
 
-    public DistrictImportCommand(DistrictPersistencePort districtPersistencePort, DistrictJpaRepository districtJpaRepository) {
+    public DistrictImportCommand(DistrictPersistencePort districtPersistencePort, DistrictRepository districtRepository) {
         this.districtPersistencePort = districtPersistencePort;
-        this.districtJpaRepository = districtJpaRepository;
+        this.districtRepository = districtRepository;
     }
 
     @SneakyThrows
     @Override
     public void accept(TextIO textIO) {
-        this.districtJpaRepository.truncateClosures(new District());
+        this.districtRepository.truncateClosures(new District());
 
         var connection = DriverManager.getConnection("jdbc:sqlite:./database/district.sqlite");
         var provinces = connection.createStatement().executeQuery("SELECT * FROM province");

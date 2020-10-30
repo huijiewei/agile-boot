@@ -14,13 +14,13 @@ public interface DistrictPersistencePort {
 
     Integer save(DistrictEntity districtEntity);
 
-    void deleteAllById(List<Integer> ids);
-
-    List<DistrictEntity> getChildrenById(Integer id);
+    void delete(DistrictEntity districtEntity);
 
     List<DistrictEntity> getAllByParentId(Integer parentId);
 
-    List<DistrictEntity> getParentsById(Integer id);
+    List<DistrictEntity> getAncestorsById(Integer id);
 
-    List<DistrictEntity> getTreeByKeyword(String keyword);
+    List<DistrictEntity> getAncestorsByKeyword(String keyword);
+
+    List<DistrictEntity> getAncestorsTreeByKeyword(String keyword);
 }

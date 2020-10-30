@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,12 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "admin-log", description = "日志")
+@RequiredArgsConstructor
 public class AdminLogController {
     private final AdminLogPersistencePort adminLogPersistencePort;
-
-    public AdminLogController(AdminLogPersistencePort adminLogPersistencePort) {
-        this.adminLogPersistencePort = adminLogPersistencePort;
-    }
 
     @GetMapping(
             value = "/admin-logs",

@@ -6,6 +6,7 @@ import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
 import com.huijiewei.agile.core.until.HttpUtils;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,12 +28,9 @@ import java.lang.reflect.Method;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class AdminLogAspect {
     private final AdminLogPersistencePort adminLogPersistencePort;
-
-    public AdminLogAspect(AdminLogPersistencePort adminLogPersistencePort) {
-        this.adminLogPersistencePort = adminLogPersistencePort;
-    }
 
     @Pointcut("@annotation(org.springframework.security.access.prepost.PreAuthorize)")
     public void preAuthorize() {

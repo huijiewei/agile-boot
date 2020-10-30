@@ -9,6 +9,7 @@ import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "admin", description = "管理员")
+@RequiredArgsConstructor
 public class AdminController {
     private final AdminUseCase adminUseCase;
-
-    public AdminController(AdminUseCase adminUseCase) {
-        this.adminUseCase = adminUseCase;
-    }
 
     @GetMapping(
             value = "/admins",

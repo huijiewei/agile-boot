@@ -2,12 +2,13 @@ package com.huijiewei.agile.app.shop.adapter.persistence;
 
 import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopCategory;
 import com.huijiewei.agile.app.shop.adapter.persistence.mapper.ShopCategoryMapper;
-import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopCategoryRepository;
+import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopCategoryRepository;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryExistsPort;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryPersistencePort;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.until.TreeUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -22,17 +23,11 @@ import java.util.Optional;
 
 @Component
 @Transactional(readOnly = true)
-public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategoryPersistencePort {
-
-    private final JpaShopCategoryRepository shopCategoryRepository;
+@RequiredArgsConstructor
+public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategoryPersistencePort {
+    private final ShopCategoryRepository shopCategoryRepository;
     private final ShopCategoryMapper shopCategoryMapper;
-    private final JpaShopCategoryCacheAdapter jpaShopCategoryCacheAdapter;
-
-    public JpaShopCategoryAdapter(JpaShopCategoryRepository shopCategoryRepository, ShopCategoryMapper shopCategoryMapper, JpaShopCategoryCacheAdapter jpaShopCategoryCacheAdapter) {
-        this.shopCategoryRepository = shopCategoryRepository;
-        this.shopCategoryMapper = shopCategoryMapper;
-        this.jpaShopCategoryCacheAdapter = jpaShopCategoryCacheAdapter;
-    }
+    private final ShopCategoryCacheAdapter shopCategoryCacheAdapter;
 
     @Override
     public Boolean exists(String targetProperty, List<String> values) {
@@ -41,11 +36,11 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     public List<ShopCategoryEntity> getAll() {
-        return this.jpaShopCategoryCacheAdapter.getAll();
+        return this.shopCategoryCacheAdapter.getAll();
     }
 
     @Override
-    @Cacheable(cacheNames = JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY)
+    @Cacheable(cacheNames = ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY)
     public List<ShopCategoryEntity> getTree() {
         return TreeUtils.buildTree(this.getAll());
     }
@@ -57,7 +52,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {JpaShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public Integer save(ShopCategoryEntity shopCategoryEntity) {
         ShopCategory shopCategory = this.shopCategoryRepository.save(this.shopCategoryMapper.toShopCategory(shopCategoryEntity));
 
@@ -66,7 +61,7 @@ public class JpaShopCategoryAdapter implements ShopCategoryExistsPort, ShopCateg
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {JpaShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, JpaShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public void deleteAllById(List<Integer> ids) {
         this.shopCategoryRepository.deleteAllById(ids);
     }

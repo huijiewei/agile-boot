@@ -1,7 +1,8 @@
 package com.huijiewei.agile.app.shop.adapter.persistence;
 
-import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopProductRepository;
+import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopProductRepository;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopProductPersistencePort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +14,9 @@ import java.util.List;
 
 @Component
 @Transactional(readOnly = true)
-public class JpaShopProductAdapter implements ShopProductPersistencePort {
-    private final JpaShopProductRepository shopProductRepository;
-
-    public JpaShopProductAdapter(JpaShopProductRepository shopProductRepository) {
-        this.shopProductRepository = shopProductRepository;
-    }
+@RequiredArgsConstructor
+public class ShopProductAdapter implements ShopProductPersistencePort {
+    private final ShopProductRepository shopProductRepository;
 
     @Override
     public Boolean existsByShopBrandId(Integer shopBrandId) {

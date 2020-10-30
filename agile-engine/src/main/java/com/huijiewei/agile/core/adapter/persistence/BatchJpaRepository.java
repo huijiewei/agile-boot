@@ -1,15 +1,12 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
-import org.springframework.data.repository.NoRepositoryBean;
-
 import java.util.List;
 
 /**
  * @author huijiewei
  */
 
-@NoRepositoryBean
-public interface JpaBatchRepository<T extends AbstractJpaEntity> {
+public interface BatchJpaRepository<T extends AbstractJpaEntity> {
     /**
      * 批量插入方法
      *

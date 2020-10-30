@@ -7,6 +7,7 @@ import com.huijiewei.agile.spring.upload.UploadService;
 import com.huijiewei.agile.spring.upload.request.ImageCropRequest;
 import com.huijiewei.agile.spring.upload.response.UploadResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,14 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Tag(name = "open", description = "开放接口")
+@RequiredArgsConstructor
 public class OpenController {
     private final UploadService uploadService;
     private final CaptchaUseCase captchaUseCase;
-
-    public OpenController(UploadService uploadService, CaptchaUseCase captchaUseCase) {
-        this.uploadService = uploadService;
-        this.captchaUseCase = captchaUseCase;
-    }
 
     @PostMapping(
             value = "/open/upload-file",

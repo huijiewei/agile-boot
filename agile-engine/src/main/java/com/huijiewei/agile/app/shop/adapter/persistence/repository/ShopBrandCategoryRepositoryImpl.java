@@ -1,7 +1,8 @@
 package com.huijiewei.agile.app.shop.adapter.persistence.repository;
 
 import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopBrandCategory;
-import com.huijiewei.agile.core.adapter.persistence.JpaBatchRepository;
+import com.huijiewei.agile.core.adapter.persistence.BatchJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,12 +16,9 @@ import java.util.List;
  */
 
 @Repository
-public class JpaShopBrandCategoryRepositoryImpl implements JpaBatchRepository<ShopBrandCategory> {
+@RequiredArgsConstructor
+public class ShopBrandCategoryRepositoryImpl implements BatchJpaRepository<ShopBrandCategory> {
     private final JdbcTemplate jdbcTemplate;
-
-    public JpaShopBrandCategoryRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public void batchInsert(List<ShopBrandCategory> entities) {

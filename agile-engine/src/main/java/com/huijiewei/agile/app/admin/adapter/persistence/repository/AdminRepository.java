@@ -5,7 +5,7 @@ import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaReposito
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminAccessToken;
-import com.huijiewei.agile.core.adapter.persistence.JpaIdentityRepository;
+import com.huijiewei.agile.core.adapter.persistence.IdentityJpaRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +18,8 @@ import java.util.Optional;
  */
 
 @Repository
-public interface JpaAdminRepository extends
-        JpaIdentityRepository<Admin>,
+public interface AdminRepository extends
+        IdentityJpaRepository<Admin>,
         EntityGraphJpaRepository<Admin, Integer>,
         EntityGraphJpaSpecificationExecutor<Admin> {
     /**

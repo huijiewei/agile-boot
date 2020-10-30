@@ -1,8 +1,9 @@
 package com.huijiewei.agile.app.shop.adapter.persistence;
 
 import com.huijiewei.agile.app.shop.adapter.persistence.mapper.ShopCategoryMapper;
-import com.huijiewei.agile.app.shop.adapter.persistence.repository.JpaShopCategoryRepository;
+import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopCategoryRepository;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +15,13 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class JpaShopCategoryCacheAdapter {
+@RequiredArgsConstructor
+public class ShopCategoryCacheAdapter {
     public static final String SHOP_CATEGORIES_CACHE_KEY = "shop-categories";
     public static final String SHOP_CATEGORY_TREE_CACHE_KEY = "shop-category-tree";
 
-    private final JpaShopCategoryRepository shopCategoryRepository;
+    private final ShopCategoryRepository shopCategoryRepository;
     private final ShopCategoryMapper shopCategoryMapper;
-
-    public JpaShopCategoryCacheAdapter(JpaShopCategoryRepository shopCategoryRepository, ShopCategoryMapper shopCategoryMapper) {
-        this.shopCategoryRepository = shopCategoryRepository;
-        this.shopCategoryMapper = shopCategoryMapper;
-    }
 
     @Cacheable(cacheNames = SHOP_CATEGORIES_CACHE_KEY)
     public List<ShopCategoryEntity> getAll() {

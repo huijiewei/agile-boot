@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 @Repository
-public interface JpaShopCategoryRepository extends
+public interface ShopCategoryRepository extends
         JpaRepository<ShopCategory, Integer>,
         JpaSpecificationExecutor<ShopCategory> {
     @Modifying

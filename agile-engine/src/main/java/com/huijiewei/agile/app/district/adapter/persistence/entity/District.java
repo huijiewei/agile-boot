@@ -34,7 +34,7 @@ public class District extends AbstractJpaTreeClosureEntity {
     private District parent;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return District.tableName(District.class);
     }
 }

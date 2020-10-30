@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @Data
 @MappedSuperclass
 public abstract class AbstractJpaTreeClosureEntity extends AbstractJpaTreeEntity {
-    protected abstract String getTableName();
+    public abstract String getTableName();
 
     public String getClosureTableName() {
         return this.getTableName() + "_closure";

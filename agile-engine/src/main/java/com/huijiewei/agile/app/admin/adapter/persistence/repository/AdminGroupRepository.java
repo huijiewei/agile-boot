@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface JpaAdminGroupRepository extends
+public interface AdminGroupRepository extends
         JpaRepository<AdminGroup, Integer>,
         JpaSpecificationExecutor<AdminGroup> {
 }

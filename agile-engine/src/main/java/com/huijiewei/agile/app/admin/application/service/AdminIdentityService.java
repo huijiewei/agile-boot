@@ -14,6 +14,7 @@ import com.huijiewei.agile.app.admin.security.AdminIdentity;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,18 +22,12 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class AdminIdentityService implements AdminIdentityUseCase {
     private final AdminLogPersistencePort adminLogPersistencePort;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final AdminAccessTokenPersistencePort adminAccessTokenPersistencePort;
     private final ValidatingService validatingService;
-
-    public AdminIdentityService(AdminLogPersistencePort adminLogPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort, AdminAccessTokenPersistencePort adminAccessTokenPersistencePort, ValidatingService validatingService) {
-        this.adminLogPersistencePort = adminLogPersistencePort;
-        this.adminGroupPersistencePort = adminGroupPersistencePort;
-        this.adminAccessTokenPersistencePort = adminAccessTokenPersistencePort;
-        this.validatingService = validatingService;
-    }
 
     @Override
     public AdminIdentityResponse login(AdminLoginRequest loginRequest) {

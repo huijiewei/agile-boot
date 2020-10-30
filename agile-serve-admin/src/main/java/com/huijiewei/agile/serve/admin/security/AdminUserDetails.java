@@ -1,6 +1,7 @@
 package com.huijiewei.agile.serve.admin.security;
 
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

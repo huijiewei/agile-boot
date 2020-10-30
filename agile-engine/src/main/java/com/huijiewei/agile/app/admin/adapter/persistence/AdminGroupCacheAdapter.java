@@ -1,7 +1,8 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminGroupPermission;
-import com.huijiewei.agile.app.admin.adapter.persistence.repository.JpaAdminGroupPermissionRepository;
+import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminGroupPermissionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -15,15 +16,12 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class JpaAdminGroupCacheAdapter {
+@RequiredArgsConstructor
+public class AdminGroupCacheAdapter {
     public static final String ADMIN_GROUP_PERMISSIONS_CACHE_KEY = "admin-group-permissions";
     public static final String ADMIN_GROUP_MENUS_CACHE_KEY = "admin-group-menus";
 
-    private final JpaAdminGroupPermissionRepository jpaAdminGroupPermissionRepository;
-
-    public JpaAdminGroupCacheAdapter(JpaAdminGroupPermissionRepository jpaAdminGroupPermissionRepository) {
-        this.jpaAdminGroupPermissionRepository = jpaAdminGroupPermissionRepository;
-    }
+    private final AdminGroupPermissionRepository jpaAdminGroupPermissionRepository;
 
     @Cacheable(cacheNames = ADMIN_GROUP_PERMISSIONS_CACHE_KEY, key = "#id")
     public List<String> getPermissions(Integer id) {

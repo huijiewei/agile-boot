@@ -2,8 +2,9 @@ package com.huijiewei.agile.console.command;
 
 import com.github.javafaker.Faker;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
-import com.huijiewei.agile.app.user.adapter.persistence.repository.JpaUserRepository;
+import com.huijiewei.agile.app.user.adapter.persistence.repository.UserRepository;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
+import lombok.RequiredArgsConstructor;
 import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -22,12 +23,9 @@ import java.util.stream.Collectors;
  * @author huijiewei
  */
 @Component
+@RequiredArgsConstructor
 public class UserFakeCommand implements Consumer<TextIO> {
-    private final JpaUserRepository userRepository;
-
-    public UserFakeCommand(JpaUserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public void accept(TextIO textIO) {

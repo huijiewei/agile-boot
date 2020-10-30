@@ -8,6 +8,7 @@ import com.huijiewei.agile.core.application.response.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "admin-group", description = "管理组")
+@RequiredArgsConstructor
 public class AdminGroupController {
     private final AdminGroupUseCase adminGroupUseCase;
-
-    public AdminGroupController(AdminGroupUseCase adminGroupUseCase) {
-        this.adminGroupUseCase = adminGroupUseCase;
-    }
 
     @GetMapping(
             value = "/admin-groups",

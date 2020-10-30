@@ -6,13 +6,11 @@ import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersis
 import com.huijiewei.agile.app.district.application.request.DistrictRequest;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.core.application.service.ValidatingService;
-import com.huijiewei.agile.core.domain.AbstractEntity;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author huijiewei
@@ -41,12 +39,12 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public List<DistrictEntity> getPathById(Integer id) {
-        return this.districtPersistencePort.getParentsById(id);
+        return this.districtPersistencePort.getAncestorsById(id);
     }
 
     @Override
     public List<DistrictEntity> getTreeByKeyword(String keyword) {
-        return this.districtPersistencePort.getTreeByKeyword(keyword);
+        return this.districtPersistencePort.getAncestorsTreeByKeyword(keyword);
     }
 
     @Override
@@ -54,7 +52,7 @@ public class DistrictService implements DistrictUseCase {
         DistrictEntity districtEntity = this.getById(id);
 
         if (withParents != null && withParents && districtEntity.getParentId() > 0) {
-            districtEntity.setParents(this.districtPersistencePort.getParentsById(districtEntity.getParentId()));
+            districtEntity.setParents(this.districtPersistencePort.getAncestorsById(districtEntity.getParentId()));
         }
 
         return districtEntity;
@@ -118,14 +116,6 @@ public class DistrictService implements DistrictUseCase {
     public void deleteById(Integer id) {
         DistrictEntity districtEntity = this.getById(id);
 
-        List<Integer> childrenIds = this.districtPersistencePort
-                .getChildrenById(districtEntity.getId())
-                .stream()
-                .map(AbstractEntity::getId)
-                .collect(Collectors.toList());
-
-        childrenIds.add(districtEntity.getId());
-
-        this.districtPersistencePort.deleteAllById(childrenIds);
+        this.districtPersistencePort.delete(districtEntity);
     }
 }

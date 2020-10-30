@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersist
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -17,14 +18,10 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class AdminUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
     private final AdminPersistencePort adminPersistencePort;
     private final AdminGroupPersistencePort adminGroupPersistencePort;
-
-    public AdminUserDetailsService(AdminPersistencePort adminPersistencePort, AdminGroupPersistencePort adminGroupPersistencePort) {
-        this.adminPersistencePort = adminPersistencePort;
-        this.adminGroupPersistencePort = adminGroupPersistencePort;
-    }
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws AuthenticationException {

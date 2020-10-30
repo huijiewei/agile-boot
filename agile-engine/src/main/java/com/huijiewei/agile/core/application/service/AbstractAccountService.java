@@ -2,24 +2,23 @@ package com.huijiewei.agile.core.application.service;
 
 import com.huijiewei.agile.core.application.port.inbound.AccountUseCase;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 
-import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author huijiewei
  */
 
 public abstract class AbstractAccountService<T extends AbstractIdentityEntity> implements AccountUseCase<T> {
-    private final ConcurrentMapCacheManager concurrentMapCacheManager;
-
-    protected AbstractAccountService(ConcurrentMapCacheManager concurrentMapCacheManager) {
-        this.concurrentMapCacheManager = concurrentMapCacheManager;
-    }
+    private static final ConcurrentHashMap<String, Integer> TIMES_CACHE_MAP = new ConcurrentHashMap<>();
 
     protected abstract Boolean isCaptchaEnable();
 
     protected abstract String getRetryTimesCacheName();
+
+    private String getCacheKey(String key) {
+        return this.getRetryTimesCacheName() + key;
+    }
 
     protected abstract Boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr);
 
@@ -36,7 +35,7 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
             return 0;
         }
 
-        Integer times = Objects.requireNonNull(this.concurrentMapCacheManager.getCache(this.getRetryTimesCacheName())).get(key, Integer.class);
+        Integer times = TIMES_CACHE_MAP.get(this.getCacheKey(key));
 
         if (times == null) {
             return 0;
@@ -50,6 +49,10 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
             return;
         }
 
-        Objects.requireNonNull(this.concurrentMapCacheManager.getCache(this.getRetryTimesCacheName())).put(key, times);
+        if (times == 0) {
+            TIMES_CACHE_MAP.remove(this.getCacheKey(key));
+        } else {
+            TIMES_CACHE_MAP.put(this.getCacheKey(key), times);
+        }
     }
 }

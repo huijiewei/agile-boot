@@ -10,6 +10,7 @@ import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import com.huijiewei.agile.core.until.TreeUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,18 +20,12 @@ import java.util.List;
  */
 
 @Service
+@RequiredArgsConstructor
 public class ShopCategoryService implements ShopCategoryUseCase {
     private final ShopCategoryPersistencePort shopCategoryPersistencePort;
     private final ShopCategoryRequestMapper shopCategoryRequestMapper;
     private final ValidatingService validatingService;
     private final ShopProductPersistencePort shopProductPersistencePort;
-
-    public ShopCategoryService(ShopCategoryPersistencePort shopCategoryPersistencePort, ShopCategoryRequestMapper shopCategoryRequestMapper, ValidatingService validatingService, ShopProductPersistencePort shopProductPersistencePort) {
-        this.shopCategoryPersistencePort = shopCategoryPersistencePort;
-        this.shopCategoryRequestMapper = shopCategoryRequestMapper;
-        this.validatingService = validatingService;
-        this.shopProductPersistencePort = shopProductPersistencePort;
-    }
 
     private List<ShopCategoryEntity> getParentsById(Integer id) {
         return TreeUtils.getParents(id, this.shopCategoryPersistencePort.getAll());

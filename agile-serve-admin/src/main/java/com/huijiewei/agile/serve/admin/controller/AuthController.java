@@ -12,6 +12,7 @@ import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Tag(name = "auth", description = "管理员登录注册")
+@RequiredArgsConstructor
 public class AuthController {
     private final AdminIdentityUseCase adminIdentityUseCase;
     private final AdminUseCase adminUseCase;
-
-    public AuthController(AdminIdentityUseCase adminIdentityUseCase, AdminUseCase adminUseCase) {
-        this.adminIdentityUseCase = adminIdentityUseCase;
-        this.adminUseCase = adminUseCase;
-    }
 
     @PostMapping(
             value = "/auth/login",

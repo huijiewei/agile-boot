@@ -2,15 +2,16 @@ package com.huijiewei.agile.app.user.adapter.persistence;
 
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.mapper.UserMapper;
-import com.huijiewei.agile.app.user.adapter.persistence.repository.JpaUserRepository;
+import com.huijiewei.agile.app.user.adapter.persistence.repository.UserRepository;
 import com.huijiewei.agile.app.user.application.port.outbound.UserPersistencePort;
 import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
+import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,14 +33,10 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional(readOnly = true)
-public class JpaUserAdapter implements UserUniquePort, UserPersistencePort {
+@RequiredArgsConstructor
+public class UserAdapter implements UserUniquePort, UserPersistencePort {
     private final UserMapper userMapper;
-    private final JpaUserRepository userRepository;
-
-    public JpaUserAdapter(UserMapper userMapper, JpaUserRepository userRepository) {
-        this.userMapper = userMapper;
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     private Specification<User> buildSpecification(UserSearchRequest searchRequest) {
         return (Specification<User>) (root, query, criteriaBuilder) -> {

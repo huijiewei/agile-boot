@@ -13,6 +13,7 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,20 +23,13 @@ import java.util.List;
  */
 
 @Service
+@RequiredArgsConstructor
 public class ShopBrandService implements ShopBrandUseCase {
     private final ShopBrandPersistencePort shopBrandPersistencePort;
     private final ShopCategoryUseCase shopCategoryUseCase;
     private final ValidatingService validatingService;
     private final ShopBrandRequestMapper shopBrandRequestMapper;
     private final ShopProductPersistencePort shopProductPersistencePort;
-
-    public ShopBrandService(ShopBrandPersistencePort shopBrandPersistencePort, ShopCategoryUseCase shopCategoryUseCase, ValidatingService validatingService, ShopBrandRequestMapper shopBrandRequestMapper, ShopProductPersistencePort shopProductPersistencePort) {
-        this.shopBrandPersistencePort = shopBrandPersistencePort;
-        this.shopCategoryUseCase = shopCategoryUseCase;
-        this.validatingService = validatingService;
-        this.shopBrandRequestMapper = shopBrandRequestMapper;
-        this.shopProductPersistencePort = shopProductPersistencePort;
-    }
 
     @Override
     public SearchPageResponse<ShopBrandEntity> all(Integer page, Integer size, ShopBrandSearchRequest searchRequest, Boolean withSearchFields) {
