@@ -15,6 +15,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @Unique(fields = "code", uniqueService = DistrictUniqueService.class, message = "地区代码已存在")
 public class DistrictEntity extends AbstractTreeEntity<DistrictEntity> {
+    public static Integer LEAF_CODE_LENGTH = 9;
+
     @Schema(description = "名称")
     private String name;
 
@@ -29,6 +31,6 @@ public class DistrictEntity extends AbstractTreeEntity<DistrictEntity> {
 
     @Schema(description = "最终节点")
     public Boolean isLeaf() {
-        return this.code.length() == 9;
+        return this.code.length() == LEAF_CODE_LENGTH;
     }
 }

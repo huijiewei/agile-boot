@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.huijiewei.agile.app.user.application.service.UserUniqueService;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.core.constraint.Unique;
@@ -28,11 +29,14 @@ public class UserEntity extends AbstractIdentityEntity {
     private String avatar;
 
     @Schema(description = "创建 IP")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String createdIp;
 
-    @Schema(description = "创建方式")
+    @Schema(description = "创建来源")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UserCreatedFrom createdFrom;
 
-    @Schema(description = "创建来源")
+    @Schema(description = "创建时间")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime createdAt;
 }

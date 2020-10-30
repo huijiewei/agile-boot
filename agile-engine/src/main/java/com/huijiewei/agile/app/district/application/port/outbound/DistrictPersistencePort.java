@@ -3,6 +3,7 @@ package com.huijiewei.agile.app.district.application.port.outbound;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -23,4 +24,6 @@ public interface DistrictPersistencePort {
     List<DistrictEntity> getAncestorsByKeyword(String keyword);
 
     List<DistrictEntity> getAncestorsTreeByKeyword(String keyword);
+
+    Map<String, List<DistrictEntity>> getAllByCodesWithParents(List<String> code);
 }

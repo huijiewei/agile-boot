@@ -1,11 +1,16 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
+import com.github.pnowy.nc.core.NativeExps;
+import com.github.pnowy.nc.core.expressions.NativeOrderExp;
+import com.github.pnowy.nc.core.jpa.JpaQueryProvider;
+import com.github.pnowy.nc.spring.SpringNativeCriteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huijiewei
@@ -95,7 +100,7 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeClosureEntity
                         "FROM %s AS E " +
                         "INNER JOIN %s AS A ON E.id = A.ancestor " +
                         "WHERE A.descendant = :id " +
-                        "ORDER BY E.code, E.id ASC", tableName, closureTableName), entity.getClass())
+                        "ORDER BY E.id ASC", tableName, closureTableName), entity.getClass())
                 .setParameter("id", entity.getId());
     }
 
@@ -115,28 +120,46 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeClosureEntity
                         "FROM %s AS E " +
                         "INNER JOIN %s AS D ON E.id = D.descendant " +
                         "WHERE D.ancestor = :id " +
-                        "ORDER BY E.code, E.id ASC", tableName, closureTableName), entity.getClass())
+                        "ORDER BY E.id ASC", tableName, closureTableName), entity.getClass())
                 .setParameter("id", entity.getId());
     }
 
     @Override
-    public List<T> findAncestorsByKeyword(String keyword, T entity) {
-        return this.buildFindAncestorsByKeywordQuery(keyword, entity).getResultList();
+    public List<T> findAncestors(String sql, Map<String, Object> values, Map<String, NativeOrderExp.OrderType> orders, T entity) {
+        return this.buildAncestorsQuery(sql, values, orders, entity).getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    private TypedQuery<T> buildFindAncestorsByKeywordQuery(String keyword, T entity) {
+    public TypedQuery<T> buildAncestorsQuery(String sql, Map<String, Object> values, Map<String, NativeOrderExp.OrderType> orders, T entity) {
         String tableName = entity.getTableName();
         String closureTableName = entity.getClosureTableName();
 
-        return (TypedQuery<T>) this.entityManager
-                .createNativeQuery(String.format("SELECT DISTINCT E.* " +
-                        "FROM %s AS E " +
-                        "INNER JOIN %s AS A ON E.id = A.ancestor " +
-                        "INNER JOIN %s AS S ON A.descendant = S.id " +
-                        "WHERE S.name LIKE :keyword OR S.code = :code " +
-                        "ORDER BY E.CODE, E.id ASC", tableName, closureTableName, tableName), entity.getClass())
-                .setParameter("keyword", "%" + keyword + "%")
-                .setParameter("code", keyword);
+        SpringNativeCriteria springNativeCriteria = (SpringNativeCriteria) new SpringNativeCriteria(new JpaQueryProvider(entityManager), tableName, "E")
+                .addJoin(NativeExps.innerJoin(closureTableName, "A", "A.ancestor", "E.id"))
+                .addJoin(NativeExps.innerJoin(tableName, "S", "S.id", "A.descendant"))
+                .add(NativeExps.customSql(sql))
+                .setDistinct(true)
+                .setProjection(NativeExps.projection().addProjection(NativeExps.customSql("E.*")));
+
+        NativeOrderExp nativeOrderExp = NativeExps.order();
+
+        for (var order : orders.entrySet()) {
+            nativeOrderExp.add(order.getKey(), order.getValue());
+        }
+
+        nativeOrderExp.add("E.id", NativeOrderExp.OrderType.ASC);
+
+        springNativeCriteria.setOrder(nativeOrderExp);
+
+        String nativeSql = springNativeCriteria.toSQL();
+
+        var query = (TypedQuery<T>) this.entityManager
+                .createNativeQuery(nativeSql, entity.getClass());
+
+        for (var value : values.entrySet()) {
+            query.setParameter(value.getKey(), value.getValue());
+        }
+
+        return query;
     }
 }

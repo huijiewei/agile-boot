@@ -103,6 +103,6 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
     @Override
     public String toString() {
-        return "生成用户数据";
+        return "用户数据生成";
     }
 }

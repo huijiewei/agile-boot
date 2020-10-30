@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Component
-public class ExcelUserAdapter implements UserExportPort {
+public class UserExcelAdapter implements UserExportPort {
     @Override
     public void export(List<UserEntity> userEntities, OutputStream outputStream) throws IOException {
         List<ExcelExportEntity> entities = new ArrayList<>();

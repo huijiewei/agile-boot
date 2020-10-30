@@ -3,6 +3,7 @@ package com.huijiewei.agile.app.user.adapter.persistence;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.mapper.UserMapper;
 import com.huijiewei.agile.app.user.adapter.persistence.repository.UserRepository;
+import com.huijiewei.agile.app.user.application.port.outbound.UserExistsPort;
 import com.huijiewei.agile.app.user.application.port.outbound.UserPersistencePort;
 import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 @Component
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserAdapter implements UserUniquePort, UserPersistencePort {
+public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExistsPort {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
@@ -129,5 +130,10 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort {
     @Override
     public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.userRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
+    }
+
+    @Override
+    public Boolean exists(String targetProperty, List<String> values) {
+        return this.userRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 }

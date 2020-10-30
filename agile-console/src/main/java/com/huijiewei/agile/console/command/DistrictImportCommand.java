@@ -93,6 +93,6 @@ public class DistrictImportCommand implements Consumer<TextIO> {
 
     @Override
     public String toString() {
-        return "区域导入";
+        return "区域数据导入";
     }
 }

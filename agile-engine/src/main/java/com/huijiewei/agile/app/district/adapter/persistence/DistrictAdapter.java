@@ -1,5 +1,6 @@
 package com.huijiewei.agile.app.district.adapter.persistence;
 
+import com.github.pnowy.nc.core.expressions.NativeOrderExp;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.mapper.DistrictMapper;
 import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
@@ -12,6 +13,7 @@ import com.huijiewei.agile.core.until.TreeUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,7 +87,10 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
     @Override
     public List<DistrictEntity> getAncestorsByKeyword(String keyword) {
         return this.districtRepository
-                .findAncestorsByKeyword(keyword, new District())
+                .findAncestors("S.name LIKE :keyword OR S.code = :code",
+                        Map.of("keyword", "%" + keyword + "%", "code", keyword),
+                        Map.of("E.code", NativeOrderExp.OrderType.ASC),
+                        new District())
                 .stream()
                 .map(this.districtMapper::toDistrictEntity)
                 .collect(Collectors.toList());
@@ -94,6 +99,31 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
     @Override
     public List<DistrictEntity> getAncestorsTreeByKeyword(String keyword) {
         return TreeUtils.buildTree(this.getAncestorsByKeyword(keyword));
+    }
+
+    @Override
+    public Map<String, List<DistrictEntity>> getAllByCodesWithParents(List<String> codes) {
+        Map<String, List<DistrictEntity>> districtMap = new HashMap<>(codes.size());
+
+        List<DistrictEntity> districts = this.districtRepository
+                .findAncestors(
+                        "S.code IN (:codes)",
+                        Map.of("codes", codes),
+                        Map.of("E.code", NativeOrderExp.OrderType.ASC),
+                        new District())
+                .stream()
+                .map(this.districtMapper::toDistrictEntity)
+                .collect(Collectors.toList());
+
+        for (String code : codes) {
+            for (DistrictEntity district : districts) {
+                if (district.getCode().equals(code)) {
+                    districtMap.put(code, TreeUtils.getParents(district.getId(), districts));
+                }
+            }
+        }
+
+        return districtMap;
     }
 
     @Override

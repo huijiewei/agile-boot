@@ -35,6 +35,6 @@ public class DistrictClosureCommand implements Consumer<TextIO> {
 
     @Override
     public String toString() {
-        return "地区树形闭包表生成";
+        return "区域数据树形闭包表生成";
     }
 }

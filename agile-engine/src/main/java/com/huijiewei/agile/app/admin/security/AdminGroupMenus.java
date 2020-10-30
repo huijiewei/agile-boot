@@ -23,6 +23,7 @@ public class AdminGroupMenus {
                         .addChild(new AdminGroupMenuItem().label("手动创建").url("user/create"))
                         .addChild(new AdminGroupMenuItem().label("批量导入").url("user/import"))
                 )
+                .addChild(new AdminGroupMenuItem().label("用户地址").url("user-address/index"))
         );
 
         all.add(new AdminGroupMenuItem().label("商品管理")

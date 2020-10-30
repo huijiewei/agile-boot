@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.user.adapter.persistence.entity;
 
-import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.core.adapter.persistence.AbstractJpaEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -10,7 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  * @author huijiewei
@@ -33,10 +32,11 @@ public class UserAddress extends AbstractJpaEntity {
 
     private String districtCode;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "districtCode", referencedColumnName = "code", insertable = false, updatable = false)
-    @Setter(AccessLevel.NONE)
-    private List<District> districtPath;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(updatable = false, insertable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", insertable = false, updatable = false)

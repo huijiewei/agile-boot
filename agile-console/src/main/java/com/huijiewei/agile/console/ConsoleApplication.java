@@ -1,10 +1,8 @@
 package com.huijiewei.agile.console;
 
 import com.cosium.spring.data.jpa.entity.graph.repository.support.EntityGraphJpaRepositoryFactoryBean;
-import com.huijiewei.agile.console.command.CronCommand;
-import com.huijiewei.agile.console.command.DistrictClosureCommand;
-import com.huijiewei.agile.console.command.DistrictImportCommand;
-import com.huijiewei.agile.console.command.UserFakeCommand;
+import com.huijiewei.agile.console.command.*;
+import lombok.RequiredArgsConstructor;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -31,16 +29,12 @@ import java.util.function.Consumer;
         basePackages = "com.huijiewei.agile",
         bootstrapMode = BootstrapMode.DEFERRED
 )
+@RequiredArgsConstructor
 public class ConsoleApplication implements CommandLineRunner {
     private final UserFakeCommand userFakeCommand;
+    private final UserAddressFakeCommand userAddressFakeCommand;
     private final DistrictImportCommand districtImportCommand;
     private final DistrictClosureCommand districtClosureCommand;
-
-    public ConsoleApplication(UserFakeCommand userFakeCommand, DistrictImportCommand districtImportCommand, DistrictClosureCommand districtClosureCommand) {
-        this.userFakeCommand = userFakeCommand;
-        this.districtImportCommand = districtImportCommand;
-        this.districtClosureCommand = districtClosureCommand;
-    }
 
     public static void main(String[] args) {
         SpringApplication.exit(SpringApplication.run(ConsoleApplication.class, args));
@@ -52,6 +46,7 @@ public class ConsoleApplication implements CommandLineRunner {
 
         List<Consumer<TextIO>> commands = Arrays.asList(
                 this.userFakeCommand,
+                this.userAddressFakeCommand,
                 this.districtImportCommand,
                 this.districtClosureCommand,
                 new CronCommand()
