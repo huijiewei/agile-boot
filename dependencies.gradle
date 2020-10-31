@@ -41,7 +41,4 @@ ext.libs = [
         textIo            : [
                 "org.beryx:text-io:${textIoVersion}"
         ],
-        nativeCriteria    : [
-                "com.github.pnowy.nc:nativeCriteria-spring:${nativeCriteriaVersion}"
-        ],
 ]

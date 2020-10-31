@@ -80,8 +80,14 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
         this.shopCategoryRequestMapper.updateShopCategoryEntity(shopCategoryRequest, shopCategoryEntity);
 
+        if (!this.validatingService.validate(shopCategoryEntity)) {
+            return null;
+        }
+
         Integer shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
         shopCategoryEntity.setId(shopCategoryId);
+
+        shopCategoryEntity.setParents(this.getParentsById(shopCategoryEntity.getParentId()));
 
         return shopCategoryEntity;
     }

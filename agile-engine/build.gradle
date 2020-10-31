@@ -16,7 +16,6 @@ dependencies {
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
     implementation libs.easyPoiBase
-    implementation libs.nativeCriteria
 
     implementation project(':agile-spring-captcha')
 

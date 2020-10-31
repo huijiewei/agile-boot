@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.district.adapter.persistence;
 
-import com.github.pnowy.nc.core.expressions.NativeOrderExp;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.mapper.DistrictMapper;
 import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
@@ -89,7 +88,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
         return this.districtRepository
                 .findAncestors("S.name LIKE :keyword OR S.code = :code",
                         Map.of("keyword", "%" + keyword + "%", "code", keyword),
-                        Map.of("E.code", NativeOrderExp.OrderType.ASC),
+                        "E.code, E.id ASC",
                         new District())
                 .stream()
                 .map(this.districtMapper::toDistrictEntity)
@@ -109,7 +108,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
                 .findAncestors(
                         "S.code IN (:codes)",
                         Map.of("codes", codes),
-                        Map.of("E.code", NativeOrderExp.OrderType.ASC),
+                        "E.code, E.id ASC",
                         new District())
                 .stream()
                 .map(this.districtMapper::toDistrictEntity)

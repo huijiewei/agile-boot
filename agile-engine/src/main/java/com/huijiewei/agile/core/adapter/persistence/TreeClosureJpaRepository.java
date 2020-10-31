@@ -1,7 +1,5 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
-import com.github.pnowy.nc.core.expressions.NativeOrderExp;
-
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
@@ -27,5 +25,5 @@ public interface TreeClosureJpaRepository<T extends AbstractJpaTreeClosureEntity
 
     TypedQuery<T> buildDescendantsQuery(T entity);
 
-    List<T> findAncestors(String sql, Map<String, Object> values, Map<String, NativeOrderExp.OrderType> orders, T entity);
+    List<T> findAncestors(String where, Map<String, Object> values, String sort, T entity);
 }

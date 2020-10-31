@@ -1,6 +1,7 @@
 package com.huijiewei.agile.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.huijiewei.agile.core.constraint.NotFalse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NotFalse(messages = "不能选择自己作为上级", properties = "parentId", verifiers = "verifyParentId")
 public class AbstractTreeEntity<T extends AbstractTreeEntity<T>> extends AbstractEntity {
     private Integer parentId;
 
@@ -28,5 +30,9 @@ public class AbstractTreeEntity<T extends AbstractTreeEntity<T>> extends Abstrac
         }
 
         this.children.add(child);
+    }
+
+    public Boolean getVerifyParentId() {
+        return !this.getParentId().equals(this.getId());
     }
 }

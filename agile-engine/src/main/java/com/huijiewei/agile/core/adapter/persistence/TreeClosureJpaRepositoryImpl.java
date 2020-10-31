@@ -1,9 +1,5 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
-import com.github.pnowy.nc.core.NativeExps;
-import com.github.pnowy.nc.core.expressions.NativeOrderExp;
-import com.github.pnowy.nc.core.jpa.JpaQueryProvider;
-import com.github.pnowy.nc.spring.SpringNativeCriteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -125,36 +121,22 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeClosureEntity
     }
 
     @Override
-    public List<T> findAncestors(String sql, Map<String, Object> values, Map<String, NativeOrderExp.OrderType> orders, T entity) {
-        return this.buildAncestorsQuery(sql, values, orders, entity).getResultList();
+    public List<T> findAncestors(String where, Map<String, Object> values, String sort, T entity) {
+        return this.buildAncestorsQuery(where, values, sort, entity).getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    public TypedQuery<T> buildAncestorsQuery(String sql, Map<String, Object> values, Map<String, NativeOrderExp.OrderType> orders, T entity) {
+    public TypedQuery<T> buildAncestorsQuery(String where, Map<String, Object> values, String sort, T entity) {
         String tableName = entity.getTableName();
         String closureTableName = entity.getClosureTableName();
 
-        SpringNativeCriteria springNativeCriteria = (SpringNativeCriteria) new SpringNativeCriteria(new JpaQueryProvider(entityManager), tableName, "E")
-                .addJoin(NativeExps.innerJoin(closureTableName, "A", "A.ancestor", "E.id"))
-                .addJoin(NativeExps.innerJoin(tableName, "S", "S.id", "A.descendant"))
-                .add(NativeExps.customSql(sql))
-                .setDistinct(true)
-                .setProjection(NativeExps.projection().addProjection(NativeExps.customSql("E.*")));
-
-        NativeOrderExp nativeOrderExp = NativeExps.order();
-
-        for (var order : orders.entrySet()) {
-            nativeOrderExp.add(order.getKey(), order.getValue());
-        }
-
-        nativeOrderExp.add("E.id", NativeOrderExp.OrderType.ASC);
-
-        springNativeCriteria.setOrder(nativeOrderExp);
-
-        String nativeSql = springNativeCriteria.toSQL();
-
         var query = (TypedQuery<T>) this.entityManager
-                .createNativeQuery(nativeSql, entity.getClass());
+                .createNativeQuery(String.format("SELECT DISTINCT E.* " +
+                        "FROM %s AS E " +
+                        "INNER JOIN %s AS A ON E.id = A.ancestor " +
+                        "INNER JOIN %s AS S ON A.descendant = S.id " +
+                        "WHERE %s " +
+                        "ORDER BY %s", tableName, closureTableName, tableName, where, sort), entity.getClass());
 
         for (var value : values.entrySet()) {
             query.setParameter(value.getKey(), value.getValue());
