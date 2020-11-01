@@ -26,7 +26,7 @@ public class DistrictImportCommand implements Consumer<TextIO> {
     @Override
     public void accept(TextIO textIO) {
         this.districtRepository.deleteAll();
-        this.districtRepository.truncateClosures(new District());
+        this.districtRepository.truncateClosures(District.class);
 
         var connection = DriverManager.getConnection("jdbc:sqlite:./database/district.sqlite");
         var provinces = connection.createStatement().executeQuery("SELECT * FROM province");

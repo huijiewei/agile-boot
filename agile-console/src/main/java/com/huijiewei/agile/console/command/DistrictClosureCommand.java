@@ -24,7 +24,7 @@ public class DistrictClosureCommand implements Consumer<TextIO> {
         List<District> districts = this.districtRepository
                 .findAll(Sort.by(Sort.Direction.ASC, "parentId", "id"));
 
-        this.districtRepository.truncateClosures(new District());
+        this.districtRepository.truncateClosures(District.class);
 
         for (District district : districts) {
             this.districtRepository.insertClosures(district);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huijiewei
@@ -26,4 +27,26 @@ public interface DistrictRepository extends
      */
     @OrderBy("code, id ASC")
     List<District> findByParentId(Integer parentId);
+
+    default List<District> findAncestorsByKeyword(String keyword) {
+        return this.findAncestors("S.name LIKE :keyword OR S.code = :code",
+                Map.of("keyword", "%" + keyword + "%", "code", keyword),
+                "E.code, E.id ASC",
+                District.class);
+    }
+
+    default List<District> findAncestorsByCodes(List<String> codes) {
+        return this.findAncestors(
+                "S.code IN (:codes)",
+                Map.of("codes", codes),
+                "E.code, E.id ASC",
+                District.class);
+    }
+
+    default List<District> findDescendantsByKeyword(String keyword) {
+        return this.findDescendants("S.name LIKE :keyword OR S.code = :code",
+                Map.of("keyword", "%" + keyword + "%", "code", keyword),
+                "E.code, E.id ASC",
+                District.class);
+    }
 }

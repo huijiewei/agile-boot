@@ -1,6 +1,8 @@
 package com.huijiewei.agile.app.user.adapter.persistence;
 
 import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
+import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.UserAddress;
 import com.huijiewei.agile.app.user.adapter.persistence.mapper.UserAddressMapper;
 import com.huijiewei.agile.app.user.adapter.persistence.repository.UserAddressRepository;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 public class UserAddressAdapter implements UserAddressPersistencePort {
     private final UserAddressRepository userAddressRepository;
     private final UserAddressMapper userAddressMapper;
+    private final DistrictRepository districtRepository;
 
     private Specification<UserAddress> buildSpecification(UserAddressSearchRequest searchRequest) {
         return (Specification<UserAddress>) (root, query, criteriaBuilder) -> {
@@ -44,6 +47,27 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
 
             if (StringUtils.isNotBlank(searchRequest.getPhone())) {
                 predicates.add(criteriaBuilder.like(root.get("phone"), "%" + searchRequest.getPhone() + "%"));
+            }
+
+            if (StringUtils.isNotBlank(searchRequest.getUserName())) {
+                predicates.add(criteriaBuilder.like(root.get("user").get("name"), "%" + searchRequest.getUserName() + "%"));
+            }
+
+            if (StringUtils.isNotBlank(searchRequest.getUserEmail())) {
+                predicates.add(criteriaBuilder.like(root.get("user").get("email"), "%" + searchRequest.getUserEmail() + "%"));
+            }
+
+            if (StringUtils.isNotBlank(searchRequest.getUserPhone())) {
+                predicates.add(criteriaBuilder.like(root.get("user").get("phone"), "%" + searchRequest.getUserPhone() + "%"));
+            }
+
+            if (StringUtils.isNotBlank(searchRequest.getDistrictName())) {
+                predicates.add(root.get("districtCode").in(this.districtRepository
+                        .findDescendantsByKeyword(searchRequest.getDistrictName())
+                        .stream()
+                        .map(District::getCode)
+                        .collect(Collectors.toList())
+                ));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

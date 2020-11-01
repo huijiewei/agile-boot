@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.district.adapter.persistence.entity;
 
-import com.huijiewei.agile.core.adapter.persistence.AbstractJpaTreeClosureEntity;
+import com.huijiewei.agile.core.adapter.persistence.AbstractJpaTreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,7 +17,7 @@ import javax.persistence.Entity;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-public class District extends AbstractJpaTreeClosureEntity {
+public class District extends AbstractJpaTreeEntity {
     private String name;
 
     private String code;
@@ -25,9 +25,4 @@ public class District extends AbstractJpaTreeClosureEntity {
     private String zipCode;
 
     private String areaCode;
-
-    @Override
-    public String getTableName() {
-        return District.tableName(District.class);
-    }
 }
