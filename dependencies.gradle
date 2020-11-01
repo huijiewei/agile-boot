@@ -14,9 +14,6 @@ ext.libs = [
         mapstruct         : [
                 "org.mapstruct:mapstruct:${mapstructVersion}"
         ],
-        jodaTime          : [
-                "joda-time:joda-time:${jodaTimeVersion}"
-        ],
         swaggerAnnotations: [
                 "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
         ],
