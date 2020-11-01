@@ -55,8 +55,8 @@ CREATE TABLE `${table-prefix}admin`
     `updatedAt`    timestamp    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     `deletedAt`    timestamp    NULL     DEFAULT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `email` (`email`) USING BTREE,
-    UNIQUE KEY `phone` (`phone`) USING BTREE,
+    UNIQUE KEY `email` (`email`),
+    UNIQUE KEY `phone` (`phone`),
     KEY `adminGroupId` (`adminGroupId`),
     KEY `deletedAt` (`deletedAt`)
 ) ENGINE = InnoDB
@@ -78,7 +78,7 @@ CREATE TABLE `${table-prefix}admin_access_token`
     `userAgent`   varchar(2048) NOT NULL DEFAULT '',
     `updatedAt`   timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `accessToken` (`clientId`, `accessToken`) USING BTREE,
+    UNIQUE KEY `accessToken` (`clientId`, `accessToken`),
     KEY `clientId` (`clientId`),
     KEY `adminId` (`adminId`)
 ) ENGINE = InnoDB
@@ -121,8 +121,8 @@ CREATE TABLE `${table-prefix}user`
     `updatedAt`   timestamp    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     `deletedAt`   timestamp    NULL     DEFAULT NULL,
     PRIMARY KEY (`id`),
-    KEY `phone` (`phone`) USING BTREE,
-    KEY `email` (`email`) USING BTREE,
+    KEY `phone` (`phone`),
+    KEY `email` (`email`),
     KEY `deletedAt` (`deletedAt`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1981
@@ -182,7 +182,7 @@ CREATE TABLE `${table-prefix}shop_category`
     KEY `parentId` (`parentId`),
     KEY `name` (`name`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1418
+  AUTO_INCREMENT = 1211
   DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `${table-prefix}captcha`
@@ -194,7 +194,7 @@ CREATE TABLE `${table-prefix}captcha`
     `remoteAddr` varchar(50)   NOT NULL DEFAULT '',
     `createdAt`  timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uuid` (`uuid`, `code`, `remoteAddr`) USING BTREE
+    UNIQUE KEY `uuid` (`uuid`, `code`, `remoteAddr`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 136
   DEFAULT CHARSET = utf8mb4;
@@ -208,8 +208,9 @@ CREATE TABLE `${table-prefix}district`
     `zipCode`  varchar(9)  NOT NULL DEFAULT '',
     `areaCode` varchar(9)  NOT NULL DEFAULT '',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `code` (`code`) USING BTREE,
-    KEY `parentId` (`parentId`) USING BTREE
+    UNIQUE KEY `code` (`code`),
+    KEY `parentId` (`parentId`),
+    KEY `name` (`name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1221
   DEFAULT CHARSET = utf8mb4;
