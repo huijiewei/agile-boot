@@ -1,4 +1,4 @@
-rootProject.name = 'agile-spring-boot'
+rootProject.name = 'agile-boot'
 
 include 'agile-engine'
 include 'agile-console'
