@@ -17,15 +17,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author huijiewei
@@ -79,12 +76,9 @@ public class UserController {
             HttpServletResponse response
     ) {
         try {
-            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel;charset=utf-8");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + URLEncoder.encode("用户列表.xlsx", StandardCharsets.UTF_8) + "\"");
+            HttpUtils.setExcelDownload("用户列表.xlsx", response);
 
             this.userUseCase.export(userSearchRequest, response.getOutputStream());
-
-            //response.setHeader(HttpHeaders.CONTENT_LENGTH, );
 
             response.getOutputStream().flush();
             response.getOutputStream().close();
