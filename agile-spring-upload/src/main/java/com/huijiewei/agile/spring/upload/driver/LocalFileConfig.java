@@ -21,9 +21,15 @@ public class LocalFileConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String accessPath = this.properties.getAccessPath();
+
+        if (UploadUtils.isUrl(accessPath)) {
+            return;
+        }
+
         String absoluteUploadPath = UploadUtils.buildAbsoluteUploadPath(this.properties.getUploadPath());
 
-        registry.addResourceHandler(this.properties.getAccessPath())
+        registry.addResourceHandler(accessPath)
                 .addResourceLocations("file:" + absoluteUploadPath)
                 .resourceChain(false);
     }

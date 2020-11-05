@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -62,7 +63,15 @@ public class UploadUtils {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
     }
 
+    public static Boolean isUrl(String accessPath) {
+        return accessPath.startsWith("http") || accessPath.startsWith("https");
+    }
+
     public static String buildAbsoluteAccessPathUrl(String accessPath) {
+        if (UploadUtils.isUrl(accessPath)) {
+            return StringUtils.stripEnd(accessPath, "/");
+        }
+
         String replaceUrl = StringUtils
                 .stripEnd(StringUtils
                         .stripEnd(accessPath, "*"), "/");
@@ -74,7 +83,7 @@ public class UploadUtils {
     }
 
     public static String buildAbsoluteUploadPath(String uploadPath) {
-        String absolutePath = new File(uploadPath).getAbsolutePath();
+        String absolutePath = Paths.get(uploadPath).toAbsolutePath().toString();
 
         return StringUtils.stripEnd(absolutePath, File.separator) + File.separator;
     }

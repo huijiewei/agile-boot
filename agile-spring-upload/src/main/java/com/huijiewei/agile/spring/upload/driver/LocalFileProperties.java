@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class LocalFileProperties {
     public static final String PREFIX = "agile.spring.upload.local-file";
 
-    private String uploadPath = "./files";
     private String accessPath = "/files/**";
+    private String uploadPath = "./files";
     private String corpAction;
     private String uploadAction;
     private String policyKey;
