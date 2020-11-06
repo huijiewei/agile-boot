@@ -1,7 +1,7 @@
 package com.huijiewei.agile.console.command;
 
+import com.huijiewei.agile.core.adapter.config.PrefixTableNamingStrategy;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.beryx.textio.TextIO;
 import org.flywaydb.core.Flyway;
 import org.springframework.core.env.Environment;
@@ -27,16 +27,14 @@ public class DatabaseInitCommand implements Consumer<TextIO> {
     public void accept(TextIO textIO) {
         textIO.getTextTerminal().println("开始初始化数据库...");
 
-        val locations = environment.getProperty("spring.flyway.locations", List.class);
-        var tablePrefix = environment.getProperty("spring.flyway.placeholders.table-prefix");
+        var locations = environment.getProperty("spring.flyway.locations", List.class);
 
         assert locations != null;
-        assert tablePrefix != null;
 
         Flyway flyway = Flyway.configure()
                 .dataSource(dataSource)
                 .locations((String) locations.get(0))
-                .placeholders(Map.of("table-prefix", tablePrefix))
+                .placeholders(Map.of("table-prefix", PrefixTableNamingStrategy.tablePrefix))
                 .load();
 
         flyway.migrate();
