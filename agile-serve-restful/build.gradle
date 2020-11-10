@@ -1,0 +1,28 @@
+apply plugin: 'org.springframework.boot'
+
+bootJar {
+    launchScript()
+}
+
+configurations.all {
+    exclude module: 'spring-boot-starter-tomcat'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation libs.zalandoProblemWeb
+    implementation libs.springdocOpenApiUi
+    implementation libs.jpaEntityGraph
+
+    implementation project(':agile-spring-upload')
+    implementation project(':agile-spring-captcha')
+    implementation project(':agile-engine')
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}

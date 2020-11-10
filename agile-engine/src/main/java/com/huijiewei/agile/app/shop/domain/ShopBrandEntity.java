@@ -19,14 +19,14 @@ import java.util.List;
 @Data
 @Unique.List({
         @Unique(fields = {"name"}, uniqueService = ShopBrandUniqueService.class, message = "品牌已存在"),
-        @Unique(fields = {"alias"}, uniqueService = ShopBrandUniqueService.class, message = "品牌别名已被占用")
+        @Unique(fields = {"slug"}, uniqueService = ShopBrandUniqueService.class, message = "品牌别名已被占用")
 })
 public class ShopBrandEntity extends AbstractEntity {
     @Schema(description = "名称")
     private String name;
 
     @Schema(description = "别名")
-    private String alias;
+    private String slug;
 
     @Schema(description = "LOGO")
     private String logo;

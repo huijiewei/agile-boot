@@ -22,7 +22,7 @@ import java.util.List;
 public class ShopBrand extends AbstractJpaEntity {
     private String name;
 
-    private String alias;
+    private String slug;
 
     private String logo;
 
