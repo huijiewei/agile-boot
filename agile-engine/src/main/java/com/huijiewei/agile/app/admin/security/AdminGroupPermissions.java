@@ -35,6 +35,23 @@ public class AdminGroupPermissions {
                 )
         );
 
+        all.add(new AdminGroupPermissionItem().name("内容管理")
+                .addChild(new AdminGroupPermissionItem().name("文章管理")
+                        .addChild(new AdminGroupPermissionItem().name("文章列表").actionId("cms-article/index"))
+                        .addChild(new AdminGroupPermissionItem().name("文章新建").actionId("cms-article/create"))
+                        .addChild(new AdminGroupPermissionItem().name("文章查看").actionId("cms-article/view/:id"))
+                        .addChild(new AdminGroupPermissionItem().name("文章编辑").actionId("cms-article/edit/:id").addCombine("cms-article/view/:id"))
+                        .addChild(new AdminGroupPermissionItem().name("文章删除").actionId("cms-article/delete").addCombine("cms-article/view/:id"))
+                )
+                .addChild(new AdminGroupPermissionItem().name("内容分类管理")
+                        .addChild(new AdminGroupPermissionItem().name("内容分类").actionId("cms-category/index"))
+                        .addChild(new AdminGroupPermissionItem().name("分类新建").actionId("cms-category/create/:id"))
+                        .addChild(new AdminGroupPermissionItem().name("分类查看").actionId("cms-category/view/:id"))
+                        .addChild(new AdminGroupPermissionItem().name("分类编辑").actionId("cms-category/edit/:id").addCombine("cms-category/view/:id"))
+                        .addChild(new AdminGroupPermissionItem().name("分类删除").actionId("cms-category/delete").addCombine("cms-category/view/:id"))
+                )
+        );
+
         all.add(new AdminGroupPermissionItem().name("商品管理")
                 .addChild(new AdminGroupPermissionItem().name("商品管理")
                         .addChild(new AdminGroupPermissionItem().name("商品列表").actionId("shop-product/index"))

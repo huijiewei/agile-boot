@@ -40,7 +40,7 @@ public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategory
     }
 
     @Override
-    @Cacheable(cacheNames = ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY)
+    @Cacheable(cacheNames = ShopCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY)
     public List<ShopCategoryEntity> getTree() {
         return TreeUtils.buildTree(this.getAll());
     }
@@ -52,7 +52,7 @@ public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategory
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public Integer save(ShopCategoryEntity shopCategoryEntity) {
         ShopCategory shopCategory = this.shopCategoryRepository.save(this.shopCategoryMapper.toShopCategory(shopCategoryEntity));
 
@@ -61,7 +61,7 @@ public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategory
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.SHOP_CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.SHOP_CATEGORY_TREE_CACHE_KEY}, allEntries = true)
+    @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public void deleteAllById(List<Integer> ids) {
         this.shopCategoryRepository.deleteAllById(ids);
     }

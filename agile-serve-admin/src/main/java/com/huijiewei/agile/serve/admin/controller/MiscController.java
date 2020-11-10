@@ -4,6 +4,8 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersist
 import com.huijiewei.agile.app.admin.domain.AdminGroupEntity;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissionItem;
 import com.huijiewei.agile.app.admin.security.AdminGroupPermissions;
+import com.huijiewei.agile.app.cms.application.port.inbound.CmsCategoryUseCase;
+import com.huijiewei.agile.app.cms.domain.CmsCategoryEntity;
 import com.huijiewei.agile.app.district.application.port.inbound.DistrictUseCase;
 import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.app.shop.application.port.inbound.ShopCategoryUseCase;
@@ -35,6 +37,7 @@ public class MiscController {
     private final UploadService uploadService;
     private final ShopCategoryUseCase shopCategoryUseCase;
     private final DistrictUseCase districtUseCase;
+    private final CmsCategoryUseCase cmsCategoryUseCase;
 
     @GetMapping(
             value = "/misc/admin-group-permissions",
@@ -75,6 +78,27 @@ public class MiscController {
     @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
     public List<ShopCategoryEntity> actionShopCategoryPath(Integer id) {
         return this.shopCategoryUseCase.getPathById(id);
+    }
+
+    @GetMapping(
+            value = "/misc/cms-category-tree",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "内容分类树", operationId = "miscCmsCategoryTree")
+    @ApiResponse(responseCode = "200", description = "商品分类树")
+    public List<CmsCategoryEntity> actionCmsCategoryTree() {
+        return this.cmsCategoryUseCase.getTree();
+    }
+
+    @GetMapping(
+            value = "/misc/cms-category-path",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(description = "内容分类路径", operationId = "miscCmsCategoryPath")
+    @ApiResponse(responseCode = "200", description = "内容分类路径")
+    @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
+    public List<CmsCategoryEntity> actionCmsCategoryPath(Integer id) {
+        return this.cmsCategoryUseCase.getPathById(id);
     }
 
     @GetMapping(

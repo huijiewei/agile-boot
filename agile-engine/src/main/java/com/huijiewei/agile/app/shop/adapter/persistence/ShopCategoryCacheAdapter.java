@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class ShopCategoryCacheAdapter {
-    public static final String SHOP_CATEGORIES_CACHE_KEY = "shop-categories";
-    public static final String SHOP_CATEGORY_TREE_CACHE_KEY = "shop-category-tree";
+    public static final String CATEGORIES_CACHE_KEY = "shop-categories";
+    public static final String CATEGORY_TREE_CACHE_KEY = "shop-category-tree";
 
     private final ShopCategoryRepository shopCategoryRepository;
     private final ShopCategoryMapper shopCategoryMapper;
 
-    @Cacheable(cacheNames = SHOP_CATEGORIES_CACHE_KEY)
+    @Cacheable(cacheNames = CATEGORIES_CACHE_KEY)
     public List<ShopCategoryEntity> getAll() {
         return this.shopCategoryRepository
                 .findAll()
