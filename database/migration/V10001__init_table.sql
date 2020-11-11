@@ -150,7 +150,7 @@ CREATE TABLE `${table-prefix}shop_brand`
 (
     `id`          int          NOT NULL AUTO_INCREMENT,
     `name`        varchar(60)  NOT NULL DEFAULT '',
-    `slug`       varchar(50)  NOT NULL DEFAULT '',
+    `slug`        varchar(50)  NOT NULL DEFAULT '',
     `logo`        varchar(255) NOT NULL DEFAULT '',
     `website`     varchar(255) NOT NULL DEFAULT '',
     `description` text,
@@ -244,4 +244,32 @@ CREATE TABLE `${table-prefix}shop_product`
     KEY `name` (`name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 12230
+  DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `${table-prefix}cms_category`
+(
+    `id`          int          NOT NULL AUTO_INCREMENT,
+    `parentId`    int          NOT NULL DEFAULT '0',
+    `name`        varchar(60)  NOT NULL DEFAULT '',
+    `slug`        varchar(60)  NOT NULL DEFAULT '',
+    `icon`        text,
+    `image`       varchar(500) NOT NULL DEFAULT '',
+    `description` text,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `slug` (`slug`),
+    KEY `parentId` (`parentId`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1211
+  DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `${table-prefix}cms_article`
+(
+    `id`            int          NOT NULL AUTO_INCREMENT,
+    `cmsCategoryId` int          NOT NULL DEFAULT '0',
+    `title`         varchar(255) NOT NULL DEFAULT '',
+    `createdAt`     timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `cmsCategoryId` (`cmsCategoryId`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 121211
   DEFAULT CHARSET = utf8mb4;
