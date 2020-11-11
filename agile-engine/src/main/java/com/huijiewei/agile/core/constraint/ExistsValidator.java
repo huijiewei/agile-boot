@@ -1,8 +1,8 @@
 package com.huijiewei.agile.core.constraint;
 
 import com.huijiewei.agile.core.application.port.inbound.ExistsUseCase;
+import com.huijiewei.agile.core.until.StringUtils;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

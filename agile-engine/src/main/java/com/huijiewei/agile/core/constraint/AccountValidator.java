@@ -8,7 +8,7 @@ import com.huijiewei.agile.core.consts.IdentityLogType;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
 import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
 import com.huijiewei.agile.core.until.SecurityUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.huijiewei.agile.core.until.StringUtils;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

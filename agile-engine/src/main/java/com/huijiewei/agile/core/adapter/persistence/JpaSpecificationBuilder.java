@@ -1,6 +1,6 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
-import org.apache.commons.lang3.StringUtils;
+import com.huijiewei.agile.core.until.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;

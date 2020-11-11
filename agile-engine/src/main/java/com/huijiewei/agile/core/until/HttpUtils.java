@@ -12,19 +12,22 @@ import java.nio.charset.StandardCharsets;
  */
 
 public class HttpUtils {
-    public static String getUserAgent(HttpServletRequest servletRequest) {
+    private HttpUtils() {
+    }
+
+    public static String getUserAgent(final HttpServletRequest servletRequest) {
         return servletRequest.getHeader("User-Agent") != null ? servletRequest.getHeader("User-Agent") : "";
     }
 
-    public static String getClientId(HttpServletRequest servletRequest) {
+    public static String getClientId(final HttpServletRequest servletRequest) {
         return servletRequest.getHeader("X-Client-Id") != null ? servletRequest.getHeader("X-Client-Id") : "";
     }
 
-    public static String getRemoteAddr(HttpServletRequest servletRequest) {
+    public static String getRemoteAddr(final HttpServletRequest servletRequest) {
         return servletRequest.getRemoteAddr();
     }
 
-    public static void setExcelDownload(String fileName, HttpServletResponse servletResponse) {
+    public static void setExcelDownload(final String fileName, HttpServletResponse servletResponse) {
         servletResponse.setContentType("application/vnd.ms-excel");
         servletResponse.setCharacterEncoding("utf-8");
         servletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + "\"");

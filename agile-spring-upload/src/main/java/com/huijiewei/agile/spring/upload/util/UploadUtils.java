@@ -30,6 +30,8 @@ public class UploadUtils {
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'Z'};
 
+    private UploadUtils() {}
+
     public static String random(int size) {
         Random random = new Random();
         char[] cs = new char[size];

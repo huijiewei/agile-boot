@@ -2,6 +2,7 @@ package com.huijiewei.agile.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.huijiewei.agile.core.constraint.NotFalse;
+import com.huijiewei.agile.core.until.CollectionUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,9 +31,5 @@ public class AbstractTreeEntity<T extends AbstractTreeEntity<T>> extends Abstrac
         }
 
         this.children.add(child);
-    }
-
-    public Boolean getVerifyParentId() {
-        return !this.getParentId().equals(this.getId());
     }
 }

@@ -4,8 +4,8 @@ import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersist
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
+import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;

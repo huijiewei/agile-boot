@@ -9,6 +9,9 @@ import java.util.*;
  */
 
 public class TreeUtils {
+    private TreeUtils() {
+    }
+
     private static <T extends AbstractTreeEntity<T>> T getItemInListById(Integer id, List<T> list) {
         for (T item : list) {
             if (item.getId().equals(id)) {
@@ -25,7 +28,7 @@ public class TreeUtils {
         for (T node : tree) {
             ids.add(node.getId());
 
-            if (node.getChildren() != null && !node.getChildren().isEmpty()) {
+            if (CollectionUtils.isNotEmpty(node.getChildren())) {
                 ids.addAll(TreeUtils.getNodeIdsInTree(node.getChildren()));
             }
         }
@@ -44,7 +47,7 @@ public class TreeUtils {
             if (node.getId().equals(id)) {
                 result = node;
                 break;
-            } else if (node.getChildren() != null && !node.getChildren().isEmpty()) {
+            } else if (CollectionUtils.isNotEmpty(node.getChildren())) {
                 result = TreeUtils.getNodeInTreeById(id, node.getChildren());
             }
         }

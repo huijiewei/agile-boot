@@ -1,8 +1,8 @@
 package com.huijiewei.agile.core.consts;
 
+import com.huijiewei.agile.core.until.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

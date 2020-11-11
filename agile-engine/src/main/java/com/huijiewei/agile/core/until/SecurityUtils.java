@@ -10,15 +10,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityUtils {
     private final static BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-    public static String passwordEncode(String password) {
+    private SecurityUtils() {
+    }
+
+    public static String passwordEncode(final String password) {
         return SecurityUtils.PASSWORD_ENCODER.encode(password);
     }
 
-    public static boolean passwordMatches(String password, String encodePassword) {
+    public static boolean passwordMatches(final String password, final String encodePassword) {
         return SecurityUtils.PASSWORD_ENCODER.matches(password, encodePassword);
     }
 
-    public static String md5(String value) {
+    public static String md5(final String value) {
         return DigestUtils.md5Hex(value);
     }
 }

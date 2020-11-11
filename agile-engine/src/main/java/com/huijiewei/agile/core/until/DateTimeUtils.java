@@ -5,5 +5,6 @@ package com.huijiewei.agile.core.until;
  */
 
 public class DateTimeUtils {
-
+    private DateTimeUtils() {
+    }
 }
