@@ -40,7 +40,7 @@ public class ShopBrandEntity extends AbstractEntity {
     @JsonIgnore
     private List<Integer> shopCategoryIds;
 
-    @Schema(description = "绑定分类")
+    @Schema(description = "商品分类")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShopCategoryEntity> shopCategories;
 }
