@@ -1,7 +1,6 @@
 package com.huijiewei.agile.app.cms.application.request;
 
 import com.huijiewei.agile.app.cms.application.service.CmsCategoryExistsService;
-import com.huijiewei.agile.app.shop.application.service.ShopCategoryExistsService;
 import com.huijiewei.agile.core.constraint.Exists;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -34,6 +33,8 @@ public class CmsArticleRequest {
     @NotBlank
     @Schema(description = "文章内容", required = true)
     private String content;
+
+    private Integer adminId;
 
     @NotNull
     @Schema(description = "内容分类", required = true)

@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.admin.domain.AdminEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,5 +18,5 @@ public class AdminIdentity {
 
     private AdminEntity adminEntity;
 
-    private List<String> permissions;
+    private List<String> permissions = new ArrayList<>();
 }

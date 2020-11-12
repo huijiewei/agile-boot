@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,5 +24,5 @@ public class AdminGroupEntity extends AbstractEntity {
 
     @Schema(description = "管理组权限")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<String> permissions;
+    private List<String> permissions = new ArrayList<>();
 }

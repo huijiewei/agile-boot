@@ -12,6 +12,7 @@ import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
+import com.huijiewei.agile.core.until.CollectionUtils;
 import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -98,7 +99,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
             this.shopBrandCategoryRepository.deleteAllByShopBrandId(id);
         }
 
-        if (shopCategoryIds == null || shopCategoryIds.isEmpty()) {
+        if (CollectionUtils.isEmpty(shopCategoryIds)) {
             return;
         }
 

@@ -49,15 +49,13 @@ public class ShopBrandService implements ShopBrandUseCase {
     private ShopBrandEntity fillCategories(ShopBrandEntity shopBrandEntity) {
         List<ShopCategoryEntity> shopCategoryResponses = shopBrandEntity.getShopCategories();
 
-        if (shopCategoryResponses != null) {
-            for (int i = 0; i < shopCategoryResponses.size(); i++) {
-                ShopCategoryEntity shopCategoryEntity = shopCategoryResponses.get(i);
-                shopCategoryEntity.setParents(this.shopCategoryUseCase.getPathById(shopCategoryEntity.getParentId()));
-                shopCategoryResponses.set(i, shopCategoryEntity);
-            }
-
-            shopBrandEntity.setShopCategories(shopCategoryResponses);
+        for (int i = 0; i < shopCategoryResponses.size(); i++) {
+            ShopCategoryEntity shopCategoryEntity = shopCategoryResponses.get(i);
+            shopCategoryEntity.setParents(this.shopCategoryUseCase.getPathById(shopCategoryEntity.getParentId()));
+            shopCategoryResponses.set(i, shopCategoryEntity);
         }
+
+        shopBrandEntity.setShopCategories(shopCategoryResponses);
 
         return shopBrandEntity;
     }

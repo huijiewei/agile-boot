@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,9 +39,9 @@ public class ShopBrandEntity extends AbstractEntity {
     private String description;
 
     @JsonIgnore
-    private List<Integer> shopCategoryIds;
+    private List<Integer> shopCategoryIds = new ArrayList<>();
 
     @Schema(description = "商品分类")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<ShopCategoryEntity> shopCategories;
+    private List<ShopCategoryEntity> shopCategories = new ArrayList<>();
 }

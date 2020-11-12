@@ -2,13 +2,16 @@ package com.huijiewei.agile.app.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
+import com.huijiewei.agile.app.admin.domain.AdminEntity;
+import com.huijiewei.agile.app.shop.application.service.ShopBrandUniqueService;
+import com.huijiewei.agile.core.constraint.Unique;
 import com.huijiewei.agile.core.domain.AbstractEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +20,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Unique(fields = {"slug"}, uniqueService = ShopBrandUniqueService.class, message = "文章别名已被占用")
 public class CmsArticleEntity extends AbstractEntity {
     @Schema(description = "别名")
     private String slug;
@@ -25,7 +29,7 @@ public class CmsArticleEntity extends AbstractEntity {
     private String title;
 
     @Schema(description = "封面")
-    private String cover;
+    private String image;
 
     @Schema(description = "介绍")
     private String description;
@@ -41,7 +45,7 @@ public class CmsArticleEntity extends AbstractEntity {
 
     @Schema(description = "文章作者")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Admin admin;
+    private AdminEntity admin;
 
     @JsonIgnore
     private Integer cmsCategoryId;
@@ -52,5 +56,5 @@ public class CmsArticleEntity extends AbstractEntity {
 
     @Schema(description = "文章标签")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<CmsTagEntity> cmsTags;
+    private List<CmsTagEntity> cmsTags = new ArrayList<>();
 }

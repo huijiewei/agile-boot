@@ -28,9 +28,11 @@ public class AdminEntity extends AbstractIdentityEntity {
     private String avatar;
 
     @Schema(description = "创建时间")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime createdAt;
 
     @Schema(description = "所属管理组 Id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer adminGroupId;
 
     @Schema(description = "所属管理组")

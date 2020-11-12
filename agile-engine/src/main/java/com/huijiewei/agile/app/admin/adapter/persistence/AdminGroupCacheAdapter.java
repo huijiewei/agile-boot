@@ -2,6 +2,7 @@ package com.huijiewei.agile.app.admin.adapter.persistence;
 
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminGroupPermission;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminGroupPermissionRepository;
+import com.huijiewei.agile.core.until.CollectionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,7 +39,7 @@ public class AdminGroupCacheAdapter {
             this.jpaAdminGroupPermissionRepository.deleteByAdminGroupId(id);
         }
 
-        if (permissions == null || permissions.isEmpty()) {
+        if (CollectionUtils.isEmpty(permissions)) {
             return;
         }
 
