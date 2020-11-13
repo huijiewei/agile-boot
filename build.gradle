@@ -19,8 +19,7 @@ allprojects {
     version = '1.0.1'
 
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/central/' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
 
         mavenCentral()
         jcenter()
