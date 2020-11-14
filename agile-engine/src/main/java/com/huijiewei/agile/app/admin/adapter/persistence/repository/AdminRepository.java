@@ -53,5 +53,5 @@ public interface AdminRepository extends
      * @param adminGroupId 管理组 Id
      * @return Boolean
      */
-    Boolean existsByAdminGroupId(Integer adminGroupId);
+    boolean existsByAdminGroupId(Integer adminGroupId);
 }

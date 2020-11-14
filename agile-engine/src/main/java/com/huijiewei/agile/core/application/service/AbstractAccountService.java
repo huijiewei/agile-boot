@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractAccountService<T extends AbstractIdentityEntity> implements AccountUseCase<T> {
     private static final ConcurrentHashMap<String, Integer> TIMES_CACHE_MAP = new ConcurrentHashMap<>();
 
-    protected abstract Boolean isCaptchaEnable();
+    protected abstract boolean isCaptchaDisabled();
 
     protected abstract String getRetryTimesCacheName();
 
@@ -23,7 +23,7 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
     protected abstract boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr);
 
     public boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr) {
-        if (!this.isCaptchaEnable()) {
+        if (this.isCaptchaDisabled()) {
             return true;
         }
 
@@ -31,7 +31,7 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
     }
 
     public Integer getRetryTimes(String key) {
-        if (!this.isCaptchaEnable()) {
+        if (this.isCaptchaDisabled()) {
             return 0;
         }
 
@@ -45,7 +45,7 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
     }
 
     public void setRetryTimes(String key, Integer times) {
-        if (!this.isCaptchaEnable()) {
+        if (this.isCaptchaDisabled()) {
             return;
         }
 

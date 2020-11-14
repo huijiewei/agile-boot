@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
 public interface CmsArticleMapper {
     @Mapping(target = "cmsCategoryId", ignore = true)
     @Mapping(target = "admin.adminGroup", ignore = true)
+    @Mapping(target = "cmsCategory.parents", ignore = true)
+    @Mapping(target = "cmsCategory.children", ignore = true)
     CmsArticleEntity toCmsArticleEntity(CmsArticle cmsArticle);
 
     @Mapping(target = "createdAt", ignore = true)

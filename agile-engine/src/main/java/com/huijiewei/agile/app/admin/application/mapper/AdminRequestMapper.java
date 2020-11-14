@@ -9,9 +9,12 @@ import org.mapstruct.*;
  */
 
 @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper
 public interface AdminRequestMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "adminGroup", ignore = true)
     AdminEntity toAdminEntity(AdminRequest adminRequest);
 
     @InheritConfiguration

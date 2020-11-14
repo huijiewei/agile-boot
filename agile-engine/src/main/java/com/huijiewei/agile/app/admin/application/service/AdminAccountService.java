@@ -40,8 +40,8 @@ public class AdminAccountService extends AbstractAccountService<AdminEntity> {
     }
 
     @Override
-    protected Boolean isCaptchaEnable() {
-        return true;
+    protected boolean isCaptchaDisabled() {
+        return false;
     }
 
     @Override
