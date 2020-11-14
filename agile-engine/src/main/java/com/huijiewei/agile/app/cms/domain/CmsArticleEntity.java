@@ -35,6 +35,7 @@ public class CmsArticleEntity extends AbstractEntity {
     private String description;
 
     @Schema(description = "内容")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String content;
 
     @Schema(description = "创建时间")
