@@ -25,6 +25,6 @@ public class ShopProductAdapter implements ShopProductPersistencePort {
 
     @Override
     public Boolean existsByShopCategoryIds(List<Integer> shopCategoryIds) {
-        return this.shopProductRepository.existsByShopCategoryIds(shopCategoryIds);
+        return this.shopProductRepository.existsByShopCategoryIdIn(shopCategoryIds);
     }
 }

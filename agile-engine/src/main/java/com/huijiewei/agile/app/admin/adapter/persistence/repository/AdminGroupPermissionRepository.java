@@ -23,9 +23,7 @@ public interface AdminGroupPermissionRepository extends
      * @param adminGroupId adminGroupId
      * @return 管理组权限列表
      */
-    List<AdminGroupPermission> findAllByAdminGroupId(Integer adminGroupId);
+    List<AdminGroupPermission> findByAdminGroupId(Integer adminGroupId);
 
-    @Modifying
-    @Query("DELETE FROM AdminGroupPermission WHERE adminGroupId = ?1")
-    void deleteByAdminGroupId(Integer id);
+    void deleteByAdminGroupId(Integer adminGroupId);
 }

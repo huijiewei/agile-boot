@@ -63,6 +63,6 @@ public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategory
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = {ShopCategoryCacheAdapter.CATEGORIES_CACHE_KEY, ShopCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public void deleteAllById(List<Integer> ids) {
-        this.shopCategoryRepository.deleteAllById(ids);
+        this.shopCategoryRepository.deleteByIdIn(ids);
     }
 }

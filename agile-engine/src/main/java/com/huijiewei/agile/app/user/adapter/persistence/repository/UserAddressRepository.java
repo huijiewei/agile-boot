@@ -15,5 +15,5 @@ import java.util.List;
 public interface UserAddressRepository extends
         EntityGraphJpaRepository<UserAddress, Integer>,
         EntityGraphJpaSpecificationExecutor<UserAddress> {
-    List<UserAddress> findAllByUserId(Integer userId);
+    List<UserAddress> findByUserId(Integer userId);
 }

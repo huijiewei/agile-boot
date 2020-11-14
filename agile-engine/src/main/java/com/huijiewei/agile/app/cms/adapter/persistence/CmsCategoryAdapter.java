@@ -63,6 +63,6 @@ public class CmsCategoryAdapter implements CmsCategoryExistsPort, CmsCategoryPer
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = {CmsCategoryCacheAdapter.CATEGORIES_CACHE_KEY, CmsCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public void deleteAllById(List<Integer> ids) {
-        this.cmsCategoryRepository.deleteAllById(ids);
+        this.cmsCategoryRepository.deleteByIdIn(ids);
     }
 }

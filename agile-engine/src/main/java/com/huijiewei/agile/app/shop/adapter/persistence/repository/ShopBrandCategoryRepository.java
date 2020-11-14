@@ -15,7 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface ShopBrandCategoryRepository extends
         BatchJpaRepository<ShopBrandCategory>,
         JpaRepository<ShopBrandCategory, Integer> {
-    @Modifying
-    @Query("DELETE FROM ShopBrandCategory WHERE shopBrandId = ?1")
-    void deleteAllByShopBrandId(Integer id);
+    void deleteByShopBrandId(Integer shopBrandId);
 }

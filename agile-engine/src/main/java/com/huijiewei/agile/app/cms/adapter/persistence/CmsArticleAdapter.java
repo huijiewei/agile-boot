@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +39,8 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     private final CmsArticleMapper cmsArticleMapper;
 
     @Override
-    public Boolean existsByCmsCategoryIds(List<Integer> cmsCategoryIds) {
-        return this.cmsArticleRepository.existsByCmsCategoryIds(cmsCategoryIds);
+    public boolean existsByCmsCategoryIdIn(Collection<Integer> cmsCategoryId) {
+        return this.cmsArticleRepository.existsByCmsCategoryIdIn(cmsCategoryId);
     }
 
     private Specification<CmsArticle> buildSpecification(CmsArticleSearchRequest searchRequest) {
@@ -91,7 +92,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer save(CmsArticleEntity cmsArticleEntity) {
+    public int save(CmsArticleEntity cmsArticleEntity) {
         CmsArticle cmsArticle = this.cmsArticleRepository.save(this.cmsArticleMapper.toCmsArticle(cmsArticleEntity));
 
         return cmsArticle.getId();
@@ -100,7 +101,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-        this.cmsArticleTagRepository.deleteAllByCmsArticleId(id);
+        this.cmsArticleTagRepository.deleteByCmsArticleId(id);
         this.cmsArticleRepository.deleteById(id);
     }
 }

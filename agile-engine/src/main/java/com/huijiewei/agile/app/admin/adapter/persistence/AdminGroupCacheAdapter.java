@@ -27,7 +27,7 @@ public class AdminGroupCacheAdapter {
     @Cacheable(cacheNames = ADMIN_GROUP_PERMISSIONS_CACHE_KEY, key = "#id")
     public List<String> getPermissions(Integer id) {
         return this.jpaAdminGroupPermissionRepository
-                .findAllByAdminGroupId(id)
+                .findByAdminGroupId(id)
                 .stream()
                 .map(AdminGroupPermission::getActionId)
                 .collect(Collectors.toList());

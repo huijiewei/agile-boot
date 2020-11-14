@@ -96,7 +96,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
 
     private void updateShopBrandCategories(Integer id, List<Integer> shopCategoryIds, Boolean delete) {
         if (delete) {
-            this.shopBrandCategoryRepository.deleteAllByShopBrandId(id);
+            this.shopBrandCategoryRepository.deleteByShopBrandId(id);
         }
 
         if (CollectionUtils.isEmpty(shopCategoryIds)) {
@@ -118,7 +118,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-        this.shopBrandCategoryRepository.deleteAllByShopBrandId(id);
+        this.shopBrandCategoryRepository.deleteByShopBrandId(id);
         this.shopBrandRepository.deleteById(id);
     }
 }

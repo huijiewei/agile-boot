@@ -99,7 +99,7 @@ public class CmsCategoryService implements CmsCategoryUseCase {
         List<Integer> deleteIds = TreeUtils.getChildrenIds(cmsCategoryEntity.getId(), this.cmsCategoryPersistencePort.getTree());
         deleteIds.add(cmsCategoryEntity.getId());
 
-        if (this.cmsArticlePersistencePort.existsByCmsCategoryIds(deleteIds)) {
+        if (this.cmsArticlePersistencePort.existsByCmsCategoryIdIn(deleteIds)) {
             throw new ConflictException("内容分类内拥有文章，无法删除");
         }
 

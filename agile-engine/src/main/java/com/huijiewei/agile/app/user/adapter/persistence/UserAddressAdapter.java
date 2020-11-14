@@ -101,7 +101,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
 
     @Override
     public List<UserAddressEntity> getAllByUserId(Integer userId) {
-        return this.userAddressRepository.findAllByUserId(userId)
+        return this.userAddressRepository.findByUserId(userId)
                 .stream()
                 .map(this.userAddressMapper::toUserAddressEntity)
                 .collect(Collectors.toList());
