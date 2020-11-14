@@ -1,5 +1,6 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.repository;
 
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaIdentityEntity;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;

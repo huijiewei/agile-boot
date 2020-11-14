@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.user.adapter.persistence.entity;
 
-import com.huijiewei.agile.core.adapter.persistence.AbstractJpaIdentityEntity;
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaIdentityEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;

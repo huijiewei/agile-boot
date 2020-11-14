@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
  * @author huijiewei
  */
 
-public class PaginationCover {
+public class JpaPaginationMapper {
     public static PageResponse.Pagination toPagination(Page<?> page) {
         PageResponse.Pagination pagination = new PageResponse.Pagination();
 

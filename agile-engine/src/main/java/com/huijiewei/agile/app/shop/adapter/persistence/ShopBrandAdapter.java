@@ -10,7 +10,7 @@ import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandUniquePor
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.CollectionUtils;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -70,7 +70,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
                 .map(this.shopBrandMapper::toShopBrandEntity)
                 .collect(Collectors.toList()));
 
-        shopBrandEntityResponses.setPages(PaginationCover.toPagination(shopBrandPage));
+        shopBrandEntityResponses.setPages(JpaPaginationMapper.toPagination(shopBrandPage));
 
         if (withSearchFields != null && withSearchFields) {
             shopBrandEntityResponses.setSearchFields(searchRequest.getSearchFields());

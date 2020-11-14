@@ -1,7 +1,7 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.repository;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaTreeEntity;
+
 import java.util.List;
 import java.util.Map;
 

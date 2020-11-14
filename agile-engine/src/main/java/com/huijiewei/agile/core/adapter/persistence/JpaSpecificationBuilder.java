@@ -1,5 +1,6 @@
 package com.huijiewei.agile.core.adapter.persistence;
 
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 import com.huijiewei.agile.core.until.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 

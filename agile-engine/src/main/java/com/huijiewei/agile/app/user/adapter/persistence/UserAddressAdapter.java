@@ -9,7 +9,7 @@ import com.huijiewei.agile.app.user.adapter.persistence.repository.UserAddressRe
 import com.huijiewei.agile.app.user.application.port.outbound.UserAddressPersistencePort;
 import com.huijiewei.agile.app.user.application.request.UserAddressSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserAddressEntity;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +90,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
                 .map(this.userAddressMapper::toUserAddressEntity)
                 .collect(Collectors.toList()));
 
-        userAddressEntityResponse.setPages(PaginationCover.toPagination(userAddressPage));
+        userAddressEntityResponse.setPages(JpaPaginationMapper.toPagination(userAddressPage));
 
         if (withSearchFields != null && withSearchFields) {
             userAddressEntityResponse.setSearchFields(searchRequest.getSearchFields());

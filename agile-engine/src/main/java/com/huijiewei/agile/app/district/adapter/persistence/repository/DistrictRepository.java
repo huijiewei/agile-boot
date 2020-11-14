@@ -3,7 +3,7 @@ package com.huijiewei.agile.app.district.adapter.persistence.repository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
-import com.huijiewei.agile.core.adapter.persistence.TreeClosureJpaRepository;
+import com.huijiewei.agile.core.adapter.persistence.repository.TreeClosureJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.OrderBy;

@@ -1,4 +1,6 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.repository;
+
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 
 import java.util.List;
 

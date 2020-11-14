@@ -1,4 +1,4 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

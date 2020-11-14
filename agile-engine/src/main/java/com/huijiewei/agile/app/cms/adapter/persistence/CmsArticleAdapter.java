@@ -7,7 +7,7 @@ import com.huijiewei.agile.app.cms.adapter.persistence.repository.CmsArticleTagR
 import com.huijiewei.agile.app.cms.application.port.outbound.CmsArticlePersistencePort;
 import com.huijiewei.agile.app.cms.application.request.CmsArticleSearchRequest;
 import com.huijiewei.agile.app.cms.domain.CmsArticleEntity;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -76,7 +76,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
                 .map(this.cmsArticleMapper::toCmsArticleEntity)
                 .collect(Collectors.toList()));
 
-        articleEntityResponses.setPages(PaginationCover.toPagination(articlePage));
+        articleEntityResponses.setPages(JpaPaginationMapper.toPagination(articlePage));
 
         if (withSearchFields != null && withSearchFields) {
             articleEntityResponses.setSearchFields(searchRequest.getSearchFields());

@@ -1,4 +1,4 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.entity;
 
 import com.huijiewei.agile.core.adapter.config.PrefixTableNamingStrategy;
 import lombok.Data;

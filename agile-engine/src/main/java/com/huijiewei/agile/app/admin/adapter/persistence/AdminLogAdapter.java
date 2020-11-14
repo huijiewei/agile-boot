@@ -8,7 +8,7 @@ import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminLogRepo
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersistencePort;
 import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -95,7 +95,7 @@ class AdminLogAdapter implements AdminLogPersistencePort {
                 .map(this.adminLogMapper::toAdminLogEntity)
                 .collect(Collectors.toList()));
 
-        adminLogEntityResponses.setPages(PaginationCover.toPagination(adminLogPage));
+        adminLogEntityResponses.setPages(JpaPaginationMapper.toPagination(adminLogPage));
 
         if (withSearchFields != null && withSearchFields) {
             adminLogEntityResponses.setSearchFields(searchRequest.getSearchFields());

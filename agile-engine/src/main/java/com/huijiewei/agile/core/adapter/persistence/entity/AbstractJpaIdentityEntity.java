@@ -1,5 +1,6 @@
-package com.huijiewei.agile.core.adapter.persistence;
+package com.huijiewei.agile.core.adapter.persistence.entity;
 
+import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -9,7 +9,7 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
-import com.huijiewei.agile.core.adapter.persistence.PaginationCover;
+import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -90,7 +90,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
                 .map(this.userMapper::toUserEntity)
                 .collect(Collectors.toList()));
 
-        userEntityResponses.setPages(PaginationCover.toPagination(userPage));
+        userEntityResponses.setPages(JpaPaginationMapper.toPagination(userPage));
 
         if (withSearchFields != null && withSearchFields) {
             userEntityResponses.setSearchFields(searchRequest.getSearchFields());

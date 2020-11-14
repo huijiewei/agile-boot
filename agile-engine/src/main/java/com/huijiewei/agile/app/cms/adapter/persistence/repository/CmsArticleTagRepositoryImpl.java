@@ -1,7 +1,7 @@
 package com.huijiewei.agile.app.cms.adapter.persistence.repository;
 
 import com.huijiewei.agile.app.cms.adapter.persistence.entity.CmsArticleTag;
-import com.huijiewei.agile.core.adapter.persistence.BatchJpaRepository;
+import com.huijiewei.agile.core.adapter.persistence.repository.BatchJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
