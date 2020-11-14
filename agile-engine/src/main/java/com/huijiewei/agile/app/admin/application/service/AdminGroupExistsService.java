@@ -17,7 +17,7 @@ public class AdminGroupExistsService implements ExistsUseCase {
     private final AdminGroupExistsPort adminGroupExistsPort;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.adminGroupExistsPort.exists(targetProperty, values);
     }
 }

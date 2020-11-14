@@ -17,7 +17,7 @@ public class AdminGroupUniqueService implements UniqueUseCase {
     private final AdminGroupUniquePort adminGroupUniquePort;
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.adminGroupUniquePort.unique(values, primaryKey, primaryValue);
     }
 }

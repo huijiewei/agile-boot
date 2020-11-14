@@ -7,5 +7,5 @@ import java.util.Map;
  */
 
 public interface UniquePort {
-    Boolean unique(Map<String, String> values, String primaryKey, String primaryValue);
+    boolean unique(Map<String, String> values, String primaryKey, String primaryValue);
 }

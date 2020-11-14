@@ -7,5 +7,5 @@ import java.util.List;
  */
 
 public interface ExistsPort {
-    Boolean exists(String targetProperty, List<String> values);
+    boolean exists(String targetProperty, List<String> values);
 }

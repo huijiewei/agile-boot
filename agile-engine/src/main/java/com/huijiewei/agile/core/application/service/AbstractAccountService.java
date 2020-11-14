@@ -20,9 +20,9 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
         return this.getRetryTimesCacheName() + key;
     }
 
-    protected abstract Boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr);
+    protected abstract boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr);
 
-    public Boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr) {
+    public boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr) {
         if (!this.isCaptchaEnable()) {
             return true;
         }

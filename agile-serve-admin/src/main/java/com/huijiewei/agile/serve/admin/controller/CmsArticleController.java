@@ -1,6 +1,7 @@
 package com.huijiewei.agile.serve.admin.controller;
 
 import com.huijiewei.agile.app.cms.application.port.inbound.CmsArticleUseCase;
+import com.huijiewei.agile.app.cms.application.port.outbound.CmsArticlePersistencePort;
 import com.huijiewei.agile.app.cms.application.request.CmsArticleRequest;
 import com.huijiewei.agile.app.cms.application.request.CmsArticleSearchRequest;
 import com.huijiewei.agile.app.cms.domain.CmsArticleEntity;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CmsArticleController {
     private final CmsArticleUseCase cmsArticleUseCase;
+    private final CmsArticlePersistencePort cmsArticlePersistencePort;
 
     @GetMapping(
             value = "/cms-articles",
@@ -45,7 +47,7 @@ public class CmsArticleController {
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) CmsArticleSearchRequest request,
             @Parameter(hidden = true) Pageable pageable) {
-        return this.cmsArticleUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
+        return this.cmsArticlePersistencePort.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
     }
 
     @GetMapping(

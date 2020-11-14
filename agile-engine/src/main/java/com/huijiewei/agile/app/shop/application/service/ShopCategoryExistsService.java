@@ -17,7 +17,7 @@ public class ShopCategoryExistsService implements ExistsUseCase {
     private final ShopCategoryExistsPort shopCategoryExistsPort;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.shopCategoryExistsPort.exists(targetProperty, values);
     }
 }

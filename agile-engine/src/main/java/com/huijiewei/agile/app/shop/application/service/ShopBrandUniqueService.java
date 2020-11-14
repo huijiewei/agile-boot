@@ -17,7 +17,7 @@ public class ShopBrandUniqueService implements UniqueUseCase {
     private final ShopBrandUniquePort shopBrandUniquePort;
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.shopBrandUniquePort.unique(values, primaryKey, primaryValue);
     }
 }

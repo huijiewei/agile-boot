@@ -19,7 +19,7 @@ public class DistrictExistsService implements ExistsUseCase {
     }
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.districtExistsPort.exists(targetProperty, values);
     }
 }

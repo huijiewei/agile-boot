@@ -45,7 +45,7 @@ public class AdminAccountService extends AbstractAccountService<AdminEntity> {
     }
 
     @Override
-    protected Boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr) {
+    protected boolean verifyCaptchaImpl(String captcha, String userAgent, String remoteAttr) {
         return this.captchaUseCase.verify(captcha, userAgent, remoteAttr);
     }
 

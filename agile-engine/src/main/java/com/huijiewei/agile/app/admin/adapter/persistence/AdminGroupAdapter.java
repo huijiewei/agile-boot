@@ -89,12 +89,12 @@ class AdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPo
     }
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.adminGroupRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.adminGroupRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

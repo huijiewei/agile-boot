@@ -17,7 +17,7 @@ public class CmsCategoryExistsService implements ExistsUseCase {
     private final CmsCategoryExistsPort cmsCategoryExistsPort;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.cmsCategoryExistsPort.exists(targetProperty, values);
     }
 }

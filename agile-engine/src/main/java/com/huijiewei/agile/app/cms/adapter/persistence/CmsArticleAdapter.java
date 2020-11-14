@@ -62,7 +62,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     }
 
     @Override
-    public SearchPageResponse<CmsArticleEntity> getAll(Integer page, Integer size, CmsArticleSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
         Page<CmsArticle> articlePage = this.cmsArticleRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))

@@ -34,7 +34,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
     }
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.districtRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 
@@ -119,7 +119,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
     }
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.districtRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

@@ -39,7 +39,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
     private final ShopBrandCategoryRepository shopBrandCategoryRepository;
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.shopBrandRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 

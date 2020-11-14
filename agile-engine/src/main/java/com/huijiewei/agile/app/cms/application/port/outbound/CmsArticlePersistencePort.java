@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CmsArticlePersistencePort {
     boolean existsByCmsCategoryIdIn(Collection<Integer> cmsCategoryIds);
 
-    SearchPageResponse<CmsArticleEntity> getAll(Integer page, Integer size, CmsArticleSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
 
     Optional<CmsArticleEntity> getById(Integer id);
 

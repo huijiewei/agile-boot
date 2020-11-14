@@ -30,7 +30,7 @@ public class CmsCategoryAdapter implements CmsCategoryExistsPort, CmsCategoryPer
     private final CmsCategoryCacheAdapter cmsCategoryCacheAdapter;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.cmsCategoryRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 

@@ -30,7 +30,7 @@ public class ShopCategoryAdapter implements ShopCategoryExistsPort, ShopCategory
     private final ShopCategoryCacheAdapter shopCategoryCacheAdapter;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.shopCategoryRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 

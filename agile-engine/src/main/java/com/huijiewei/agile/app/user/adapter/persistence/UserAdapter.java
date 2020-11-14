@@ -128,12 +128,12 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
     }
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.userRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.userRepository.count(JpaSpecificationBuilder.buildExists(targetProperty, values)) > 0;
     }
 }

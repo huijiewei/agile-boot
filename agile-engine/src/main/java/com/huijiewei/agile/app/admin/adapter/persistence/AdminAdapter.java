@@ -79,12 +79,12 @@ class AdminAdapter implements AdminPersistencePort, AdminUniquePort {
     }
 
     @Override
-    public Boolean existsByAdminGroupId(Integer adminGroupId) {
+    public boolean existsByAdminGroupId(Integer adminGroupId) {
         return this.adminRepository.existsByAdminGroupId(adminGroupId);
     }
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.adminRepository.count(JpaSpecificationBuilder.buildUnique(values, primaryKey, primaryValue)) == 0;
     }
 }

@@ -17,7 +17,7 @@ public class UserExistsService implements ExistsUseCase {
     private final UserExistsPort userExistsPort;
 
     @Override
-    public Boolean exists(String targetProperty, List<String> values) {
+    public boolean exists(String targetProperty, List<String> values) {
         return this.userExistsPort.exists(targetProperty, values);
     }
 }

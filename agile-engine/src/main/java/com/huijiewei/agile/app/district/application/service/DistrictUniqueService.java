@@ -19,7 +19,7 @@ public class DistrictUniqueService implements UniqueUseCase {
     }
 
     @Override
-    public Boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
+    public boolean unique(Map<String, String> values, String primaryKey, String primaryValue) {
         return this.districtUniquePort.unique(values, primaryKey, primaryValue);
     }
 }

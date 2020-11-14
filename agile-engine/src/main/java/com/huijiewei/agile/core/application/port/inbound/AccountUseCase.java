@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface AccountUseCase<T extends AbstractIdentityEntity> {
     Optional<T> getByAccount(String account, AccountType accountType);
 
-    Boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr);
+    boolean verifyCaptcha(String captcha, String userAgent, String remoteAttr);
 
     Integer getRetryTimes(String key);
 
