@@ -16,6 +16,15 @@ public interface AdminMapper {
     @Mapping(target = "adminGroup.permissions", ignore = true)
     AdminEntity toAdminEntityWithAdminGroup(Admin admin);
 
+    @Named("toAdminEntityBasic")
+    @Mapping(target = "adminGroup", ignore = true)
+    @Mapping(target = "adminGroupId", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    AdminEntity toAdminEntityBasic(Admin admin);
+
     @Mapping(target = "adminGroup", ignore = true)
     AdminEntity toAdminEntity(Admin admin);
 

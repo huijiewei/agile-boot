@@ -14,7 +14,7 @@ public interface AdminRequestMapper {
     @Mapping(target = "password", ignore = true)
     AdminEntity toAdminEntity(AdminRequest adminRequest);
 
-    @Mapping(target = "password", ignore = true)
+    @InheritConfiguration
     @Mapping(target = "adminGroupId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAdminEntity(AdminRequest adminRequest, @MappingTarget AdminEntity adminEntity);
 }
