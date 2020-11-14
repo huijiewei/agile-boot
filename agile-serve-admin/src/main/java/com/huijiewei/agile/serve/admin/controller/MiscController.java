@@ -66,7 +66,7 @@ public class MiscController {
     @Operation(description = "商品分类树", operationId = "miscShopCategoryTree")
     @ApiResponse(responseCode = "200", description = "商品分类树")
     public List<ShopCategoryEntity> actionShopCategoryTree() {
-        return this.shopCategoryUseCase.getTree();
+        return this.shopCategoryUseCase.loadTree();
     }
 
     @GetMapping(
@@ -77,7 +77,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "商品分类路径")
     @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
     public List<ShopCategoryEntity> actionShopCategoryPath(Integer id) {
-        return this.shopCategoryUseCase.getPathById(id);
+        return this.shopCategoryUseCase.loadPathById(id);
     }
 
     @GetMapping(
@@ -87,7 +87,7 @@ public class MiscController {
     @Operation(description = "内容分类树", operationId = "miscCmsCategoryTree")
     @ApiResponse(responseCode = "200", description = "商品分类树")
     public List<CmsCategoryEntity> actionCmsCategoryTree() {
-        return this.cmsCategoryUseCase.getTree();
+        return this.cmsCategoryUseCase.loadTree();
     }
 
     @GetMapping(
@@ -98,7 +98,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "内容分类路径")
     @ApiResponse(responseCode = "404", description = "分类不存在", ref = "NotFoundProblem")
     public List<CmsCategoryEntity> actionCmsCategoryPath(Integer id) {
-        return this.cmsCategoryUseCase.getPathById(id);
+        return this.cmsCategoryUseCase.loadPathById(id);
     }
 
     @GetMapping(
@@ -108,7 +108,7 @@ public class MiscController {
     @Operation(description = "地区列表", operationId = "miscDistricts")
     @ApiResponse(responseCode = "200", description = "地区列表")
     public List<DistrictEntity> actionDistricts(@RequestParam() Integer parentId) {
-        return this.districtUseCase.getAllByParentId(parentId);
+        return this.districtUseCase.loadByParentId(parentId);
     }
 
     @GetMapping(
@@ -119,7 +119,7 @@ public class MiscController {
     @ApiResponse(responseCode = "200", description = "地区路径")
     @ApiResponse(responseCode = "404", description = "地区不存在", ref = "NotFoundProblem")
     public List<DistrictEntity> actionDistrictPath(Integer id) {
-        return this.districtUseCase.getPathById(id);
+        return this.districtUseCase.loadPathById(id);
     }
 
     @GetMapping(
@@ -129,7 +129,7 @@ public class MiscController {
     @Operation(description = "搜索地区树", operationId = "miscDistrictSearchTree")
     @ApiResponse(responseCode = "200", description = "地区路径")
     public List<DistrictEntity> actionDistrictSearchPath(@RequestParam() String keyword) {
-        return this.districtUseCase.getTreeByKeyword(keyword);
+        return this.districtUseCase.loadTreeByKeyword(keyword);
     }
 
     @GetMapping(

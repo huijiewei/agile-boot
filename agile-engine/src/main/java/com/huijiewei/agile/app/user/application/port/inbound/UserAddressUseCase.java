@@ -10,9 +10,9 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
  */
 
 public interface UserAddressUseCase {
-    SearchPageResponse<UserAddressEntity> all(Integer page, Integer size, UserAddressSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
 
-    UserAddressEntity read(Integer id);
+    UserAddressEntity loadById(Integer id);
 
     UserAddressEntity create(UserAddressRequest userRequest);
 

@@ -10,9 +10,9 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
  */
 
 public interface CmsArticleUseCase {
-    SearchPageResponse<CmsArticleEntity> all(Integer page, Integer size, CmsArticleSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
 
-    CmsArticleEntity read(Integer id);
+    CmsArticleEntity loadById(Integer id);
 
     CmsArticleEntity create(CmsArticleRequest cmsArticleRequest);
 

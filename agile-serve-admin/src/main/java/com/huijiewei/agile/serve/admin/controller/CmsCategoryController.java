@@ -31,7 +31,7 @@ public class CmsCategoryController {
     @ApiResponse(responseCode = "404", description = "内容分类不存在", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('cms-category/view', 'cms-category/edit', 'cms-category/delete')")
     public CmsCategoryEntity actionView(@PathVariable("id") Integer id, @RequestParam(required = false) Boolean withParents) {
-        return this.cmsCategoryUseCase.read(id, withParents);
+        return this.cmsCategoryUseCase.loadById(id, withParents);
     }
 
     @PostMapping(

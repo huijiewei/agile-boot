@@ -1,9 +1,7 @@
 package com.huijiewei.agile.app.admin.application.service;
 
 import com.huijiewei.agile.app.admin.application.mapper.AdminRequestMapper;
-import com.huijiewei.agile.app.admin.application.port.inbound.AdminHasPermissionUseCase;
 import com.huijiewei.agile.app.admin.application.port.inbound.AdminUseCase;
-import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupPersistencePort;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
 import com.huijiewei.agile.app.admin.application.request.AdminRequest;
 import com.huijiewei.agile.app.admin.domain.AdminEntity;
@@ -16,32 +14,16 @@ import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author huijiewei
  */
 
 @Service
 @RequiredArgsConstructor
-public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
+public class AdminService implements AdminUseCase {
     private final AdminPersistencePort adminPersistencePort;
-    private final AdminGroupPersistencePort adminGroupPersistencePort;
     private final ValidatingService validatingService;
     private final AdminRequestMapper adminRequestMapper;
-
-    @Override
-    public boolean hasPermissions(AdminEntity admin, String[] permissions) {
-        List<String> adminGroupPermissions = this.adminGroupPersistencePort.getPermissions(admin.getAdminGroupId());
-
-        for (String everyPermission : permissions) {
-            if (adminGroupPermissions.contains(StringUtils.trim(everyPermission))) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     private AdminEntity getById(Integer id) {
         return this.adminPersistencePort.getById(id)
@@ -49,7 +31,7 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     }
 
     @Override
-    public ListResponse<AdminEntity> all() {
+    public ListResponse<AdminEntity> loadAll() {
         ListResponse<AdminEntity> response = new ListResponse<>();
         response.setItems(this.adminPersistencePort.getAll());
 
@@ -68,7 +50,7 @@ public class AdminService implements AdminHasPermissionUseCase, AdminUseCase {
     }
 
     @Override
-    public AdminEntity read(Integer id) {
+    public AdminEntity loadById(Integer id) {
         return this.getById(id);
     }
 

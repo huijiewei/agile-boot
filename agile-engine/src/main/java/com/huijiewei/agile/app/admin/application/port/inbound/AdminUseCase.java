@@ -9,9 +9,9 @@ import com.huijiewei.agile.core.application.response.ListResponse;
  */
 
 public interface AdminUseCase {
-    ListResponse<AdminEntity> all();
+    ListResponse<AdminEntity> loadAll();
 
-    AdminEntity read(Integer id);
+    AdminEntity loadById(Integer id);
 
     AdminEntity create(AdminRequest adminRequest);
 

@@ -27,7 +27,7 @@ public class CmsArticleService implements CmsArticleUseCase {
     private final CmsArticleRequestMapper cmsArticleRequestMapper;
 
     @Override
-    public SearchPageResponse<CmsArticleEntity> all(Integer page, Integer size, CmsArticleSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
         return this.cmsArticlePersistencePort.getAll(page, size, searchRequest, withSearchFields);
     }
 
@@ -40,7 +40,7 @@ public class CmsArticleService implements CmsArticleUseCase {
         CmsCategoryEntity cmsCategoryEntity = cmsArticleEntity.getCmsCategory();
 
         if (cmsCategoryEntity != null) {
-            cmsCategoryEntity.setParents(this.cmsCategoryUseCase.getPathById(cmsCategoryEntity.getParentId()));
+            cmsCategoryEntity.setParents(this.cmsCategoryUseCase.loadPathById(cmsCategoryEntity.getParentId()));
 
             cmsArticleEntity.setCmsCategory(cmsCategoryEntity);
         }
@@ -49,7 +49,7 @@ public class CmsArticleService implements CmsArticleUseCase {
     }
 
     @Override
-    public CmsArticleEntity read(Integer id) {
+    public CmsArticleEntity loadById(Integer id) {
         return this.fillCategory(this.getById(id));
     }
 

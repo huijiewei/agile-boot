@@ -33,22 +33,22 @@ public class DistrictService implements DistrictUseCase {
     }
 
     @Override
-    public List<DistrictEntity> getAllByParentId(Integer parentId) {
+    public List<DistrictEntity> loadByParentId(Integer parentId) {
         return this.districtPersistencePort.getAllByParentId(parentId);
     }
 
     @Override
-    public List<DistrictEntity> getPathById(Integer id) {
+    public List<DistrictEntity> loadPathById(Integer id) {
         return this.districtPersistencePort.getAncestorsById(id);
     }
 
     @Override
-    public List<DistrictEntity> getTreeByKeyword(String keyword) {
+    public List<DistrictEntity> loadTreeByKeyword(String keyword) {
         return this.districtPersistencePort.getAncestorsTreeByKeyword(keyword);
     }
 
     @Override
-    public DistrictEntity read(Integer id, Boolean withParents) {
+    public DistrictEntity loadById(Integer id, Boolean withParents) {
         DistrictEntity districtEntity = this.getById(id);
 
         if (withParents != null && withParents && districtEntity.getParentId() > 0) {

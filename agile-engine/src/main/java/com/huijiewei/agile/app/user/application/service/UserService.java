@@ -32,7 +32,7 @@ public class UserService implements UserUseCase {
     private final UserExportPort userExportPort;
 
     @Override
-    public SearchPageResponse<UserEntity> all(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
         return this.userPersistencePort.getAll(page, size, searchRequest, withSearchFields);
     }
 
@@ -47,7 +47,7 @@ public class UserService implements UserUseCase {
     }
 
     @Override
-    public UserEntity read(Integer id) {
+    public UserEntity loadById(Integer id) {
         return this.getById(id);
     }
 

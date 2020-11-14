@@ -31,7 +31,7 @@ public class AdminGroupController {
     @ApiResponse(responseCode = "200", description = "管理组列表")
     @PreAuthorize("hasAuthority('admin-group/index')")
     public ListResponse<AdminGroupEntity> actionIndex() {
-        return this.adminGroupUseCase.all();
+        return this.adminGroupUseCase.loadAll();
     }
 
     @GetMapping(
@@ -43,7 +43,7 @@ public class AdminGroupController {
     @ApiResponse(responseCode = "404", description = "管理组不存在", ref = "Problem")
     @PreAuthorize("hasAnyAuthority('admin-group/view/:id', 'admin-group/edit/:id')")
     public AdminGroupEntity actionView(@PathVariable("id") Integer id) {
-        return this.adminGroupUseCase.read(id);
+        return this.adminGroupUseCase.loadById(id);
     }
 
     @PostMapping(

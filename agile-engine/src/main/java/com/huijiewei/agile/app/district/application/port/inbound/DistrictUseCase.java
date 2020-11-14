@@ -10,13 +10,13 @@ import java.util.List;
  */
 
 public interface DistrictUseCase {
-    List<DistrictEntity> getAllByParentId(Integer parentId);
+    List<DistrictEntity> loadByParentId(Integer parentId);
 
-    List<DistrictEntity> getPathById(Integer id);
+    List<DistrictEntity> loadPathById(Integer id);
 
-    List<DistrictEntity> getTreeByKeyword(String keyword);
+    List<DistrictEntity> loadTreeByKeyword(String keyword);
 
-    DistrictEntity read(Integer id, Boolean withParents);
+    DistrictEntity loadById(Integer id, Boolean withParents);
 
     DistrictEntity create(DistrictRequest districtRequest);
 

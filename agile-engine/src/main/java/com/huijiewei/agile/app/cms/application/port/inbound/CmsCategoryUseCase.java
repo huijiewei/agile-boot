@@ -10,11 +10,11 @@ import java.util.List;
  */
 
 public interface CmsCategoryUseCase {
-    List<CmsCategoryEntity> getTree();
+    List<CmsCategoryEntity> loadTree();
 
-    List<CmsCategoryEntity> getPathById(Integer id);
+    List<CmsCategoryEntity> loadPathById(Integer id);
 
-    CmsCategoryEntity read(Integer id, Boolean withParents);
+    CmsCategoryEntity loadById(Integer id, Boolean withParents);
 
     CmsCategoryEntity create(CmsCategoryRequest cmsCategoryRequest);
 

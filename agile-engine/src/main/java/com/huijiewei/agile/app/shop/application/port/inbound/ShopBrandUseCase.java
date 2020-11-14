@@ -10,9 +10,9 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
  */
 
 public interface ShopBrandUseCase {
-    SearchPageResponse<ShopBrandEntity> all(Integer page, Integer size, ShopBrandSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<ShopBrandEntity> search(ShopBrandSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
 
-    ShopBrandEntity read(Integer id);
+    ShopBrandEntity loadById(Integer id);
 
     ShopBrandEntity create(ShopBrandRequest shopBrandRequest);
 

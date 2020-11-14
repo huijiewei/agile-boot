@@ -14,11 +14,11 @@ import java.io.OutputStream;
  */
 
 public interface UserUseCase {
-    SearchPageResponse<UserEntity> all(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
 
     void export(UserSearchRequest searchRequest, OutputStream outputStream) throws IOException;
 
-    UserEntity read(Integer id);
+    UserEntity loadById(Integer id);
 
     UserEntity create(UserRequest userRequest, UserCreatedFrom createdFrom, String createdIp);
 

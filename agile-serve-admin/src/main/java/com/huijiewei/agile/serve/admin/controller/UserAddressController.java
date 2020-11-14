@@ -48,7 +48,7 @@ public class UserAddressController {
             @Parameter(hidden = true) UserAddressSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.userAddressUseCase.all(pageable.getPageNumber(), pageable.getPageSize(), request, withSearchFields);
+        return this.userAddressUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
     }
 
     @GetMapping(
@@ -60,7 +60,7 @@ public class UserAddressController {
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('user-address/view/:id', 'user/edit/:id')")
     public UserAddressEntity actionView(@PathVariable("id") Integer id) {
-        return this.userAddressUseCase.read(id);
+        return this.userAddressUseCase.loadById(id);
     }
 
     @PostMapping(

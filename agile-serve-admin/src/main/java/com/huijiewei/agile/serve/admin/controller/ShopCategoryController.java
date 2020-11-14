@@ -31,7 +31,7 @@ public class ShopCategoryController {
     @ApiResponse(responseCode = "404", description = "商品分类不存在", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('shop-category/view', 'shop-category/edit', 'shop-category/delete')")
     public ShopCategoryEntity actionView(@PathVariable("id") Integer id, @RequestParam(required = false) Boolean withParents) {
-        return this.shopCategoryUseCase.read(id, withParents);
+        return this.shopCategoryUseCase.loadById(id, withParents);
     }
 
     @PostMapping(

@@ -32,7 +32,7 @@ public class ShopBrandService implements ShopBrandUseCase {
     private final ShopProductPersistencePort shopProductPersistencePort;
 
     @Override
-    public SearchPageResponse<ShopBrandEntity> all(Integer page, Integer size, ShopBrandSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<ShopBrandEntity> search(ShopBrandSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
         return this.shopBrandPersistencePort.getAll(page, size, searchRequest, withSearchFields);
     }
 
@@ -42,7 +42,7 @@ public class ShopBrandService implements ShopBrandUseCase {
     }
 
     @Override
-    public ShopBrandEntity read(Integer id) {
+    public ShopBrandEntity loadById(Integer id) {
         return this.fillCategories(this.getById(id));
     }
 
@@ -51,7 +51,7 @@ public class ShopBrandService implements ShopBrandUseCase {
 
         for (int i = 0; i < shopCategoryResponses.size(); i++) {
             ShopCategoryEntity shopCategoryEntity = shopCategoryResponses.get(i);
-            shopCategoryEntity.setParents(this.shopCategoryUseCase.getPathById(shopCategoryEntity.getParentId()));
+            shopCategoryEntity.setParents(this.shopCategoryUseCase.loadPathById(shopCategoryEntity.getParentId()));
             shopCategoryResponses.set(i, shopCategoryEntity);
         }
 

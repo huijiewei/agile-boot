@@ -10,11 +10,11 @@ import java.util.List;
  */
 
 public interface ShopCategoryUseCase {
-    List<ShopCategoryEntity> getTree();
+    List<ShopCategoryEntity> loadTree();
 
-    List<ShopCategoryEntity> getPathById(Integer id);
+    List<ShopCategoryEntity> loadPathById(Integer id);
 
-    ShopCategoryEntity read(Integer id, Boolean withParents);
+    ShopCategoryEntity loadById(Integer id, Boolean withParents);
 
     ShopCategoryEntity create(ShopCategoryRequest shopCategoryRequest);
 

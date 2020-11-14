@@ -32,12 +32,12 @@ public class ShopCategoryService implements ShopCategoryUseCase {
     }
 
     @Override
-    public List<ShopCategoryEntity> getTree() {
+    public List<ShopCategoryEntity> loadTree() {
         return this.shopCategoryPersistencePort.getTree();
     }
 
     @Override
-    public List<ShopCategoryEntity> getPathById(Integer id) {
+    public List<ShopCategoryEntity> loadPathById(Integer id) {
         return this.getParentsById(id);
     }
 
@@ -46,7 +46,7 @@ public class ShopCategoryService implements ShopCategoryUseCase {
     }
 
     @Override
-    public ShopCategoryEntity read(Integer id, Boolean withParents) {
+    public ShopCategoryEntity loadById(Integer id, Boolean withParents) {
         ShopCategoryEntity shopCategoryEntity = this.getById(id);
 
         if (withParents != null && withParents && shopCategoryEntity.getParentId() > 0) {

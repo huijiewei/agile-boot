@@ -37,7 +37,7 @@ public class AdminGroupService implements AdminGroupUseCase {
     }
 
     @Override
-    public ListResponse<AdminGroupEntity> all() {
+    public ListResponse<AdminGroupEntity> loadAll() {
         ListResponse<AdminGroupEntity> response = new ListResponse<>();
         response.setItems(this.adminGroupPersistencePort.getAll());
 
@@ -45,7 +45,7 @@ public class AdminGroupService implements AdminGroupUseCase {
     }
 
     @Override
-    public AdminGroupEntity read(Integer id) {
+    public AdminGroupEntity loadById(Integer id) {
         AdminGroupEntity adminGroupEntity = this.getById(id);
         adminGroupEntity.setPermissions(this.adminGroupPersistencePort.getPermissions(id));
 

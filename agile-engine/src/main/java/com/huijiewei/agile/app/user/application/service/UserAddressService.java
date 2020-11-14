@@ -51,7 +51,7 @@ public class UserAddressService implements UserAddressUseCase {
     }
 
     @Override
-    public SearchPageResponse<UserAddressEntity> all(Integer page, Integer size, UserAddressSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
         SearchPageResponse<UserAddressEntity> userAddressEntitySearchPageResponse = this.userAddressPersistencePort.getAll(page, size, searchRequest, withSearchFields);
 
         userAddressEntitySearchPageResponse.setItems(this.fillDistrictPath(userAddressEntitySearchPageResponse.getItems()));
@@ -65,7 +65,7 @@ public class UserAddressService implements UserAddressUseCase {
     }
 
     @Override
-    public UserAddressEntity read(Integer id) {
+    public UserAddressEntity loadById(Integer id) {
         return this.fillDistrictPath(this.getById(id));
     }
 

@@ -32,12 +32,12 @@ public class CmsCategoryService implements CmsCategoryUseCase {
     }
 
     @Override
-    public List<CmsCategoryEntity> getTree() {
+    public List<CmsCategoryEntity> loadTree() {
         return this.cmsCategoryPersistencePort.getTree();
     }
 
     @Override
-    public List<CmsCategoryEntity> getPathById(Integer id) {
+    public List<CmsCategoryEntity> loadPathById(Integer id) {
         return this.getParentsById(id);
     }
 
@@ -46,7 +46,7 @@ public class CmsCategoryService implements CmsCategoryUseCase {
     }
 
     @Override
-    public CmsCategoryEntity read(Integer id, Boolean withParents) {
+    public CmsCategoryEntity loadById(Integer id, Boolean withParents) {
         CmsCategoryEntity cmsCategoryEntity = this.getById(id);
 
         if (withParents != null && withParents && cmsCategoryEntity.getParentId() > 0) {

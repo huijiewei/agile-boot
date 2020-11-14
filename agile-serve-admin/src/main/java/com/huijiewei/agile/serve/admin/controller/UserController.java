@@ -54,7 +54,7 @@ public class UserController {
             @Parameter(hidden = true) UserSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.userUseCase.all(pageable.getPageNumber(), pageable.getPageSize(), request, withSearchFields);
+        return this.userUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
     }
 
     @GetMapping(
@@ -96,7 +96,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('user/view/:id', 'user/edit/:id')")
     public UserEntity actionView(@PathVariable("id") Integer id) {
-        return this.userUseCase.read(id);
+        return this.userUseCase.loadById(id);
     }
 
     @PostMapping(

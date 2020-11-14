@@ -32,7 +32,7 @@ public class AdminController {
     @ApiResponse(responseCode = "200", description = "管理员列表")
     @PreAuthorize("hasAuthority('admin/index')")
     public ListResponse<AdminEntity> actionIndex() {
-        return this.adminUseCase.all();
+        return this.adminUseCase.loadAll();
     }
 
     @GetMapping(
@@ -44,7 +44,7 @@ public class AdminController {
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('admin/view/:id', 'admin/edit/:id')")
     public AdminEntity actionView(@PathVariable("id") Integer id) {
-        return this.adminUseCase.read(id);
+        return this.adminUseCase.loadById(id);
     }
 
     @PostMapping(

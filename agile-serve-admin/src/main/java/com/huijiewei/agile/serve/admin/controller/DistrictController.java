@@ -44,7 +44,7 @@ public class DistrictController {
     @ApiResponse(responseCode = "404", description = "地区不存在", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('district/view', 'district/edit', 'district/delete')")
     public DistrictEntity actionView(@PathVariable("id") Integer id, @RequestParam(required = false) Boolean withParents) {
-        return this.districtUseCase.read(id, withParents);
+        return this.districtUseCase.loadById(id, withParents);
     }
 
     @PutMapping(

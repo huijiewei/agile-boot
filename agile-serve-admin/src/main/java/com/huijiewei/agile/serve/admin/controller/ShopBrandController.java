@@ -43,7 +43,7 @@ public class ShopBrandController {
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) ShopBrandSearchRequest request,
             @Parameter(hidden = true) Pageable pageable) {
-        return this.shopBrandUseCase.all(pageable.getPageNumber(), pageable.getPageSize(), request, withSearchFields);
+        return this.shopBrandUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
     }
 
     @GetMapping(
@@ -55,7 +55,7 @@ public class ShopBrandController {
     @ApiResponse(responseCode = "404", description = "商品品牌不存在", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('shop-brand/view/:id', 'shop-brand/edit/:id')")
     public ShopBrandEntity actionView(@PathVariable("id") Integer id) {
-        return this.shopBrandUseCase.read(id);
+        return this.shopBrandUseCase.loadById(id);
     }
 
     @PostMapping(

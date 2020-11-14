@@ -45,7 +45,7 @@ public class CmsArticleController {
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) CmsArticleSearchRequest request,
             @Parameter(hidden = true) Pageable pageable) {
-        return this.cmsArticleUseCase.all(pageable.getPageNumber(), pageable.getPageSize(), request, withSearchFields);
+        return this.cmsArticleUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
     }
 
     @GetMapping(
@@ -57,7 +57,7 @@ public class CmsArticleController {
     @ApiResponse(responseCode = "404", description = "文章不存在", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('cms-article/view/:id', 'cms-article/edit/:id')")
     public CmsArticleEntity actionView(@PathVariable("id") Integer id) {
-        return this.cmsArticleUseCase.read(id);
+        return this.cmsArticleUseCase.loadById(id);
     }
 
     @PostMapping(
