@@ -13,23 +13,21 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SelectSearchField extends AbstractSearchField<SelectSearchField> {
-    private Boolean multiple = false;
+    private boolean multiple = false;
     private List<?> options;
 
     public SelectSearchField() {
         this.setType("select");
     }
 
-    public SelectSearchField multiple(Boolean multiple) {
+    public SelectSearchField multiple(boolean multiple) {
         this.multiple = multiple;
 
         return this;
     }
 
     public <E> SelectSearchField options(E[] options) {
-        this.options = Arrays.asList(options);
-
-        return this;
+        return this.options(Arrays.asList(options));
     }
 
     public <T> SelectSearchField options(List<T> options) {

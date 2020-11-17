@@ -33,7 +33,7 @@ ext.libs = [
                 "cn.afterturn:easypoi-base:${easyPoiBaseVersion}"
         ],
         jpaEntityGraph    : [
-                files('libraries/spring-data-jpa-entity-graph-2.4.0-SNAPSHOT.jar')
+                "com.cosium.spring.data:spring-data-jpa-entity-graph:${jpaEntityGraphVersion}"
         ],
         textIo            : [
                 "org.beryx:text-io:${textIoVersion}"
