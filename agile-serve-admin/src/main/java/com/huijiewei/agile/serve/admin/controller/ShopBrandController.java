@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.shop.application.port.inbound.ShopBrandUseCase;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandRequest;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +44,7 @@ public class ShopBrandController {
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) ShopBrandSearchRequest request,
             @Parameter(hidden = true) Pageable pageable) {
-        return this.shopBrandUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
+        return this.shopBrandUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 
     @GetMapping(

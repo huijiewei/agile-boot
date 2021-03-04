@@ -3,6 +3,7 @@ package com.huijiewei.agile.app.user.application.port.inbound;
 import com.huijiewei.agile.app.user.application.request.UserAddressRequest;
 import com.huijiewei.agile.app.user.application.request.UserAddressSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserAddressEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 
 /**
@@ -10,7 +11,7 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
  */
 
 public interface UserAddressUseCase {
-    SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
+    SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields);
 
     UserAddressEntity loadById(Integer id);
 

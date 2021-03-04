@@ -8,6 +8,7 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserAddressPersist
 import com.huijiewei.agile.app.user.application.request.UserAddressRequest;
 import com.huijiewei.agile.app.user.application.request.UserAddressSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserAddressEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.NotFoundException;
@@ -51,8 +52,8 @@ public class UserAddressService implements UserAddressUseCase {
     }
 
     @Override
-    public SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
-        SearchPageResponse<UserAddressEntity> userAddressEntitySearchPageResponse = this.userAddressPersistencePort.getAll(page, size, searchRequest, withSearchFields);
+    public SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields) {
+        SearchPageResponse<UserAddressEntity> userAddressEntitySearchPageResponse = this.userAddressPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
 
         userAddressEntitySearchPageResponse.setItems(this.fillDistrictPath(userAddressEntitySearchPageResponse.getItems()));
 

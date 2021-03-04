@@ -3,6 +3,7 @@ package com.huijiewei.agile.serve.admin.controller;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersistencePort;
 import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,6 +46,6 @@ public class AdminLogController {
             @Parameter(hidden = true) AdminLogSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.adminLogPersistencePort.getAll(pageable.getPageNumber(), pageable.getPageSize(), request, withSearchFields);
+        return this.adminLogPersistencePort.getAll(request, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()), withSearchFields);
     }
 }

@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.user.application.port.inbound.UserAddressUseCase;
 import com.huijiewei.agile.app.user.application.request.UserAddressRequest;
 import com.huijiewei.agile.app.user.application.request.UserAddressSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserAddressEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,7 +49,7 @@ public class UserAddressController {
             @Parameter(hidden = true) UserAddressSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.userAddressUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
+        return this.userAddressUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 
     @GetMapping(

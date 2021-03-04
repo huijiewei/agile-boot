@@ -8,6 +8,7 @@ import com.huijiewei.agile.app.user.application.request.UserRequest;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.app.user.domain.UserEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.NotFoundException;
@@ -32,8 +33,8 @@ public class UserService implements UserUseCase {
     private final UserExportPort userExportPort;
 
     @Override
-    public SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
-        return this.userPersistencePort.getAll(page, size, searchRequest, withSearchFields);
+    public SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields) {
+        return this.userPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
     }
 
     @Override

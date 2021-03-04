@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class JpaSpecificationBuilder {
     public static <T extends AbstractJpaEntity> Specification<T> buildUnique(Map<String, String> values, String primaryKey, String primaryValue) {
-        return (Specification<T>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             for (Map.Entry<String, String> entry : values.entrySet()) {
@@ -31,7 +31,7 @@ public class JpaSpecificationBuilder {
     }
 
     public static <T extends AbstractJpaEntity> Specification<T> buildExists(String targetProperty, List<String> values) {
-        return (Specification<T>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             for (String value : values) {

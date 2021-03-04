@@ -8,8 +8,8 @@ import com.huijiewei.agile.app.user.application.port.outbound.UserPersistencePor
 import com.huijiewei.agile.app.user.application.port.outbound.UserUniquePort;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserEntity;
-import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -40,7 +40,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
     private final UserRepository userRepository;
 
     private Specification<User> buildSpecification(UserSearchRequest searchRequest) {
-        return (Specification<User>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
@@ -76,10 +76,13 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
     }
 
     @Override
-    public SearchPageResponse<UserEntity> getAll(Integer page, Integer size, UserSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<UserEntity> getAll(UserSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
         Page<User> userPage = this.userRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))
+                PageRequest.of(pageRequest.getPage(),
+                        pageRequest.getSize(),
+                        Sort.by(Sort.Direction.DESC, "id")
+                )
         );
 
         SearchPageResponse<UserEntity> userEntityResponses = new SearchPageResponse<>();

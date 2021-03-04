@@ -9,8 +9,8 @@ import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandPersisten
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopBrandUniquePort;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
-import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
+import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.CollectionUtils;
 import com.huijiewei.agile.core.until.StringUtils;
@@ -44,7 +44,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
     }
 
     private Specification<ShopBrand> buildSpecification(ShopBrandSearchRequest searchRequest) {
-        return (Specification<ShopBrand>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
@@ -56,10 +56,10 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
     }
 
     @Override
-    public SearchPageResponse<ShopBrandEntity> getAll(Integer page, Integer size, ShopBrandSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<ShopBrandEntity> getAll(ShopBrandSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
         Page<ShopBrand> shopBrandPage = this.shopBrandRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))
+                PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id"))
         );
 
         SearchPageResponse<ShopBrandEntity> shopBrandEntityResponses = new SearchPageResponse<>();

@@ -2,6 +2,7 @@ package com.huijiewei.agile.app.admin.application.port.outbound;
 
 import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 
 /**
@@ -9,7 +10,7 @@ import com.huijiewei.agile.core.application.response.SearchPageResponse;
  */
 
 public interface AdminLogPersistencePort {
-    SearchPageResponse<AdminLogEntity> getAll(Integer page, Integer size, AdminLogSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<AdminLogEntity> getAll(AdminLogSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields);
 
     void save(AdminLogEntity adminLogEntity);
 }

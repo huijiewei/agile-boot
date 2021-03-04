@@ -5,6 +5,7 @@ import com.huijiewei.agile.app.cms.application.port.outbound.CmsArticlePersisten
 import com.huijiewei.agile.app.cms.application.request.CmsArticleRequest;
 import com.huijiewei.agile.app.cms.application.request.CmsArticleSearchRequest;
 import com.huijiewei.agile.app.cms.domain.CmsArticleEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetails;
@@ -47,7 +48,7 @@ public class CmsArticleController {
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) CmsArticleSearchRequest request,
             @Parameter(hidden = true) Pageable pageable) {
-        return this.cmsArticlePersistencePort.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
+        return this.cmsArticlePersistencePort.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 
     @GetMapping(

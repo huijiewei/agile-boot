@@ -2,7 +2,6 @@ package com.huijiewei.agile.core.adapter.persistence.repository;
 
 import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaTreeEntity;
-import com.huijiewei.agile.core.adapter.persistence.repository.TreeClosureJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

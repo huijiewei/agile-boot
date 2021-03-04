@@ -31,7 +31,7 @@ public interface AdminRepository extends
      */
     @Override
     default Optional<Admin> findByAccessToken(String accessToken, String clientId) {
-        Specification<Admin> adminSpecification = (Specification<Admin>) (root, query, criteriaBuilder) -> {
+        Specification<Admin> adminSpecification = (root, query, criteriaBuilder) -> {
             Subquery<Integer> subQuery = query.subquery(Integer.class);
             Root<AdminAccessToken> subRoot = subQuery.from(AdminAccessToken.class);
 

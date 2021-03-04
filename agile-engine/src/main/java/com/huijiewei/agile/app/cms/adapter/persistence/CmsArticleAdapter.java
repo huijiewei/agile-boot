@@ -44,7 +44,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     }
 
     private Specification<CmsArticle> buildSpecification(CmsArticleSearchRequest searchRequest) {
-        return (Specification<CmsArticle>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             if (StringUtils.isNotBlank(searchRequest.getTitle())) {
@@ -62,10 +62,10 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     }
 
     @Override
-    public SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
+    public SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
         Page<CmsArticle> articlePage = this.cmsArticleRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))
+                PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id"))
         );
 
         SearchPageResponse<CmsArticleEntity> articleEntityResponses = new SearchPageResponse<>();

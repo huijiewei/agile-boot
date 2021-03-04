@@ -5,6 +5,7 @@ import com.huijiewei.agile.app.user.application.request.UserRequest;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.app.user.domain.UserEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.exception.BadRequestException;
@@ -54,7 +55,7 @@ public class UserController {
             @Parameter(hidden = true) UserSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.userUseCase.search(request, pageable.getPageNumber(), pageable.getPageSize(), withSearchFields);
+        return this.userUseCase.search(request, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()), withSearchFields);
     }
 
     @GetMapping(

@@ -2,6 +2,7 @@ package com.huijiewei.agile.app.shop.application.port.outbound;
 
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 
 import java.util.Optional;
@@ -11,7 +12,7 @@ import java.util.Optional;
  */
 
 public interface ShopBrandPersistencePort {
-    SearchPageResponse<ShopBrandEntity> getAll(Integer page, Integer size, ShopBrandSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<ShopBrandEntity> getAll(ShopBrandSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields);
 
     Optional<ShopBrandEntity> getById(Integer id);
 

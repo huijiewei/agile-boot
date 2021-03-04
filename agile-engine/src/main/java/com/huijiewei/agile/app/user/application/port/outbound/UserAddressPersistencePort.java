@@ -2,6 +2,7 @@ package com.huijiewei.agile.app.user.application.port.outbound;
 
 import com.huijiewei.agile.app.user.application.request.UserAddressSearchRequest;
 import com.huijiewei.agile.app.user.domain.UserAddressEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
  */
 
 public interface UserAddressPersistencePort {
-    SearchPageResponse<UserAddressEntity> getAll(Integer page, Integer size, UserAddressSearchRequest searchRequest, Boolean withSearchFields);
+    SearchPageResponse<UserAddressEntity> getAll(UserAddressSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields);
 
     List<UserAddressEntity> getAllByUserId(Integer userId);
 

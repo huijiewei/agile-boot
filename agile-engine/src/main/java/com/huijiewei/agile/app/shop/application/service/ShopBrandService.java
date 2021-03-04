@@ -9,6 +9,7 @@ import com.huijiewei.agile.app.shop.application.request.ShopBrandRequest;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
 import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.ConflictException;
@@ -32,8 +33,8 @@ public class ShopBrandService implements ShopBrandUseCase {
     private final ShopProductPersistencePort shopProductPersistencePort;
 
     @Override
-    public SearchPageResponse<ShopBrandEntity> search(ShopBrandSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields) {
-        return this.shopBrandPersistencePort.getAll(page, size, searchRequest, withSearchFields);
+    public SearchPageResponse<ShopBrandEntity> search(ShopBrandSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields) {
+        return this.shopBrandPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
     }
 
     private ShopBrandEntity getById(Integer id) {

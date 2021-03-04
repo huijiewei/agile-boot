@@ -4,6 +4,7 @@ import com.huijiewei.agile.app.user.application.request.UserRequest;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.app.user.domain.UserEntity;
+import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.io.OutputStream;
  */
 
 public interface UserUseCase {
-    SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, Integer page, Integer size, Boolean withSearchFields);
+    SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields);
 
     void export(UserSearchRequest searchRequest, OutputStream outputStream) throws IOException;
 

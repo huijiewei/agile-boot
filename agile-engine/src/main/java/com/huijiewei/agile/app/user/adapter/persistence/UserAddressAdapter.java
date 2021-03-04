@@ -38,7 +38,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
     private final DistrictRepository districtRepository;
 
     private Specification<UserAddress> buildSpecification(UserAddressSearchRequest searchRequest) {
-        return (Specification<UserAddress>) (root, query, criteriaBuilder) -> {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new LinkedList<>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
@@ -75,10 +75,10 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
     }
 
     @Override
-    public SearchPageResponse<UserAddressEntity> getAll(Integer page, Integer size, UserAddressSearchRequest searchRequest, Boolean withSearchFields) {
+    public SearchPageResponse<UserAddressEntity> getAll(UserAddressSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
         Page<UserAddress> userAddressPage = this.userAddressRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")),
+                PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
                 EntityGraphUtils.fromAttributePaths("user")
         );
 
