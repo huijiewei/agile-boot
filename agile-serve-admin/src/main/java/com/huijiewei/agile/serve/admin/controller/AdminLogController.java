@@ -1,6 +1,6 @@
 package com.huijiewei.agile.serve.admin.controller;
 
-import com.huijiewei.agile.app.admin.application.port.outbound.AdminLogPersistencePort;
+import com.huijiewei.agile.app.admin.application.port.inbound.AdminLogUseCase;
 import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.core.application.request.PageRequest;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "admin-log", description = "日志")
 @RequiredArgsConstructor
 public class AdminLogController {
-    private final AdminLogPersistencePort adminLogPersistencePort;
+    private final AdminLogUseCase adminLogUseCase;
 
     @GetMapping(
             value = "/admin-logs",
@@ -46,6 +46,6 @@ public class AdminLogController {
             @Parameter(hidden = true) AdminLogSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.adminLogPersistencePort.getAll(request, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()), withSearchFields);
+        return this.adminLogUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 }

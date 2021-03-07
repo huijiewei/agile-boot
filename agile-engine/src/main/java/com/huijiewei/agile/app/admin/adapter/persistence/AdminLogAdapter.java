@@ -84,7 +84,7 @@ class AdminLogAdapter implements AdminLogPersistencePort {
     public SearchPageResponse<AdminLogEntity> getAll(AdminLogSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
         Page<AdminLog> adminLogPage = this.adminLogRepository.findAll(
                 this.buildSpecification(searchRequest),
-                PageRequest.of(pageRequest.getPage(), pageRequest.getPage(), Sort.by(Sort.Direction.DESC, "id")),
+                PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
                 EntityGraphUtils.fromAttributePaths("admin"));
 
         SearchPageResponse<AdminLogEntity> adminLogEntityResponses = new SearchPageResponse<>();

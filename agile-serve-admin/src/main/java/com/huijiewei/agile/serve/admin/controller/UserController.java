@@ -55,7 +55,7 @@ public class UserController {
             @Parameter(hidden = true) UserSearchRequest request,
             @Parameter(hidden = true) Pageable pageable
     ) {
-        return this.userUseCase.search(request, PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()), withSearchFields);
+        return this.userUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 
     @GetMapping(
