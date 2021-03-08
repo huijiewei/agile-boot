@@ -15,6 +15,11 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface AdminLogMapper {
     @Mapping(target = "admin.adminGroup", ignore = true)
+    @Mapping(target = "admin.adminGroupId", ignore = true)
+    @Mapping(target = "admin.createdAt", ignore = true)
+    @Mapping(target = "admin.email", ignore = true)
+    @Mapping(target = "admin.phone", ignore = true)
+    @Mapping(target = "admin.avatar", ignore = true)
     AdminLogEntity toAdminLogEntity(AdminLog adminLog);
 
     @Mapping(target = "admin", ignore = true)
