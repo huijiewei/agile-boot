@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author huijiewei
  */
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class OpenApiConfig {
 
     @Bean
@@ -58,7 +58,7 @@ public class OpenApiConfig {
     }
 
     private ArraySchema defineUserCreatedFromSearchRequest() {
-        Schema<String> schema = new Schema<>();
+        var schema = new Schema<String>();
         schema.setType("string");
         schema.setUniqueItems(true);
 

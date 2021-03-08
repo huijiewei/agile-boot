@@ -47,7 +47,7 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
     @Override
     public ShopCategoryEntity loadById(Integer id, Boolean withParents) {
-        ShopCategoryEntity shopCategoryEntity = this.getById(id);
+        var shopCategoryEntity = this.getById(id);
 
         if (withParents != null && withParents && shopCategoryEntity.getParentId() > 0) {
             shopCategoryEntity.setParents(this.getParentsById(shopCategoryEntity.getParentId()));
@@ -62,9 +62,9 @@ public class ShopCategoryService implements ShopCategoryUseCase {
             return null;
         }
 
-        ShopCategoryEntity shopCategoryEntity = this.shopCategoryRequestMapper.toShopCategoryEntity(shopCategoryRequest);
+        var shopCategoryEntity = this.shopCategoryRequestMapper.toShopCategoryEntity(shopCategoryRequest);
 
-        Integer shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
+        var shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
         shopCategoryEntity.setId(shopCategoryId);
 
         return shopCategoryEntity;
@@ -72,7 +72,7 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
     @Override
     public ShopCategoryEntity update(Integer id, ShopCategoryRequest shopCategoryRequest) {
-        ShopCategoryEntity shopCategoryEntity = this.getById(id);
+        var shopCategoryEntity = this.getById(id);
 
         if (!this.validatingService.validate(shopCategoryRequest)) {
             return null;
@@ -84,7 +84,7 @@ public class ShopCategoryService implements ShopCategoryUseCase {
             return null;
         }
 
-        Integer shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
+        var shopCategoryId = this.shopCategoryPersistencePort.save(shopCategoryEntity);
         shopCategoryEntity.setId(shopCategoryId);
 
         shopCategoryEntity.setParents(this.getParentsById(shopCategoryEntity.getParentId()));
@@ -94,9 +94,9 @@ public class ShopCategoryService implements ShopCategoryUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        ShopCategoryEntity shopCategoryEntity = this.getById(id);
+        var shopCategoryEntity = this.getById(id);
 
-        List<Integer> deleteIds = TreeUtils.getChildrenIds(shopCategoryEntity.getId(), this.shopCategoryPersistencePort.getTree());
+        var deleteIds = TreeUtils.getChildrenIds(shopCategoryEntity.getId(), this.shopCategoryPersistencePort.getTree());
         deleteIds.add(shopCategoryEntity.getId());
 
         if (this.shopProductPersistencePort.existsByShopCategoryIds(deleteIds)) {

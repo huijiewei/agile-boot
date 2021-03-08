@@ -39,12 +39,12 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
             return true;
         }
 
-        List<String> allowValueList = Arrays.asList(this.allowValues);
+        var allowValueList = Arrays.asList(this.allowValues);
 
-        List<String> search = new ArrayList<>();
+        var search = new ArrayList<String>();
 
         if (object instanceof Collection) {
-            for (Object item : (Collection<?>) object) {
+            for (var item : (Collection<?>) object) {
                 String str = item.toString();
 
                 if (allowValueList.size() == 0 || !allowValueList.contains(str)) {
@@ -52,7 +52,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
                 }
             }
         } else {
-            String valueString = object.toString();
+            var valueString = object.toString();
 
             if (this.allowValues.length > 0 && Arrays.asList(this.allowValues).contains(valueString)) {
                 return true;

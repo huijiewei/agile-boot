@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = TencentCosProperties.PREFIX)
 public class TencentCosProperties {
     public static final String PREFIX = "agile.spring.upload.tencent-cos";

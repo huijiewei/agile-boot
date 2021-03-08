@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = UploadProperties.PREFIX)
 public class UploadProperties {
     public static final String PREFIX = "agile.spring.upload";

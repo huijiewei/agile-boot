@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author huijiewei
@@ -30,27 +29,27 @@ public class TencentCos implements UploadService {
 
     @Override
     public UploadRequest option(String identity, Integer size, List<String> types, List<String> thumbs, Boolean cropper) {
-        String host = this.properties.getBucket() + ".cos." + this.properties.getRegion() + ".myqcloud.com";
-        String url = "https://" + host + "/";
-        String directory = StringUtils.stripEnd(this.properties.getDirectory(), "/") +
+        var host = this.properties.getBucket() + ".cos." + this.properties.getRegion() + ".myqcloud.com";
+        var url = "https://" + host + "/";
+        var directory = StringUtils.stripEnd(this.properties.getDirectory(), "/") +
                 "/" +
                 UploadUtils.buildMonthName() +
                 "/";
 
-        String httpString = String.format("post\n%s\n\nhost=%s\n", UploadUtils.urlDecode("/"), host);
+        var httpString = String.format("post\n%s\n\nhost=%s\n", UploadUtils.urlDecode("/"), host);
 
-        long currentTimestamp = System.currentTimeMillis() / 1000L;
+        var currentTimestamp = System.currentTimeMillis() / 1000L;
 
-        String signTime = String.format("%d;%d", currentTimestamp - 60, currentTimestamp + 60 * 20);
+        var signTime = String.format("%d;%d", currentTimestamp - 60, currentTimestamp + 60 * 20);
 
-        String httpStringSha1 = UploadUtils.sha1Encode(httpString);
+        var httpStringSha1 = UploadUtils.sha1Encode(httpString);
 
-        String signString = String.format("sha1\n%s\n%s\n", signTime, httpStringSha1);
+        var signString = String.format("sha1\n%s\n%s\n", signTime, httpStringSha1);
 
-        String signKey = this.hmacSha1(this.properties.getSecretKey(), signTime);
-        String signature = this.hmacSha1(signKey, signString);
+        var signKey = this.hmacSha1(this.properties.getSecretKey(), signTime);
+        var signature = this.hmacSha1(signKey, signString);
 
-        String authorization = "q-sign-algorithm=sha1&q-ak=" +
+        var authorization = "q-sign-algorithm=sha1&q-ak=" +
                 this.properties.getSecretId() +
                 "&q-sign-time=" +
                 signTime + "&q-key-time=" + signTime +
@@ -58,17 +57,17 @@ public class TencentCos implements UploadService {
                 signature;
 
 
-        Map<String, String> params = new HashMap<>(3);
+        var params = new HashMap<String, String>(3);
         params.put("key", directory + identity + "_${filename}");
         params.put("Signature", authorization);
         params.put("success_action_status", "201");
 
-        Map<String, String> headers = new HashMap<>(1);
+        var headers = new HashMap<String, String>(1);
         headers.put("Authorization", authorization);
 
-        StringBuilder responseParse = new StringBuilder("var url = result.querySelector('PostResponse > Location').textContent;");
+        var responseParse = new StringBuilder("var url = result.querySelector('PostResponse > Location').textContent;");
 
-        List<UploadUtils.ThumbSize> thumbSizes = UploadUtils.getThumbSizes(thumbs);
+        var thumbSizes = UploadUtils.getThumbSizes(thumbs);
 
         if (thumbSizes.isEmpty()) {
             responseParse.append("var thumbs = null;");
@@ -76,7 +75,6 @@ public class TencentCos implements UploadService {
             responseParse.append("var thumbs = [];");
 
             for (UploadUtils.ThumbSize thumbSize : thumbSizes) {
-
                 responseParse.append("thumbs.push({ thumb: '")
                         .append(thumbSize.getThumbName())
                         .append("', url: url + '")
@@ -88,7 +86,7 @@ public class TencentCos implements UploadService {
 
         responseParse.append("return { original: url, thumbs: thumbs }; ");
 
-        UploadRequest request = new UploadRequest();
+        var request = new UploadRequest();
         request.setUrl(url);
         request.setTimeout(19 * 60);
         request.setParams(params);

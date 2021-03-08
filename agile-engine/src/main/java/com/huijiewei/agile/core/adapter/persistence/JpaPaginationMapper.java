@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 
 public class JpaPaginationMapper {
     public static PageResponse.Pagination toPagination(Page<?> page) {
-        PageResponse.Pagination pagination = new PageResponse.Pagination();
+        var pagination = new PageResponse.Pagination();
 
         pagination.setCurrentPage(page.getNumber() + 1);
         pagination.setTotalCount(page.getTotalElements());

@@ -27,7 +27,7 @@ public class AdminGroupService implements AdminGroupUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        AdminGroupEntity adminGroupEntity = this.getById(id);
+        var adminGroupEntity = this.getById(id);
 
         if (adminPersistencePort.existsByAdminGroupId(adminGroupEntity.getId())) {
             throw new ConflictException("管理组内拥有管理员，无法删除");
@@ -38,7 +38,7 @@ public class AdminGroupService implements AdminGroupUseCase {
 
     @Override
     public ListResponse<AdminGroupEntity> loadAll() {
-        ListResponse<AdminGroupEntity> response = new ListResponse<>();
+        var response = new ListResponse<AdminGroupEntity>();
         response.setItems(this.adminGroupPersistencePort.getAll());
 
         return response;
@@ -46,7 +46,7 @@ public class AdminGroupService implements AdminGroupUseCase {
 
     @Override
     public AdminGroupEntity loadById(Integer id) {
-        AdminGroupEntity adminGroupEntity = this.getById(id);
+        var adminGroupEntity = this.getById(id);
         adminGroupEntity.setPermissions(this.adminGroupPersistencePort.getPermissions(id));
 
         return adminGroupEntity;
@@ -62,13 +62,13 @@ public class AdminGroupService implements AdminGroupUseCase {
             return null;
         }
 
-        AdminGroupEntity adminGroupEntity = this.adminGroupRequestMapper.toAdminGroupEntity(adminGroupRequest);
+        var adminGroupEntity = this.adminGroupRequestMapper.toAdminGroupEntity(adminGroupRequest);
 
         if (!this.validatingService.validate(adminGroupEntity)) {
             return null;
         }
 
-        Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
+        var adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
 
         adminGroupEntity.setId(adminGroupId);
 
@@ -77,7 +77,7 @@ public class AdminGroupService implements AdminGroupUseCase {
 
     @Override
     public AdminGroupEntity update(Integer id, AdminGroupRequest adminGroupRequest) {
-        AdminGroupEntity adminGroupEntity = this.getById(id);
+        var adminGroupEntity = this.getById(id);
 
         if (!this.validatingService.validate(adminGroupRequest)) {
             return null;
@@ -89,7 +89,7 @@ public class AdminGroupService implements AdminGroupUseCase {
             return null;
         }
 
-        Integer adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
+        var adminGroupId = this.adminGroupPersistencePort.save(adminGroupEntity);
 
         adminGroupEntity.setId(adminGroupId);
 

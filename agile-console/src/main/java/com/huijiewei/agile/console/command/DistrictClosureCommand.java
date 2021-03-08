@@ -7,7 +7,6 @@ import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -21,12 +20,12 @@ public class DistrictClosureCommand implements Consumer<TextIO> {
 
     @Override
     public void accept(TextIO textIO) {
-        List<District> districts = this.districtRepository
+        var districts = this.districtRepository
                 .findAll(Sort.by(Sort.Direction.ASC, "parentId", "id"));
 
         this.districtRepository.truncateClosures(District.class);
 
-        for (District district : districts) {
+        for (var district : districts) {
             this.districtRepository.insertClosures(district);
         }
     }

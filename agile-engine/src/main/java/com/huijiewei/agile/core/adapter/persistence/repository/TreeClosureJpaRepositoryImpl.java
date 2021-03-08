@@ -41,7 +41,7 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @Override
     public void truncateClosures(Class<T> entityType) {
-        String closureTableName = this.getEntityClosureTableName(entityType);
+        var closureTableName = this.getEntityClosureTableName(entityType);
 
         this.entityManager
                 .createNativeQuery(String.format("TRUNCATE TABLE %s", closureTableName))
@@ -50,7 +50,7 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @Override
     public void insertClosures(T entity) {
-        String closureTableName = this.getEntityClosureTableName(entity);
+        var closureTableName = this.getEntityClosureTableName(entity);
 
         this.entityManager
                 .createNativeQuery(String.format("INSERT INTO %s (ancestor, descendant, distance) " +
@@ -66,7 +66,7 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @Override
     public void updateClosures(T entity) {
-        String closureTableName = this.getEntityClosureTableName(entity);
+        var closureTableName = this.getEntityClosureTableName(entity);
 
         this.entityManager
                 .createNativeQuery(String.format("DELETE C FROM %s AS C " +
@@ -89,8 +89,8 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @Override
     public void deleteWithClosures(T entity) {
-        String tableName = this.getEntityTableName(entity);
-        String closureTableName = this.getEntityClosureTableName(tableName);
+        var tableName = this.getEntityTableName(entity);
+        var closureTableName = this.getEntityClosureTableName(tableName);
 
         this.entityManager
                 .createNativeQuery(String.format("DELETE D, DC " +
@@ -109,8 +109,8 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @SuppressWarnings("unchecked")
     private TypedQuery<T> buildAncestorsQuery(T entity) {
-        String tableName = this.getEntityTableName(entity);
-        String closureTableName = this.getEntityClosureTableName(tableName);
+        var tableName = this.getEntityTableName(entity);
+        var closureTableName = this.getEntityClosureTableName(tableName);
 
         return (TypedQuery<T>) this.entityManager
                 .createNativeQuery(String.format("SELECT E.* " +
@@ -128,8 +128,8 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @SuppressWarnings("unchecked")
     private TypedQuery<T> buildDescendantsQuery(T entity) {
-        String tableName = this.getEntityTableName(entity);
-        String closureTableName = this.getEntityClosureTableName(tableName);
+        var tableName = this.getEntityTableName(entity);
+        var closureTableName = this.getEntityClosureTableName(tableName);
 
         return (TypedQuery<T>) this.entityManager
                 .createNativeQuery(String.format("SELECT E.* " +
@@ -147,8 +147,8 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @SuppressWarnings("unchecked")
     private TypedQuery<T> buildAncestorsQuery(String where, Map<String, Object> values, String sort, Class<T> entityType) {
-        String tableName = this.getEntityTableName(entityType);
-        String closureTableName = this.getEntityClosureTableName(tableName);
+        var tableName = this.getEntityTableName(entityType);
+        var closureTableName = this.getEntityClosureTableName(tableName);
 
         var query = (TypedQuery<T>) this.entityManager
                 .createNativeQuery(String.format("SELECT DISTINCT E.* " +
@@ -172,8 +172,8 @@ public class TreeClosureJpaRepositoryImpl<T extends AbstractJpaTreeEntity> imple
 
     @SuppressWarnings("unchecked")
     private TypedQuery<T> buildDescendantsQuery(String where, Map<String, Object> values, String sort, Class<T> entityType) {
-        String tableName = this.getEntityTableName(entityType);
-        String closureTableName = this.getEntityClosureTableName(tableName);
+        var tableName = this.getEntityTableName(entityType);
+        var closureTableName = this.getEntityClosureTableName(tableName);
 
         var query = (TypedQuery<T>) this.entityManager
                 .createNativeQuery(String.format("SELECT DISTINCT E.* " +

@@ -48,10 +48,10 @@ public class ShopBrandService implements ShopBrandUseCase {
     }
 
     private ShopBrandEntity fillCategories(ShopBrandEntity shopBrandEntity) {
-        List<ShopCategoryEntity> shopCategoryResponses = shopBrandEntity.getShopCategories();
+        var shopCategoryResponses = shopBrandEntity.getShopCategories();
 
         for (int i = 0; i < shopCategoryResponses.size(); i++) {
-            ShopCategoryEntity shopCategoryEntity = shopCategoryResponses.get(i);
+            var shopCategoryEntity = shopCategoryResponses.get(i);
             shopCategoryEntity.setParents(this.shopCategoryUseCase.loadPathById(shopCategoryEntity.getParentId()));
             shopCategoryResponses.set(i, shopCategoryEntity);
         }
@@ -67,13 +67,13 @@ public class ShopBrandService implements ShopBrandUseCase {
             return null;
         }
 
-        ShopBrandEntity shopBrandEntity = this.shopBrandRequestMapper.toShopBrandEntity(shopBrandRequest);
+        var shopBrandEntity = this.shopBrandRequestMapper.toShopBrandEntity(shopBrandRequest);
 
         if (!this.validatingService.validate(shopBrandEntity)) {
             return null;
         }
 
-        Integer shopBrandId = this.shopBrandPersistencePort.save(shopBrandEntity);
+        var shopBrandId = this.shopBrandPersistencePort.save(shopBrandEntity);
         shopBrandEntity.setId(shopBrandId);
 
         return this.fillCategories(shopBrandEntity);
@@ -81,7 +81,7 @@ public class ShopBrandService implements ShopBrandUseCase {
 
     @Override
     public ShopBrandEntity update(Integer id, ShopBrandRequest shopBrandRequest) {
-        ShopBrandEntity shopBrandEntity = this.getById(id);
+        var shopBrandEntity = this.getById(id);
 
         if (!this.validatingService.validate(shopBrandRequest)) {
             return null;
@@ -93,7 +93,7 @@ public class ShopBrandService implements ShopBrandUseCase {
             return null;
         }
 
-        Integer shopBrandId = this.shopBrandPersistencePort.save(shopBrandEntity);
+        var shopBrandId = this.shopBrandPersistencePort.save(shopBrandEntity);
         shopBrandEntity.setId(shopBrandId);
 
         return this.fillCategories(shopBrandEntity);
@@ -101,7 +101,7 @@ public class ShopBrandService implements ShopBrandUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        ShopBrandEntity shopBrandEntity = this.getById(id);
+        var shopBrandEntity = this.getById(id);
 
         if (this.shopProductPersistencePort.existsByShopBrandId(shopBrandEntity.getId())) {
             throw new ConflictException("商品品牌内拥有商品，无法删除");

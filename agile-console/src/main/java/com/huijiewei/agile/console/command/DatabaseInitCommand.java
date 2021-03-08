@@ -31,7 +31,7 @@ public class DatabaseInitCommand implements Consumer<TextIO> {
 
         assert locations != null;
 
-        Flyway flyway = Flyway.configure()
+        var flyway = Flyway.configure()
                 .dataSource(dataSource)
                 .locations((String) locations.get(0))
                 .placeholders(Map.of("table-prefix", PrefixTableNamingStrategy.tablePrefix))

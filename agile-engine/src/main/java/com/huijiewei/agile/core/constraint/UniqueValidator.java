@@ -42,9 +42,9 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     @SneakyThrows
     private String getObjectFieldValue(Object object, String field) {
-        Class<?> clazz = object.getClass();
+        var clazz = object.getClass();
 
-        Field objectField = ReflectionUtils.findField(clazz, field);
+        var objectField = ReflectionUtils.findField(clazz, field);
 
         if (objectField == null) {
             return "";
@@ -52,7 +52,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
         objectField.setAccessible(true);
 
-        Object value = objectField.get(object);
+        var value = objectField.get(object);
 
         if (value == null) {
             return "";
@@ -63,10 +63,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     @Override
     public boolean isValid(Object object, ConstraintValidatorContext context) {
-        Map<String, String> values = new HashMap<>();
+        var values = new HashMap<String, String>();
 
-        for (String field : this.fields) {
-            String value = this.getObjectFieldValue(object, field);
+        for (var field : this.fields) {
+            var value = this.getObjectFieldValue(object, field);
 
             if (StringUtils.isNotBlank(value)) {
                 values.put(field, value);
@@ -77,12 +77,12 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
             return true;
         }
 
-        boolean isValid = this.uniqueUseCase.unique(values, this.primaryKey, this.getObjectFieldValue(object, this.primaryKey));
+        var isValid = this.uniqueUseCase.unique(values, this.primaryKey, this.getObjectFieldValue(object, this.primaryKey));
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
 
-            for (String field : fields) {
+            for (var field : fields) {
                 context
                         .buildConstraintViolationWithTemplate(String.format(message, String.join(",", fields)))
                         .addPropertyNode(field)

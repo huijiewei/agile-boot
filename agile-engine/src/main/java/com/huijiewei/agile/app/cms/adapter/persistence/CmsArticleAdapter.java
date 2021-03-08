@@ -45,13 +45,13 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
 
     private Specification<CmsArticle> buildSpecification(CmsArticleSearchRequest searchRequest) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
+            var predicates = new LinkedList<Predicate>();
 
             if (StringUtils.isNotBlank(searchRequest.getTitle())) {
-                predicates.add(criteriaBuilder.like(root.get("titile"), "%" + searchRequest.getTitle() + "%"));
+                predicates.add(criteriaBuilder.like(root.get("title"), "%" + searchRequest.getTitle() + "%"));
             }
 
-            DateTimeRange dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
+            var dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
 
             if (dateTimeRange != null) {
                 predicates.add(criteriaBuilder.between(root.get("createdAt"), dateTimeRange.getBegin(), dateTimeRange.getEnd()));
@@ -63,12 +63,12 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
 
     @Override
     public SearchPageResponse<CmsArticleEntity> search(CmsArticleSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
-        Page<CmsArticle> articlePage = this.cmsArticleRepository.findAll(
+        var articlePage = this.cmsArticleRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id"))
         );
 
-        SearchPageResponse<CmsArticleEntity> articleEntityResponses = new SearchPageResponse<>();
+        var articleEntityResponses = new SearchPageResponse<CmsArticleEntity>();
 
         articleEntityResponses.setItems(articlePage
                 .getContent()
@@ -93,7 +93,7 @@ public class CmsArticleAdapter implements CmsArticlePersistencePort {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int save(CmsArticleEntity cmsArticleEntity) {
-        CmsArticle cmsArticle = this.cmsArticleRepository.save(this.cmsArticleMapper.toCmsArticle(cmsArticleEntity));
+        var cmsArticle = this.cmsArticleRepository.save(this.cmsArticleMapper.toCmsArticle(cmsArticleEntity));
 
         return cmsArticle.getId();
     }

@@ -21,7 +21,7 @@ public class AdminUserDetails implements UserDetails {
     }
 
     public static AdminIdentity getCurrentAdminIdentity() {
-        AdminUserDetails adminUserDetails = (AdminUserDetails) SecurityContextHolder
+        var adminUserDetails = (AdminUserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();

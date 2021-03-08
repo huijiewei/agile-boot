@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = "agile.format")
 public class DateFormatConfig {
     private String dateFormat = "yyyy-MM-dd";

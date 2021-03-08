@@ -10,21 +10,17 @@ import com.huijiewei.agile.app.admin.application.request.AdminLogSearchRequest;
 import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
-import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -40,14 +36,14 @@ class AdminLogAdapter implements AdminLogPersistencePort {
 
     private Specification<AdminLog> buildSpecification(AdminLogSearchRequest searchRequest) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
+            var predicates = new LinkedList<Predicate>();
 
             if (StringUtils.isNotBlank(searchRequest.getAdmin())) {
-                Join<AdminLog, Admin> joinAdmin = root.join("admin", JoinType.LEFT);
+                var joinAdmin = root.<AdminLog, Admin>join("admin", JoinType.LEFT);
 
-                List<Predicate> adminPredicates = new LinkedList<>();
+                var adminPredicates = new LinkedList<Predicate>();
 
-                String like = "%" + searchRequest.getAdmin() + "%";
+                var like = "%" + searchRequest.getAdmin() + "%";
 
                 adminPredicates.add(criteriaBuilder.like(joinAdmin.get("name"), like));
                 adminPredicates.add(criteriaBuilder.like(joinAdmin.get("phone"), like));
@@ -57,7 +53,7 @@ class AdminLogAdapter implements AdminLogPersistencePort {
             }
 
             if (searchRequest.getType() != null && searchRequest.getType().length > 0) {
-                List<Predicate> typePredicates = new LinkedList<>();
+                var typePredicates = new LinkedList<Predicate>();
 
                 for (String type : searchRequest.getType()) {
                     typePredicates.add(criteriaBuilder.equal(root.get("type"), type));
@@ -70,7 +66,7 @@ class AdminLogAdapter implements AdminLogPersistencePort {
                 predicates.add(criteriaBuilder.equal(root.get("status"), searchRequest.getStatus()));
             }
 
-            DateTimeRange dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
+            var dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
 
             if (dateTimeRange != null) {
                 predicates.add(criteriaBuilder.between(root.get("createdAt"), dateTimeRange.getBegin(), dateTimeRange.getEnd()));
@@ -82,12 +78,12 @@ class AdminLogAdapter implements AdminLogPersistencePort {
 
     @Override
     public SearchPageResponse<AdminLogEntity> getAll(AdminLogSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
-        Page<AdminLog> adminLogPage = this.adminLogRepository.findAll(
+        var adminLogPage = this.adminLogRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
                 EntityGraphUtils.fromAttributePaths("admin"));
 
-        SearchPageResponse<AdminLogEntity> adminLogEntityResponses = new SearchPageResponse<>();
+        var adminLogEntityResponses = new SearchPageResponse<AdminLogEntity>();
 
         adminLogEntityResponses.setItems(adminLogPage
                 .getContent()

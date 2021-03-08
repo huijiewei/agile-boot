@@ -3,7 +3,6 @@ package com.huijiewei.agile.core.consts;
 import lombok.Getter;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class ValueDescription<T extends ValueDescription<T, E>, E> {
         this.value = value;
         this.description = description;
 
-        Map<E, ValueDescription<?, ?>> element = getElement();
+        var element = getElement();
 
         if (element == null) {
             element = new HashMap<>();
@@ -48,13 +47,13 @@ public class ValueDescription<T extends ValueDescription<T, E>, E> {
 
     @SuppressWarnings("unchecked")
     protected static <T extends ValueDescription<T, E>, E> T[] values(Class<T> enumType) {
-        Collection<ValueDescription<?, ?>> values = ELEMENTS.get(enumType.getName()).values();
+        var values = ELEMENTS.get(enumType.getName()).values();
 
-        T[] typedValues = (T[]) Array.newInstance(enumType, values.size());
+        var typedValues = (T[]) Array.newInstance(enumType, values.size());
 
         int i = 0;
 
-        for (ValueDescription<?, ?> value : values) {
+        for (var value : values) {
             Array.set(typedValues, i, value);
             i++;
         }

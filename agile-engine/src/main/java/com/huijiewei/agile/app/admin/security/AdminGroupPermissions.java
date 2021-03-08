@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AdminGroupPermissions {
     public static List<AdminGroupPermissionItem> getAll() {
-        List<AdminGroupPermissionItem> all = new ArrayList<>();
+        var all = new ArrayList<AdminGroupPermissionItem>();
 
         all.add(new AdminGroupPermissionItem().name("管理首页")
                 .addChild(new AdminGroupPermissionItem().name("测试短信发送").actionId("site/sms-send"))

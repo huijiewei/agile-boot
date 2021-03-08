@@ -11,7 +11,7 @@ import java.util.Map;
  * @author huijiewei
  */
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class FlywayConfiguration {
     @Bean
     public FlywayConfigurationCustomizer customize(@Value("${agile.database.table-prefix}") String tablePrefix) {

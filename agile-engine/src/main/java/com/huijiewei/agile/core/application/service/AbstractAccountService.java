@@ -35,7 +35,7 @@ public abstract class AbstractAccountService<T extends AbstractIdentityEntity> i
             return 0;
         }
 
-        Integer times = TIMES_CACHE_MAP.get(this.getCacheKey(key));
+        var times = TIMES_CACHE_MAP.get(this.getCacheKey(key));
 
         if (times == null) {
             return 0;

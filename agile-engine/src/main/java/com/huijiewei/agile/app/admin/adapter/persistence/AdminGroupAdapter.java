@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
-import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminGroup;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminGroupMapper;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminGroupRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminGroupExistsPort;
@@ -41,7 +40,7 @@ class AdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(AdminGroupEntity adminGroupEntity) {
-        AdminGroup adminGroup = this.adminGroupRepository.save(this.adminGroupMapper.toAdminGroup(adminGroupEntity));
+        var adminGroup = this.adminGroupRepository.save(this.adminGroupMapper.toAdminGroup(adminGroupEntity));
 
         this.adminGroupCacheAdapter.updatePermissions(adminGroup.getId(), adminGroupEntity.getPermissions(), adminGroupEntity.hasId());
 
@@ -63,13 +62,13 @@ class AdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPo
     @Override
     @Cacheable(cacheNames = AdminGroupCacheAdapter.ADMIN_GROUP_MENUS_CACHE_KEY, key = "#id")
     public List<AdminGroupMenuItem> getMenus(Integer id) {
-        List<AdminGroupMenuItem> all = AdminGroupMenus.getAll();
-        List<String> adminGroupPermissions = this.getPermissions(id);
+        var all = AdminGroupMenus.getAll();
+        var adminGroupPermissions = this.getPermissions(id);
 
-        List<AdminGroupMenuItem> adminGroupMenuItems = new ArrayList<>();
+        var adminGroupMenuItems = new ArrayList<AdminGroupMenuItem>();
 
-        for (AdminGroupMenuItem adminGroupMenuItem : all) {
-            AdminGroupMenuItem item = AdminGroupMenus.getAdminGroupMenuItemInPermissions(adminGroupMenuItem, adminGroupPermissions);
+        for (var adminGroupMenuItem : all) {
+            var item = AdminGroupMenus.getAdminGroupMenuItemInPermissions(adminGroupMenuItem, adminGroupPermissions);
 
             if (item != null) {
                 adminGroupMenuItems.add(item);

@@ -57,7 +57,7 @@ public class AdminAccountService extends AbstractAccountService<AdminEntity> {
     @SuppressWarnings("unchecked")
     @Override
     public <E extends AbstractIdentityLogEntity> E createLog(Integer identityId) {
-        AdminLogEntity adminLogEntity = new AdminLogEntity();
+        var adminLogEntity = new AdminLogEntity();
         adminLogEntity.setAdminId(identityId);
 
         return (E) adminLogEntity;

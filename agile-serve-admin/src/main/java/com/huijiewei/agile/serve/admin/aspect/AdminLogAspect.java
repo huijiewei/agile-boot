@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
 /**
  * @author huijiewei
  */
@@ -37,14 +33,14 @@ public class AdminLogAspect {
     }
 
     private void setAdminLog(AdminLogEntity adminLogEntity, ProceedingJoinPoint joinPoint) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        var requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-        StringBuilder queryString = new StringBuilder();
+        var queryString = new StringBuilder();
 
         if (requestAttributes != null) {
-            HttpServletRequest request = requestAttributes.getRequest();
+            var request = requestAttributes.getRequest();
 
-            String requestMethod = request.getMethod();
+            var requestMethod = request.getMethod();
 
             adminLogEntity.setType("GET".equals(requestMethod) ? IdentityLogType.VISIT : IdentityLogType.OPERATE);
             adminLogEntity.setMethod(requestMethod);
@@ -56,24 +52,22 @@ public class AdminLogAspect {
             }
         }
 
-        Class<?> joinPointClass = joinPoint.getTarget().getClass();
-        Method joinPointMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
+        var joinPointClass = joinPoint.getTarget().getClass();
+        var joinPointMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
 
         adminLogEntity.setAction(joinPointClass.getSimpleName() + "." + joinPointMethod.getName());
 
-        Object[][] parameterAnnotations = joinPointMethod.getParameterAnnotations();
-        Object[] args = joinPoint.getArgs();
+        var parameterAnnotations = joinPointMethod.getParameterAnnotations();
+        var args = joinPoint.getArgs();
 
         for (int i = 0; i < parameterAnnotations.length; i++) {
-            Object[] parameterAnnotation = parameterAnnotations[i];
+            var parameterAnnotation = parameterAnnotations[i];
 
-            for (Object object : parameterAnnotation) {
-                Annotation annotation = (Annotation) object;
-
+            for (var annotation : parameterAnnotation) {
                 if (annotation.annotationType().equals(PathVariable.class)) {
-                    PathVariable pathVariableAnnotation = (PathVariable) annotation;
+                    var pathVariableAnnotation = (PathVariable) annotation;
 
-                    String queryName = pathVariableAnnotation.name();
+                    var queryName = pathVariableAnnotation.name();
 
                     if (StringUtils.isEmpty(queryName)) {
                         queryName = pathVariableAnnotation.value();
@@ -96,7 +90,7 @@ public class AdminLogAspect {
 
     @Around(value = "preAuthorize()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        AdminLogEntity adminLogEntity = new AdminLogEntity();
+        var adminLogEntity = new AdminLogEntity();
         adminLogEntity.setAdminId(AdminUserDetails.getCurrentAdminIdentity().getAdminEntity().getId());
 
         this.setAdminLog(adminLogEntity, joinPoint);

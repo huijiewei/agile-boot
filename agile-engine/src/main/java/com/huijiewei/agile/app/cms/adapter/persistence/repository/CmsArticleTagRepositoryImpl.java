@@ -5,6 +5,7 @@ import com.huijiewei.agile.core.adapter.persistence.repository.BatchJpaRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -30,9 +31,9 @@ public class CmsArticleTagRepositoryImpl implements BatchJpaRepository<CmsArticl
                 String.format("INSERT INTO %s(cmsArticleId,cmsTagId) values(?,?)", CmsArticleTag.tableName(CmsArticleTag.class)),
                 new BatchPreparedStatementSetter() {
                     @Override
-                    public void setValues(PreparedStatement preparedStatement, int i)
+                    public void setValues(@NonNull PreparedStatement preparedStatement, int i)
                             throws SQLException {
-                        CmsArticleTag cmsArticleTag = entities.get(i);
+                        var cmsArticleTag = entities.get(i);
 
                         preparedStatement.setInt(1, cmsArticleTag.getCmsArticleId());
                         preparedStatement.setInt(2, cmsArticleTag.getCmsTagId());

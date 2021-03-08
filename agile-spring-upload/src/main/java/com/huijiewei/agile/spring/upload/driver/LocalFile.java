@@ -48,24 +48,24 @@ public class LocalFile implements UploadService {
     }
 
     private UploadPolicy parsePolicy(String policy) {
-        String policyDecrypt = UploadUtils.urlDecode(policy);
-        String policyValue = this.decrypt(policyDecrypt, this.properties.getPolicyKey());
+        var policyDecrypt = UploadUtils.urlDecode(policy);
+        var policyValue = this.decrypt(policyDecrypt, this.properties.getPolicyKey());
 
-        String[] policies = policyValue.split(";");
+        var policies = policyValue.split(";");
 
         if (policies.length != POLICY_DATA_LENGTH) {
             throw new RuntimeException("策略验证错误");
         }
 
-        long currentTimestamp = System.currentTimeMillis() / 1000L;
+        var currentTimestamp = System.currentTimeMillis() / 1000L;
 
-        long timestamp = Long.parseLong(policies[1]);
+        var timestamp = Long.parseLong(policies[1]);
 
         if (timestamp < currentTimestamp) {
             throw new RuntimeException("参数已过期");
         }
 
-        UploadPolicy uploadPolicy = new UploadPolicy();
+        var uploadPolicy = new UploadPolicy();
         uploadPolicy.setIdentity(policies[0]);
         uploadPolicy.setSize(Integer.parseInt(policies[2]));
         uploadPolicy.setTypes(Arrays.asList(policies[3].split(",")));
@@ -76,17 +76,17 @@ public class LocalFile implements UploadService {
     }
 
     private List<UploadResponse.Thumb> thumbs(String policyThumbs, String policyIdentity, String filePath, String absoluteFilePath, String fileExtension, String absoluteUrl) {
-        List<UploadUtils.ThumbSize> thumbSizes = UploadUtils.getThumbSizes(policyThumbs);
+        var thumbSizes = UploadUtils.getThumbSizes(policyThumbs);
 
         if (thumbSizes.isEmpty()) {
             return null;
         }
 
-        List<UploadResponse.Thumb> thumbs = new ArrayList<>();
+        var thumbs = new ArrayList<UploadResponse.Thumb>();
 
-        for (UploadUtils.ThumbSize thumbSize : thumbSizes) {
-            String thumbFileName = policyIdentity + "_" + UploadUtils.random(10) + "." + fileExtension;
-            String thumbFilePath = absoluteFilePath + File.separator + thumbFileName;
+        for (var thumbSize : thumbSizes) {
+            var thumbFileName = policyIdentity + "_" + UploadUtils.random(10) + "." + fileExtension;
+            var thumbFilePath = absoluteFilePath + File.separator + thumbFileName;
 
             try {
                 Thumbnails
@@ -106,21 +106,21 @@ public class LocalFile implements UploadService {
 
     @Override
     public UploadResponse crop(String policy, ImageCropRequest request) {
-        UploadPolicy uploadPolicy = this.parsePolicy(policy);
+        var uploadPolicy = this.parsePolicy(policy);
 
         if (!uploadPolicy.getCropper()) {
             throw new RuntimeException("不支持图片切割");
         }
 
-        String absoluteAccessPathUrl = UploadUtils.buildAbsoluteAccessPathUrl(this.properties.getAccessPath());
+        var absoluteAccessPathUrl = UploadUtils.buildAbsoluteAccessPathUrl(this.properties.getAccessPath());
 
-        String filePath = StringUtils.stripStart(request.getFile(), absoluteAccessPathUrl);
+        var filePath = StringUtils.stripStart(request.getFile(), absoluteAccessPathUrl);
 
-        String absoluteUploadPath = UploadUtils.buildAbsoluteUploadPath(this.properties.getUploadPath());
+        var absoluteUploadPath = UploadUtils.buildAbsoluteUploadPath(this.properties.getUploadPath());
 
-        String absoluteFilePath = Paths.get(absoluteUploadPath, filePath).normalize().toString();
+        var absoluteFilePath = Paths.get(absoluteUploadPath, filePath).normalize().toString();
 
-        File absoluteFile = new File(absoluteFilePath);
+        var absoluteFile = new File(absoluteFilePath);
 
         if (!absoluteFile.exists()) {
             throw new RuntimeException("要切割的图片文件不存在");
@@ -134,11 +134,11 @@ public class LocalFile implements UploadService {
             throw new RuntimeException("无效的图片文件");
         }
 
-        String monthName = UploadUtils.buildMonthName();
+        var monthName = UploadUtils.buildMonthName();
 
-        String absoluteCropperFilePath = absoluteUploadPath + monthName;
+        var absoluteCropperFilePath = absoluteUploadPath + monthName;
 
-        File cropperFilePathFile = new File(absoluteCropperFilePath);
+        var cropperFilePathFile = new File(absoluteCropperFilePath);
 
         if (!cropperFilePathFile.exists()) {
             if (!cropperFilePathFile.mkdirs()) {
@@ -146,13 +146,13 @@ public class LocalFile implements UploadService {
             }
         }
 
-        String fileExtension = FilenameUtils.getExtension(filePath);
+        var fileExtension = FilenameUtils.getExtension(filePath);
 
-        String fileName = uploadPolicy.getIdentity() + "_" + UploadUtils.random(10) + "." + fileExtension;
+        var fileName = uploadPolicy.getIdentity() + "_" + UploadUtils.random(10) + "." + fileExtension;
 
-        BufferedImage cropImage = image.getSubimage(request.getX(), request.getY(), request.getW(), request.getH());
+        var cropImage = image.getSubimage(request.getX(), request.getY(), request.getW(), request.getH());
 
-        String cropperFilePath = absoluteCropperFilePath + File.separator + fileName;
+        var cropperFilePath = absoluteCropperFilePath + File.separator + fileName;
 
         try {
             ImageIO.write(cropImage, fileExtension, new File(cropperFilePath));
@@ -160,17 +160,17 @@ public class LocalFile implements UploadService {
             throw new RuntimeException("服务器保存文件错误:" + cropperFilePath, ex);
         }
 
-        String absoluteUrl = absoluteAccessPathUrl + "/" + monthName + "/";
+        var absoluteUrl = absoluteAccessPathUrl + "/" + monthName + "/";
 
         return getUploadResponse(uploadPolicy, fileName, fileExtension, cropperFilePath, absoluteCropperFilePath, absoluteUrl);
     }
 
     private UploadResponse getUploadResponse(UploadPolicy uploadPolicy, String fileName, String fileExtension, String cropperFilePath, String absoluteCropperFilePath, String absoluteUrl) {
-        UploadResponse response = new UploadResponse();
+        var response = new UploadResponse();
 
         response.setOriginal(absoluteUrl + fileName);
 
-        List<UploadResponse.Thumb> thumbs = this.thumbs(uploadPolicy.getThumbs(), uploadPolicy.getIdentity(), cropperFilePath, absoluteCropperFilePath, fileExtension, absoluteUrl);
+        var thumbs = this.thumbs(uploadPolicy.getThumbs(), uploadPolicy.getIdentity(), cropperFilePath, absoluteCropperFilePath, fileExtension, absoluteUrl);
 
         if (thumbs != null) {
             response.setThumbs(thumbs);
@@ -181,7 +181,7 @@ public class LocalFile implements UploadService {
 
     @Override
     public UploadResponse upload(String policy, MultipartFile file) {
-        UploadPolicy uploadPolicy = this.parsePolicy(policy);
+        var uploadPolicy = this.parsePolicy(policy);
 
         if (file.isEmpty()) {
             throw new RuntimeException("没有文件被上传");
@@ -191,18 +191,18 @@ public class LocalFile implements UploadService {
             throw new RuntimeException("文件大小超出：" + FileUtils.byteCountToDisplaySize(uploadPolicy.getSize()));
         }
 
-        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+        var fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
 
         if (!uploadPolicy.getTypes().contains(fileExtension)) {
             throw new RuntimeException("文件类型限制：" + String.join(",", uploadPolicy.getTypes()));
         }
 
-        String monthName = UploadUtils.buildMonthName();
+        var monthName = UploadUtils.buildMonthName();
 
-        String absoluteUploadPath = UploadUtils.buildAbsoluteUploadPath(this.properties.getUploadPath()) +
+        var absoluteUploadPath = UploadUtils.buildAbsoluteUploadPath(this.properties.getUploadPath()) +
                 monthName;
 
-        File absoluteUploadPathFile = new File(absoluteUploadPath);
+        var absoluteUploadPathFile = new File(absoluteUploadPath);
 
         if (!absoluteUploadPathFile.exists()) {
             if (!absoluteUploadPathFile.mkdirs()) {
@@ -210,9 +210,9 @@ public class LocalFile implements UploadService {
             }
         }
 
-        String fileName = uploadPolicy.getIdentity() + "_" + UploadUtils.random(10) + "." + fileExtension;
+        var fileName = uploadPolicy.getIdentity() + "_" + UploadUtils.random(10) + "." + fileExtension;
 
-        String uploadFilePath = absoluteUploadPath + File.separator + fileName;
+        var uploadFilePath = absoluteUploadPath + File.separator + fileName;
 
         try {
             file.transferTo(Path.of(uploadFilePath));
@@ -220,7 +220,7 @@ public class LocalFile implements UploadService {
             throw new RuntimeException("服务器保存文件错误: " + ex.getMessage(), ex);
         }
 
-        String absoluteUrl = UploadUtils.buildAbsoluteAccessPathUrl(this.properties.getAccessPath()) +
+        var absoluteUrl = UploadUtils.buildAbsoluteAccessPathUrl(this.properties.getAccessPath()) +
                 "/" + monthName + "/";
 
         return getUploadResponse(uploadPolicy, fileName, fileExtension, uploadFilePath, absoluteUploadPath, absoluteUrl);
@@ -228,9 +228,9 @@ public class LocalFile implements UploadService {
 
     @Override
     public UploadRequest option(String identity, Integer size, List<String> types, List<String> thumbs, Boolean cropper) {
-        long currentTimestamp = System.currentTimeMillis() / 1000L;
+        var currentTimestamp = System.currentTimeMillis() / 1000L;
 
-        String policy = String.format(
+        var policy = String.format(
                 "%s;%d;%d;%s;%s;%b",
                 identity,
                 currentTimestamp + 10 * 60,
@@ -239,10 +239,10 @@ public class LocalFile implements UploadService {
                 thumbs != null ? String.join(",", thumbs) : "",
                 cropper);
 
-        String policyEncrypt = this.encrypt(policy, this.properties.getPolicyKey());
-        String policyValue = UploadUtils.urlEncode(policyEncrypt);
+        var policyEncrypt = this.encrypt(policy, this.properties.getPolicyKey());
+        var policyValue = UploadUtils.urlEncode(policyEncrypt);
 
-        UploadRequest request = new UploadRequest();
+        var request = new UploadRequest();
         request.setUrl(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/" + StringUtils.strip(this.properties.getUploadAction(), "/"))
@@ -274,10 +274,10 @@ public class LocalFile implements UploadService {
 
     private String encrypt(String data, String key) {
         try {
-            Cipher cipher = Cipher.getInstance("AES");
+            var cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES"));
 
-            byte[] encrypt = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            var encrypt = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
 
             return Base64.getEncoder().encodeToString(encrypt);
         } catch (Exception ex) {
@@ -287,10 +287,10 @@ public class LocalFile implements UploadService {
 
     private String decrypt(String data, String key) {
         try {
-            Cipher cipher = Cipher.getInstance("AES");
+            var cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES"));
 
-            byte[] decrypt = cipher.doFinal(Base64.getDecoder().decode(data));
+            var decrypt = cipher.doFinal(Base64.getDecoder().decode(data));
 
             return new String(decrypt);
         } catch (Exception ex) {

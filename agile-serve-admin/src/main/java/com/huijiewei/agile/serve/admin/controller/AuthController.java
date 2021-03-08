@@ -77,7 +77,7 @@ public class AuthController {
     @ApiResponse(responseCode = "200", description = "管理员个人资料")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
     public MessageResponse actionProfileEdit(@RequestBody AdminRequest request) {
-        AdminEntity adminEntity = AdminUserDetails.getCurrentAdminIdentity().getAdminEntity();
+        var adminEntity = AdminUserDetails.getCurrentAdminIdentity().getAdminEntity();
 
         this.adminUseCase.update(adminEntity.getId(), request, adminEntity.getId());
 

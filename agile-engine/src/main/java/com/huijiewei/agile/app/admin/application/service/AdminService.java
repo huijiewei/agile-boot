@@ -32,7 +32,7 @@ public class AdminService implements AdminUseCase {
 
     @Override
     public ListResponse<AdminEntity> loadAll() {
-        ListResponse<AdminEntity> response = new ListResponse<>();
+        var response = new ListResponse<AdminEntity>();
         response.setItems(this.adminPersistencePort.getAll());
 
         return response;
@@ -40,7 +40,7 @@ public class AdminService implements AdminUseCase {
 
     @Override
     public void deleteById(Integer id, Integer identityId) {
-        AdminEntity adminEntity = this.getById(id);
+        var adminEntity = this.getById(id);
 
         if (adminEntity.getId().equals(identityId)) {
             throw new ConflictException("管理员不能删除自己");
@@ -60,14 +60,14 @@ public class AdminService implements AdminUseCase {
             return null;
         }
 
-        AdminEntity adminEntity = this.adminRequestMapper.toAdminEntity(adminRequest);
+        var adminEntity = this.adminRequestMapper.toAdminEntity(adminRequest);
         adminEntity.setPassword(SecurityUtils.passwordEncode(adminRequest.getPassword()));
 
         if (!this.validatingService.validate(adminEntity)) {
             return null;
         }
 
-        Integer adminId = this.adminPersistencePort.save(adminEntity);
+        var adminId = this.adminPersistencePort.save(adminEntity);
         adminEntity.setId(adminId);
 
         return adminEntity;
@@ -75,7 +75,7 @@ public class AdminService implements AdminUseCase {
 
     @Override
     public AdminEntity update(Integer id, AdminRequest adminRequest, Integer identityId) {
-        AdminEntity adminEntity = this.getById(id);
+        var adminEntity = this.getById(id);
 
         if (!this.validatingService.validate(adminRequest, AdminRequest.OnUpdate.class)) {
             return null;
@@ -95,7 +95,7 @@ public class AdminService implements AdminUseCase {
             return null;
         }
 
-        Integer adminId = this.adminPersistencePort.save(adminEntity);
+        var adminId = this.adminPersistencePort.save(adminEntity);
         adminEntity.setId(adminId);
 
         return adminEntity;

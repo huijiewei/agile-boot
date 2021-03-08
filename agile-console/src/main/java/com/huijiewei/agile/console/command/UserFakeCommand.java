@@ -29,25 +29,25 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
     @Override
     public void accept(TextIO textIO) {
-        Integer count = textIO.newIntInputReader().withDefaultValue(10).read("生成数量");
+        var count = textIO.newIntInputReader().withDefaultValue(10).read("生成数量");
 
-        Faker englishFaker = new Faker(Locale.ENGLISH);
-        Faker chineseFaker = new Faker(Locale.CHINA);
+        var englishFaker = new Faker(Locale.ENGLISH);
+        var chineseFaker = new Faker(Locale.CHINA);
 
-        Page<User> users = this.userRepository.findAll(PageRequest.of(0, 1, Sort.Direction.DESC, "id"));
+        var users = this.userRepository.findAll(PageRequest.of(0, 1, Sort.Direction.DESC, "id"));
 
         long fakeCreatedAtTimestamp = users.getContent().isEmpty()
                 ? LocalDateTime.of(2019, 5, 1, 12, 20, 32).toEpochSecond(ZoneOffset.of("+8"))
                 : users.getContent().get(0).getCreatedAt().toEpochSecond(ZoneOffset.of("+8"));
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        var passwordEncoder = new BCryptPasswordEncoder();
 
-        List<String> createdFromList = Arrays.stream(UserCreatedFrom.values()).map(UserCreatedFrom::getValue).collect(Collectors.toList());
+        var createdFromList = Arrays.stream(UserCreatedFrom.values()).map(UserCreatedFrom::getValue).collect(Collectors.toList());
 
         for (int i = 0; i < count; i++) {
-            String fakePhone = chineseFaker.phoneNumber().cellPhone();
+            var fakePhone = chineseFaker.phoneNumber().cellPhone();
 
-            User existPhoneUser = new User();
+            var existPhoneUser = new User();
             existPhoneUser.setPhone(fakePhone);
 
             if (this.userRepository.exists(Example.of(existPhoneUser))) {
@@ -55,9 +55,9 @@ public class UserFakeCommand implements Consumer<TextIO> {
                 continue;
             }
 
-            String fakeEmail = englishFaker.internet().emailAddress();
+            var fakeEmail = englishFaker.internet().emailAddress();
 
-            User existEmailUser = new User();
+            var existEmailUser = new User();
             existEmailUser.setEmail(fakeEmail);
 
             if (this.userRepository.exists(Example.of(existEmailUser))) {
@@ -67,7 +67,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
             Collections.shuffle(createdFromList);
 
-            User user = new User();
+            var user = new User();
             user.setPhone(fakePhone);
             user.setEmail(fakeEmail);
             user.setPassword(passwordEncoder.encode(englishFaker.internet().password()));
@@ -77,7 +77,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
             fakeCreatedAtTimestamp += new Random().nextInt((28800 - 30) + 1) + 30;
 
-            LocalDateTime fakeCreatedAt = LocalDateTime.ofEpochSecond(
+            var fakeCreatedAt = LocalDateTime.ofEpochSecond(
                     fakeCreatedAtTimestamp,
                     new Random().nextInt((28800 - 30) + 1) + 30,
                     ZoneOffset.of("+8")
@@ -85,11 +85,11 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
             user.setCreatedAt(fakeCreatedAt);
 
-            int randomInt = new Random().nextInt((100 - 1) + 1) + 1;
+            var randomInt = new Random().nextInt((100 - 1) + 1) + 1;
 
             if (randomInt > 9) {
-                int randomAvatarId = new Random().nextInt((100677 - 100001) + 1) + 100001;
-                String randomAvatar = Integer.toString(randomAvatarId).substring(1);
+                var randomAvatarId = new Random().nextInt((100677 - 100001) + 1) + 100001;
+                var randomAvatar = Integer.toString(randomAvatarId).substring(1);
 
                 user.setAvatar("https://yuncars-other.oss-cn-shanghai.aliyuncs.com/boilerplate/avatar/a" + randomAvatar + ".png@!avatar");
             }

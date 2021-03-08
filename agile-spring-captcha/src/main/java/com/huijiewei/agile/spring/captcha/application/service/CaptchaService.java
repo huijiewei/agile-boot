@@ -10,8 +10,6 @@ import com.wf.captcha.GifCaptcha;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
  * @author huijiewei
  */
@@ -34,7 +32,7 @@ public class CaptchaService implements CaptchaUseCase {
             return false;
         }
 
-        String[] captchaSplit = captcha.split(CAPTCHA_REQUEST_SPLIT);
+        var captchaSplit = captcha.split(CAPTCHA_REQUEST_SPLIT);
 
         if (captchaSplit.length != 2) {
             return false;
@@ -44,13 +42,14 @@ public class CaptchaService implements CaptchaUseCase {
             return false;
         }
 
-        Optional<CaptchaEntity> captchaEntityOptional = this.captchaPersistencePort.getByCode(captchaSplit[0], captchaSplit[1], userAgent, remoteAddr);
+        var captchaEntityOptional =
+                this.captchaPersistencePort.getByCode(captchaSplit[0], captchaSplit[1], userAgent, remoteAddr);
 
         if (captchaEntityOptional.isEmpty()) {
             return false;
         }
 
-        CaptchaEntity captchaEntity = captchaEntityOptional.get();
+        var captchaEntity = captchaEntityOptional.get();
 
         this.captchaPersistencePort.deleteById(captchaEntity.getId());
 
@@ -59,11 +58,13 @@ public class CaptchaService implements CaptchaUseCase {
 
     @Override
     public CaptchaResponse create(String userAgent, String remoteAddr) {
-        String uuid = FriendlyId.createFriendlyId();
+        var uuid = FriendlyId.createFriendlyId();
 
-        GifCaptcha gifCaptcha = new GifCaptcha(captchaProperties.getWidth(), captchaProperties.getHeight(), captchaProperties.getLength());
+        var gifCaptcha = new GifCaptcha(captchaProperties.getWidth(),
+                captchaProperties.getHeight(),
+                captchaProperties.getLength());
 
-        CaptchaEntity captchaEntity = new CaptchaEntity();
+        var captchaEntity = new CaptchaEntity();
         captchaEntity.setCode(gifCaptcha.text());
         captchaEntity.setUuid(uuid);
         captchaEntity.setUserAgent(userAgent);
@@ -71,7 +72,7 @@ public class CaptchaService implements CaptchaUseCase {
 
         this.captchaPersistencePort.save(captchaEntity);
 
-        CaptchaResponse captchaResponse = new CaptchaResponse();
+        var captchaResponse = new CaptchaResponse();
         captchaResponse.setImage(gifCaptcha.toBase64());
         captchaResponse.setProcess("return captcha + '" + CAPTCHA_REQUEST_SPLIT + uuid + "'");
 

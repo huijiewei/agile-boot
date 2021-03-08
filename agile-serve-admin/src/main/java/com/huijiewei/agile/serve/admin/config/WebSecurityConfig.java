@@ -19,7 +19,7 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
  * @author huijiewei
  */
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import(SecurityProblemSupport.class)
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder builder) {
-        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        var provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(this.adminUserDetailsService);
 
         builder.authenticationProvider(provider);

@@ -18,7 +18,7 @@ public class IdentityLogType extends ValueDescription<IdentityLogType, String> {
     }
 
     public static IdentityLogType valueOf(String value) {
-        IdentityLogType identityLogType = valueOf(IdentityLogType.class, value);
+        var identityLogType = valueOf(IdentityLogType.class, value);
 
         if (identityLogType == null) {
             identityLogType = new IdentityLogType(value, value);

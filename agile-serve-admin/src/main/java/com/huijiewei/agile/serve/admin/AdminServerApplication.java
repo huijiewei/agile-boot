@@ -15,7 +15,7 @@ import org.springframework.data.repository.config.BootstrapMode;
  * @author huijiewei
  */
 @EnableCaching
-@SpringBootApplication(exclude = {
+@SpringBootApplication(proxyBeanMethods = false, exclude = {
         ErrorMvcAutoConfiguration.class,
         UserDetailsServiceAutoConfiguration.class
 })

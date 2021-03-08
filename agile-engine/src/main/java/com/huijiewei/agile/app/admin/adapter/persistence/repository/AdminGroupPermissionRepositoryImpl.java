@@ -5,6 +5,7 @@ import com.huijiewei.agile.core.adapter.persistence.repository.BatchJpaRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class AdminGroupPermissionRepositoryImpl implements BatchJpaRepository<Ad
                 String.format("INSERT INTO %s(adminGroupId,actionId) values(?,?)", AdminGroupPermission.tableName(AdminGroupPermission.class)),
                 new BatchPreparedStatementSetter() {
                     @Override
-                    public void setValues(PreparedStatement preparedStatement, int i)
+                    public void setValues(@NonNull PreparedStatement preparedStatement, int i)
                             throws SQLException {
                         AdminGroupPermission adminGroupPermission = adminGroupPermissions.get(i);
 

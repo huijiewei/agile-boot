@@ -28,12 +28,12 @@ public class NotFalseValidator implements ConstraintValidator<NotFalse, Object> 
             return true;
         }
 
-        boolean valid = true;
+        var valid = true;
 
-        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(bean);
+        var beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(bean);
 
         for (int i = 0; i < properties.length; i++) {
-            Boolean verified = (Boolean) beanWrapper.getPropertyValue(verifiers[i]);
+            var verified = (Boolean) beanWrapper.getPropertyValue(verifiers[i]);
             valid &= isValidProperty(verified, messages[i], properties[i], context);
         }
 

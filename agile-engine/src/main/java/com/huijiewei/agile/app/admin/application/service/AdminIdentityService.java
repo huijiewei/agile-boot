@@ -35,10 +35,10 @@ public class AdminIdentityService implements AdminIdentityUseCase {
             return null;
         }
 
-        AdminEntity adminEntity = (AdminEntity) loginRequest.getIdentity();
-        String accessToken = FriendlyId.createFriendlyId();
+        var adminEntity = (AdminEntity) loginRequest.getIdentity();
+        var accessToken = FriendlyId.createFriendlyId();
 
-        AdminAccessTokenEntity adminAccessTokenEntity = this.adminAccessTokenPersistencePort
+        var adminAccessTokenEntity = this.adminAccessTokenPersistencePort
                 .getByAdminIdAndClientId(adminEntity.getId(), loginRequest.getClientId())
                 .orElseGet(AdminAccessTokenEntity::new);
 
@@ -53,7 +53,7 @@ public class AdminIdentityService implements AdminIdentityUseCase {
 
         this.adminAccessTokenPersistencePort.save(adminAccessTokenEntity);
 
-        AdminIdentityResponse adminIdentityResponse = new AdminIdentityResponse();
+        var adminIdentityResponse = new AdminIdentityResponse();
         adminIdentityResponse.setCurrentUser(adminEntity);
         adminIdentityResponse.setGroupPermissions(this.adminGroupPersistencePort.getPermissions(adminEntity.getAdminGroupId()));
         adminIdentityResponse.setGroupMenus(this.adminGroupPersistencePort.getMenus(adminEntity.getAdminGroupId()));
@@ -64,9 +64,9 @@ public class AdminIdentityService implements AdminIdentityUseCase {
 
     @Override
     public AdminIdentityResponse account(AdminIdentity adminIdentity) {
-        AdminEntity adminEntity = adminIdentity.getAdminEntity();
+        var adminEntity = adminIdentity.getAdminEntity();
 
-        AdminIdentityResponse adminIdentityResponse = new AdminIdentityResponse();
+        var adminIdentityResponse = new AdminIdentityResponse();
         adminIdentityResponse.setCurrentUser(adminEntity);
 
         adminIdentityResponse.setGroupPermissions(this.adminGroupPersistencePort.getPermissions(adminEntity.getAdminGroupId()));
@@ -79,7 +79,7 @@ public class AdminIdentityService implements AdminIdentityUseCase {
     public void logout(AdminIdentity adminIdentity, String userAgent, String remoteAddr) {
         this.adminAccessTokenPersistencePort.delete(adminIdentity.getAdminEntity().getId(), adminIdentity.getClientId());
 
-        AdminLogEntity adminLogEntity = new AdminLogEntity();
+        var adminLogEntity = new AdminLogEntity();
         adminLogEntity.setAdminId(adminIdentity.getAdminEntity().getId());
         adminLogEntity.setType(IdentityLogType.LOGIN);
         adminLogEntity.setStatus(IdentityLogStatus.SUCCESS);

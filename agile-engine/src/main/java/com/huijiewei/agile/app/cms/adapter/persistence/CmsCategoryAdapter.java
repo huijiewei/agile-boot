@@ -54,7 +54,7 @@ public class CmsCategoryAdapter implements CmsCategoryExistsPort, CmsCategoryPer
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = {CmsCategoryCacheAdapter.CATEGORIES_CACHE_KEY, CmsCategoryCacheAdapter.CATEGORY_TREE_CACHE_KEY}, allEntries = true)
     public Integer save(CmsCategoryEntity cmsCategoryEntity) {
-        CmsCategory cmsCategory = this.cmsCategoryRepository.save(this.cmsCategoryMapper.toCmsCategory(cmsCategoryEntity));
+        var cmsCategory = this.cmsCategoryRepository.save(this.cmsCategoryMapper.toCmsCategory(cmsCategoryEntity));
 
         return cmsCategory.getId();
     }

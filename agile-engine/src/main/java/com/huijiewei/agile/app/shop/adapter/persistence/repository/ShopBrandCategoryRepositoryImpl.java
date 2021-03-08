@@ -5,6 +5,7 @@ import com.huijiewei.agile.core.adapter.persistence.repository.BatchJpaRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -30,9 +31,9 @@ public class ShopBrandCategoryRepositoryImpl implements BatchJpaRepository<ShopB
                 String.format("INSERT INTO %s(shopBrandId,shopCategoryId) values(?,?)", ShopBrandCategory.tableName(ShopBrandCategory.class)),
                 new BatchPreparedStatementSetter() {
                     @Override
-                    public void setValues(PreparedStatement preparedStatement, int i)
+                    public void setValues(@NonNull PreparedStatement preparedStatement, int i)
                             throws SQLException {
-                        ShopBrandCategory shopBrandCategory = entities.get(i);
+                        var shopBrandCategory = entities.get(i);
 
                         preparedStatement.setInt(1, shopBrandCategory.getShopBrandId());
                         preparedStatement.setInt(2, shopBrandCategory.getShopCategoryId());

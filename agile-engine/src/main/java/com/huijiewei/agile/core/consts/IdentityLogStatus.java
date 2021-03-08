@@ -17,7 +17,7 @@ public class IdentityLogStatus extends ValueDescription<IdentityLogStatus, Integ
     }
 
     public static IdentityLogStatus valueOf(Integer value) {
-        IdentityLogStatus identityLogStatus = valueOf(IdentityLogStatus.class, value);
+        var identityLogStatus = valueOf(IdentityLogStatus.class, value);
 
         if (identityLogStatus == null) {
             identityLogStatus = new IdentityLogStatus(value, value.toString());

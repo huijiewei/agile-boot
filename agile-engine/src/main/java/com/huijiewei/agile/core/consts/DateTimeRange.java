@@ -34,14 +34,14 @@ public class DateTimeRange {
         }
 
         try {
-            LocalDateTime startDate = LocalDateTime.parse(
+            var startDate = LocalDateTime.parse(
                     StringUtils.contains(range[0], " ") ? range[0] : (range[0] + " 00:00:00"),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            LocalDateTime endDate = LocalDateTime.parse(
+            var endDate = LocalDateTime.parse(
                     StringUtils.contains(range[1], " ") ? range[1] : (range[1] + " 23:59:59"),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-            DateTimeRange dateTimeRange = new DateTimeRange();
+            var dateTimeRange = new DateTimeRange();
             dateTimeRange.begin = startDate;
             dateTimeRange.end = endDate;
 

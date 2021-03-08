@@ -6,7 +6,6 @@ import com.huijiewei.agile.core.consts.AccountType;
 import com.huijiewei.agile.core.consts.IdentityLogStatus;
 import com.huijiewei.agile.core.consts.IdentityLogType;
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
-import com.huijiewei.agile.core.domain.AbstractIdentityLogEntity;
 import com.huijiewei.agile.core.until.SecurityUtils;
 import com.huijiewei.agile.core.until.StringUtils;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
@@ -15,7 +14,6 @@ import org.springframework.context.ApplicationContext;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Optional;
 
 /**
  * @author huijiewei
@@ -67,11 +65,11 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
     }
 
     private boolean validPassword(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
-        String password = request.getPassword();
+        var password = request.getPassword();
 
-        String retryTimesCacheKey = SecurityUtils.md5(request.getAccount()).substring(0, 8);
+        var retryTimesCacheKey = SecurityUtils.md5(request.getAccount()).substring(0, 8);
 
-        Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
+        var retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
         if (retryTimes > RETRY_TIMES && this.invalidCaptcha(request, context)) {
             return false;
@@ -101,9 +99,9 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
     }
 
     private boolean validAccount(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
-        String account = request.getAccount();
+        var account = request.getAccount();
 
-        AccountType accountType = new EmailValidator().isValid(account, context) ?
+        var accountType = new EmailValidator().isValid(account, context) ?
                 AccountType.EMAIL :
                 (new PhoneValidator().isValid(account, context) ? AccountType.PHONE : null);
 
@@ -116,14 +114,14 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
             return false;
         }
 
-        String retryTimesCacheKey = SecurityUtils.md5(request.getClientId() + request.getRemoteAddr()).substring(0, 8);
-        Integer retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
+        var retryTimesCacheKey = SecurityUtils.md5(request.getClientId() + request.getRemoteAddr()).substring(0, 8);
+        var retryTimes = this.accountUseCase.getRetryTimes(retryTimesCacheKey);
 
         if (retryTimes > RETRY_TIMES && this.invalidCaptcha(request, context)) {
             return false;
         }
 
-        Optional<? extends AbstractIdentityEntity> identityEntityOptional = this.accountUseCase.getByAccount(account, accountType);
+        var identityEntityOptional = this.accountUseCase.getByAccount(account, accountType);
 
         if (identityEntityOptional.isEmpty()) {
             context.disableDefaultConstraintViolation();
@@ -151,8 +149,8 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
 
     @Override
     public boolean isValid(AbstractIdentityLoginRequest request, ConstraintValidatorContext context) {
-        String account = request.getAccount();
-        String password = request.getPassword();
+        var account = request.getAccount();
+        var password = request.getPassword();
 
         if (StringUtils.isEmpty(account)) {
             return true;
@@ -166,7 +164,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
             return false;
         }
 
-        AbstractIdentityLogEntity identityLog = this.accountUseCase.createLog(request.getIdentity().getId());
+        var identityLog = this.accountUseCase.createLog(request.getIdentity().getId());
 
         if (identityLog != null) {
             identityLog.setType(IdentityLogType.LOGIN);
@@ -176,7 +174,7 @@ public class AccountValidator implements ConstraintValidator<Account, AbstractId
             identityLog.setRemoteAddr(request.getRemoteAddr());
         }
 
-        boolean valid = this.validPassword(request, context);
+        var valid = this.validPassword(request, context);
 
         if (!valid) {
             if (identityLog != null) {

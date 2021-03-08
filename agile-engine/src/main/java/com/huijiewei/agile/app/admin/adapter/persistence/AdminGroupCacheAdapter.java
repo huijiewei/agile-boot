@@ -43,10 +43,10 @@ public class AdminGroupCacheAdapter {
             return;
         }
 
-        List<AdminGroupPermission> adminGroupPermissions = new ArrayList<>();
+        var adminGroupPermissions = new ArrayList<AdminGroupPermission>();
 
-        for (String actionId : permissions) {
-            AdminGroupPermission permission = new AdminGroupPermission();
+        for (var actionId : permissions) {
+            var permission = new AdminGroupPermission();
             permission.setActionId(actionId);
             permission.setAdminGroupId(id);
 

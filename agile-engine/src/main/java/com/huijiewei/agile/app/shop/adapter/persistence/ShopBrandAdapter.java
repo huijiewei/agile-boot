@@ -45,7 +45,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
 
     private Specification<ShopBrand> buildSpecification(ShopBrandSearchRequest searchRequest) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
+            var predicates = new LinkedList<Predicate>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("name"), "%" + searchRequest.getName() + "%"));
@@ -57,12 +57,12 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
 
     @Override
     public SearchPageResponse<ShopBrandEntity> getAll(ShopBrandSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
-        Page<ShopBrand> shopBrandPage = this.shopBrandRepository.findAll(
+        var shopBrandPage = this.shopBrandRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id"))
         );
 
-        SearchPageResponse<ShopBrandEntity> shopBrandEntityResponses = new SearchPageResponse<>();
+        var shopBrandEntityResponses = new SearchPageResponse<ShopBrandEntity>();
 
         shopBrandEntityResponses.setItems(shopBrandPage
                 .getContent()
@@ -87,7 +87,7 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(ShopBrandEntity shopBrandEntity) {
-        ShopBrand shopBrand = this.shopBrandRepository.save(this.shopBrandMapper.toShopBrand(shopBrandEntity));
+        var shopBrand = this.shopBrandRepository.save(this.shopBrandMapper.toShopBrand(shopBrandEntity));
 
         this.updateShopBrandCategories(shopBrand.getId(), shopBrandEntity.getShopCategoryIds(), shopBrandEntity.hasId());
 
@@ -103,10 +103,10 @@ public class ShopBrandAdapter implements ShopBrandUniquePort, ShopBrandPersisten
             return;
         }
 
-        List<ShopBrandCategory> shopBrandCategories = new ArrayList<>();
+        var shopBrandCategories = new ArrayList<ShopBrandCategory>(shopCategoryIds.size());
 
-        for (Integer shopCategoryId : shopCategoryIds) {
-            ShopBrandCategory shopBrandCategory = new ShopBrandCategory();
+        for (var shopCategoryId : shopCategoryIds) {
+            var shopBrandCategory = new ShopBrandCategory();
             shopBrandCategory.setShopBrandId(id);
             shopBrandCategory.setShopCategoryId(shopCategoryId);
             shopBrandCategories.add(shopBrandCategory);

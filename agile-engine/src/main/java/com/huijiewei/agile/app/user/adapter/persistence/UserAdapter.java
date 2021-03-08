@@ -11,10 +11,8 @@ import com.huijiewei.agile.app.user.domain.UserEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.adapter.persistence.JpaSpecificationBuilder;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
-import com.huijiewei.agile.core.consts.DateTimeRange;
 import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,7 +39,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
 
     private Specification<User> buildSpecification(UserSearchRequest searchRequest) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
+            var predicates = new LinkedList<Predicate>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("name"), "%" + searchRequest.getName() + "%"));
@@ -56,16 +54,16 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
             }
 
             if (searchRequest.getCreatedFrom() != null && searchRequest.getCreatedFrom().length > 0) {
-                List<Predicate> createdFromPredicates = new LinkedList<>();
+                var createdFromPredicates = new LinkedList<Predicate>();
 
-                for (String createdFrom : searchRequest.getCreatedFrom()) {
+                for (var createdFrom : searchRequest.getCreatedFrom()) {
                     createdFromPredicates.add(criteriaBuilder.equal(root.get("createdFrom"), createdFrom));
                 }
 
                 predicates.add(criteriaBuilder.or(createdFromPredicates.toArray(new Predicate[0])));
             }
 
-            DateTimeRange dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
+            var dateTimeRange = searchRequest.getCreatedAtDateTimeRange();
 
             if (dateTimeRange != null) {
                 predicates.add(criteriaBuilder.between(root.get("createdAt"), dateTimeRange.getBegin(), dateTimeRange.getEnd()));
@@ -77,7 +75,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
 
     @Override
     public SearchPageResponse<UserEntity> getAll(UserSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
-        Page<User> userPage = this.userRepository.findAll(
+        var userPage = this.userRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(),
                         pageRequest.getSize(),
@@ -85,7 +83,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
                 )
         );
 
-        SearchPageResponse<UserEntity> userEntityResponses = new SearchPageResponse<>();
+        var userEntityResponses = new SearchPageResponse<UserEntity>();
 
         userEntityResponses.setItems(userPage
                 .getContent()
@@ -119,7 +117,7 @@ public class UserAdapter implements UserUniquePort, UserPersistencePort, UserExi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(UserEntity userEntity) {
-        User user = this.userRepository.save(this.userMapper.toUser(userEntity));
+        var user = this.userRepository.save(this.userMapper.toUser(userEntity));
 
         return user.getId();
     }

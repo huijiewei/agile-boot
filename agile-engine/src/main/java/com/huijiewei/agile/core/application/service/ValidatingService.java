@@ -18,7 +18,7 @@ public class ValidatingService {
     private final Validator validator;
 
     public <T> boolean validate(T entity, Class<?>... groups) {
-        Set<ConstraintViolation<T>> violations = validator.validate(entity, groups);
+        var violations = validator.validate(entity, groups);
 
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);

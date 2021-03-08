@@ -1,7 +1,6 @@
 package com.huijiewei.agile.app.user.application.service;
 
 import com.huijiewei.agile.app.district.application.port.outbound.DistrictPersistencePort;
-import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.app.user.application.mapper.UserAddressRequestMapper;
 import com.huijiewei.agile.app.user.application.port.inbound.UserAddressUseCase;
 import com.huijiewei.agile.app.user.application.port.outbound.UserAddressPersistencePort;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -36,15 +34,15 @@ public class UserAddressService implements UserAddressUseCase {
     }
 
     private List<UserAddressEntity> fillDistrictPath(List<UserAddressEntity> userAddressEntities) {
-        List<String> districtCodes = userAddressEntities
+        var districtCodes = userAddressEntities
                 .stream()
                 .map(UserAddressEntity::getDistrictCode)
                 .distinct()
                 .collect(Collectors.toList());
 
-        Map<String, List<DistrictEntity>> districtMap = this.districtPersistencePort.getAllByCodesWithParents(districtCodes);
+        var districtMap = this.districtPersistencePort.getAllByCodesWithParents(districtCodes);
 
-        for (UserAddressEntity userAddressEntity : userAddressEntities) {
+        for (var userAddressEntity : userAddressEntities) {
             userAddressEntity.setDistrictPath(districtMap.get(userAddressEntity.getDistrictCode()));
         }
 
@@ -53,7 +51,7 @@ public class UserAddressService implements UserAddressUseCase {
 
     @Override
     public SearchPageResponse<UserAddressEntity> search(UserAddressSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields) {
-        SearchPageResponse<UserAddressEntity> userAddressEntitySearchPageResponse = this.userAddressPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
+        var userAddressEntitySearchPageResponse = this.userAddressPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
 
         userAddressEntitySearchPageResponse.setItems(this.fillDistrictPath(userAddressEntitySearchPageResponse.getItems()));
 
@@ -76,9 +74,9 @@ public class UserAddressService implements UserAddressUseCase {
             return null;
         }
 
-        UserAddressEntity userAddressEntity = this.userAddressRequestMapper.toUserAddressEntity(userAddressRequest);
+        var userAddressEntity = this.userAddressRequestMapper.toUserAddressEntity(userAddressRequest);
 
-        Integer userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
+        var userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
         userAddressEntity.setId(userAddressId);
 
         return this.fillDistrictPath(userAddressEntity);
@@ -86,7 +84,7 @@ public class UserAddressService implements UserAddressUseCase {
 
     @Override
     public UserAddressEntity update(Integer id, UserAddressRequest userAddressRequest) {
-        UserAddressEntity userAddressEntity = this.getById(id);
+        var userAddressEntity = this.getById(id);
 
         if (!this.validatingService.validate(userAddressRequest)) {
             return null;
@@ -94,7 +92,7 @@ public class UserAddressService implements UserAddressUseCase {
 
         this.userAddressRequestMapper.updateUserAddressEntity(userAddressRequest, userAddressEntity);
 
-        Integer userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
+        var userAddressId = this.userAddressPersistencePort.save(userAddressEntity);
         userAddressEntity.setId(userAddressId);
 
         return this.fillDistrictPath(userAddressEntity);

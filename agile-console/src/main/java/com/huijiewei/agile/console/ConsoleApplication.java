@@ -21,7 +21,7 @@ import java.util.function.Consumer;
  * @author huijiewei
  */
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 @ComponentScan(basePackages = "com.huijiewei.agile")
 @EntityScan(basePackages = "com.huijiewei.agile")
 @EnableJpaRepositories(
@@ -43,9 +43,9 @@ public class ConsoleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        TextIO textIO = TextIoFactory.getTextIO();
+        var textIO = TextIoFactory.getTextIO();
 
-        List<Consumer<TextIO>> commands = Arrays.asList(
+        var commands = Arrays.asList(
                 this.userFakeCommand,
                 this.userAddressFakeCommand,
                 this.districtImportCommand,
@@ -53,7 +53,7 @@ public class ConsoleApplication implements CommandLineRunner {
                 this.databaseInitCommand
         );
 
-        Consumer<TextIO> app = textIO.<Consumer<TextIO>>newGenericInputReader(null)
+        var app = textIO.<Consumer<TextIO>>newGenericInputReader(null)
                 .withNumberedPossibleValues(commands)
                 .read("选择一个命令运行");
 

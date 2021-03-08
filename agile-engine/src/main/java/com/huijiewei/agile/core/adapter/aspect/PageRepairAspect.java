@@ -25,13 +25,13 @@ public class PageRepairAspect {
 
     @Around(value = "methodPointcut()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = joinPoint.proceed();
+        var result = joinPoint.proceed();
 
         if (!(result instanceof PageResponse)) {
             return result;
         }
 
-        PageResponse<?> pageResponse = (PageResponse<?>) result;
+        var pageResponse = (PageResponse<?>) result;
 
         if (pageResponse.getPages() == null) {
             return result;
@@ -45,12 +45,12 @@ public class PageRepairAspect {
             return result;
         }
 
-        Object[] args = joinPoint.getArgs();
+        var args = joinPoint.getArgs();
 
         for (int i = 0; i < args.length; i++) {
-            Object arg = args[i];
+            var arg = args[i];
             if (arg instanceof PageRequest) {
-                PageRequest page = (PageRequest) arg;
+                var page = (PageRequest) arg;
                 args[i] = PageRequest.of(pageResponse.getPages().getPageCount() - 1, page.getSize());
             }
         }

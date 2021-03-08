@@ -11,7 +11,7 @@ import org.zalando.problem.violations.ConstraintViolationProblemModule;
  */
 
 @API(status = API.Status.INTERNAL)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ProblemConfig {
     @Bean
     public ProblemModule problemModule() {

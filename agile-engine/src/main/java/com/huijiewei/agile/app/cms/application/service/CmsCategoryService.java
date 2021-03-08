@@ -47,7 +47,7 @@ public class CmsCategoryService implements CmsCategoryUseCase {
 
     @Override
     public CmsCategoryEntity loadById(Integer id, Boolean withParents) {
-        CmsCategoryEntity cmsCategoryEntity = this.getById(id);
+        var cmsCategoryEntity = this.getById(id);
 
         if (withParents != null && withParents && cmsCategoryEntity.getParentId() > 0) {
             cmsCategoryEntity.setParents(this.getParentsById(cmsCategoryEntity.getParentId()));
@@ -62,9 +62,9 @@ public class CmsCategoryService implements CmsCategoryUseCase {
             return null;
         }
 
-        CmsCategoryEntity cmsCategoryEntity = this.cmsCategoryRequestMapper.toCmsCategoryEntity(cmsCategoryRequest);
+        var cmsCategoryEntity = this.cmsCategoryRequestMapper.toCmsCategoryEntity(cmsCategoryRequest);
 
-        Integer shopCategoryId = this.cmsCategoryPersistencePort.save(cmsCategoryEntity);
+        var shopCategoryId = this.cmsCategoryPersistencePort.save(cmsCategoryEntity);
         cmsCategoryEntity.setId(shopCategoryId);
 
         return cmsCategoryEntity;
@@ -72,7 +72,7 @@ public class CmsCategoryService implements CmsCategoryUseCase {
 
     @Override
     public CmsCategoryEntity update(Integer id, CmsCategoryRequest cmsCategoryRequest) {
-        CmsCategoryEntity cmsCategoryEntity = this.getById(id);
+        var cmsCategoryEntity = this.getById(id);
 
         if (!this.validatingService.validate(cmsCategoryRequest)) {
             return null;
@@ -84,7 +84,7 @@ public class CmsCategoryService implements CmsCategoryUseCase {
             return null;
         }
 
-        Integer cmsCategoryId = this.cmsCategoryPersistencePort.save(cmsCategoryEntity);
+        var cmsCategoryId = this.cmsCategoryPersistencePort.save(cmsCategoryEntity);
         cmsCategoryEntity.setId(cmsCategoryId);
 
         cmsCategoryEntity.setParents(this.getParentsById(cmsCategoryEntity.getParentId()));
@@ -94,9 +94,9 @@ public class CmsCategoryService implements CmsCategoryUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        CmsCategoryEntity cmsCategoryEntity = this.getById(id);
+        var cmsCategoryEntity = this.getById(id);
 
-        List<Integer> deleteIds = TreeUtils.getChildrenIds(cmsCategoryEntity.getId(), this.cmsCategoryPersistencePort.getTree());
+        var deleteIds = TreeUtils.getChildrenIds(cmsCategoryEntity.getId(), this.cmsCategoryPersistencePort.getTree());
         deleteIds.add(cmsCategoryEntity.getId());
 
         if (this.cmsArticlePersistencePort.existsByCmsCategoryIdIn(deleteIds)) {

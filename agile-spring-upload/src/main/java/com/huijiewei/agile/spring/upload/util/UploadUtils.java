@@ -34,8 +34,8 @@ public class UploadUtils {
     }
 
     public static String random(int size) {
-        Random random = new Random();
-        char[] cs = new char[size];
+        var random = new Random();
+        var cs = new char[size];
         for (int i = 0; i < cs.length; i++) {
             cs[i] = DIGITS[random.nextInt(DIGITS.length)];
         }
@@ -75,7 +75,7 @@ public class UploadUtils {
             return StringUtils.stripEnd(accessPath, "/");
         }
 
-        String replaceUrl = StringUtils
+        var replaceUrl = StringUtils
                 .stripEnd(StringUtils
                         .stripEnd(accessPath, "*"), "/");
 
@@ -86,13 +86,13 @@ public class UploadUtils {
     }
 
     public static String buildAbsoluteUploadPath(String uploadPath) {
-        String absolutePath = Paths.get(uploadPath).toAbsolutePath().toString();
+        var absolutePath = Paths.get(uploadPath).toAbsolutePath().toString();
 
         return StringUtils.stripEnd(absolutePath, File.separator) + File.separator;
     }
 
     public static List<ThumbSize> getThumbSizes(List<String> thumbs) {
-        List<ThumbSize> thumbSizes = new ArrayList<>();
+        var thumbSizes = new ArrayList<ThumbSize>();
 
         if (thumbs == null) {
             return thumbSizes;

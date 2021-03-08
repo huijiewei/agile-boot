@@ -30,7 +30,7 @@ public class CmsArticleService implements CmsArticleUseCase {
     }
 
     private CmsArticleEntity fillCategory(CmsArticleEntity cmsArticleEntity) {
-        CmsCategoryEntity cmsCategoryEntity = cmsArticleEntity.getCmsCategory();
+        var cmsCategoryEntity = cmsArticleEntity.getCmsCategory();
 
         if (cmsCategoryEntity != null) {
             cmsCategoryEntity.setParents(this.cmsCategoryUseCase.loadPathById(cmsCategoryEntity.getParentId()));
@@ -52,13 +52,13 @@ public class CmsArticleService implements CmsArticleUseCase {
             return null;
         }
 
-        CmsArticleEntity cmsArticleEntity = this.cmsArticleRequestMapper.toCmsArticleEntity(cmsArticleRequest);
+        var cmsArticleEntity = this.cmsArticleRequestMapper.toCmsArticleEntity(cmsArticleRequest);
 
         if (!this.validatingService.validate(cmsArticleEntity)) {
             return null;
         }
 
-        Integer articleId = this.cmsArticlePersistencePort.save(cmsArticleEntity);
+        var articleId = this.cmsArticlePersistencePort.save(cmsArticleEntity);
         cmsArticleEntity.setId(articleId);
 
         return this.fillCategory(cmsArticleEntity);
@@ -66,7 +66,7 @@ public class CmsArticleService implements CmsArticleUseCase {
 
     @Override
     public CmsArticleEntity update(Integer id, CmsArticleRequest cmsArticleRequest) {
-        CmsArticleEntity cmsArticleEntity = this.getById(id);
+        var cmsArticleEntity = this.getById(id);
 
         if (!this.validatingService.validate(cmsArticleRequest)) {
             return null;
@@ -78,7 +78,7 @@ public class CmsArticleService implements CmsArticleUseCase {
             return null;
         }
 
-        Integer articleId = this.cmsArticlePersistencePort.save(cmsArticleEntity);
+        var articleId = this.cmsArticlePersistencePort.save(cmsArticleEntity);
         cmsArticleEntity.setId(articleId);
 
         return this.fillCategory(cmsArticleEntity);
@@ -86,7 +86,7 @@ public class CmsArticleService implements CmsArticleUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        CmsArticleEntity cmsArticleEntity = this.getById(id);
+        var cmsArticleEntity = this.getById(id);
 
         this.cmsArticlePersistencePort.deleteById(cmsArticleEntity.getId());
     }

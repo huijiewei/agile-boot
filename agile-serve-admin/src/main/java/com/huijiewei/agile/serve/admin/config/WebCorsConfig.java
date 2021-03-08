@@ -11,18 +11,18 @@ import org.springframework.web.filter.CorsFilter;
  * @author huijiewei
  */
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class WebCorsConfig {
     @Bean
     public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
+        var config = new CorsConfiguration();
         config.addAllowedOriginPattern("*");
         config.setAllowCredentials(true);
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.addExposedHeader(HttpHeaders.CONTENT_DISPOSITION);
 
-        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+        var configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(configSource);

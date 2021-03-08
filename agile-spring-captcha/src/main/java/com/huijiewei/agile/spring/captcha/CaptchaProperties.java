@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = CaptchaProperties.PREFIX)
 public class CaptchaProperties {
     public static final String PREFIX = "agile.spring.captcha";

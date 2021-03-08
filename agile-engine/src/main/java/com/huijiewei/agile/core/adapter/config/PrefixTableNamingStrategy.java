@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = PrefixTableNamingStrategy.PREFIX)
 @ConditionalOnProperty(prefix = PrefixTableNamingStrategy.PREFIX, name = "table-prefix")
 public class PrefixTableNamingStrategy implements PhysicalNamingStrategy {
@@ -25,8 +25,8 @@ public class PrefixTableNamingStrategy implements PhysicalNamingStrategy {
     public static String tablePrefix;
 
     public static String toPhysicalTableName(final String entityName) {
-        final String regex = "([a-z])([A-Z])";
-        final String replacement = "$1_$2";
+        final var regex = "([a-z])([A-Z])";
+        final var replacement = "$1_$2";
         return tablePrefix + entityName
                 .replaceAll(regex, replacement)
                 .toLowerCase();

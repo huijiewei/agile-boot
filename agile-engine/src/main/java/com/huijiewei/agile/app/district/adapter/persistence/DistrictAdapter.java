@@ -46,7 +46,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(DistrictEntity districtEntity) {
-        District district = this.districtRepository.save(this.districtMapper.toDistrict(districtEntity));
+        var district = this.districtRepository.save(this.districtMapper.toDistrict(districtEntity));
 
         if (districtEntity.hasId()) {
             this.districtRepository.updateClosures(district);
@@ -74,7 +74,7 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
 
     @Override
     public List<DistrictEntity> getAncestorsById(Integer id) {
-        District district = new District();
+        var district = new District();
         district.setId(id);
 
         return this.districtRepository.findAncestors(district)
@@ -99,16 +99,16 @@ public class DistrictAdapter implements DistrictExistsPort, DistrictPersistenceP
 
     @Override
     public Map<String, List<DistrictEntity>> getAllByCodesWithParents(List<String> codes) {
-        Map<String, List<DistrictEntity>> districtMap = new HashMap<>(codes.size());
+        var districtMap = new HashMap<String, List<DistrictEntity>>(codes.size());
 
-        List<DistrictEntity> districts = this.districtRepository
+        var districts = this.districtRepository
                 .findAncestorsByCodes(codes)
                 .stream()
                 .map(this.districtMapper::toDistrictEntity)
                 .collect(Collectors.toList());
 
-        for (String code : codes) {
-            for (DistrictEntity district : districts) {
+        for (var code : codes) {
+            for (var district : districts) {
                 if (district.getCode().equals(code)) {
                     districtMap.put(code, TreeUtils.getParents(district.getId(), districts));
                 }

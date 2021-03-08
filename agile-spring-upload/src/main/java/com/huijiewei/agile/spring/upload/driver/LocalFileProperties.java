@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = LocalFileProperties.PREFIX)
 public class LocalFileProperties {
     public static final String PREFIX = "agile.spring.upload.local-file";

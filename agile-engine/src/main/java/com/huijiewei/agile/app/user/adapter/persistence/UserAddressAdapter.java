@@ -39,7 +39,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
 
     private Specification<UserAddress> buildSpecification(UserAddressSearchRequest searchRequest) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new LinkedList<>();
+            var predicates = new LinkedList<Predicate>();
 
             if (StringUtils.isNotBlank(searchRequest.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("name"), "%" + searchRequest.getName() + "%"));
@@ -76,13 +76,13 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
 
     @Override
     public SearchPageResponse<UserAddressEntity> getAll(UserAddressSearchRequest searchRequest, com.huijiewei.agile.core.application.request.PageRequest pageRequest, Boolean withSearchFields) {
-        Page<UserAddress> userAddressPage = this.userAddressRepository.findAll(
+        var userAddressPage = this.userAddressRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
                 EntityGraphUtils.fromAttributePaths("user")
         );
 
-        SearchPageResponse<UserAddressEntity> userAddressEntityResponse = new SearchPageResponse<>();
+        var userAddressEntityResponse = new SearchPageResponse<UserAddressEntity>();
 
         userAddressEntityResponse.setItems(userAddressPage
                 .getContent()
@@ -117,7 +117,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(UserAddressEntity userAddressEntity) {
-        UserAddress userAddress = this.userAddressRepository.save(this.userAddressMapper.toUserAddress(userAddressEntity));
+        var userAddress = this.userAddressRepository.save(this.userAddressMapper.toUserAddress(userAddressEntity));
 
         return userAddress.getId();
     }

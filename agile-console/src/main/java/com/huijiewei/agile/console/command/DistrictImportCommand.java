@@ -32,12 +32,12 @@ public class DistrictImportCommand implements Consumer<TextIO> {
         var provinces = connection.createStatement().executeQuery("SELECT * FROM province");
 
         while (provinces.next()) {
-            DistrictEntity province = new DistrictEntity();
+            var province = new DistrictEntity();
             province.setParentId(0);
             province.setName(provinces.getString("name"));
             province.setCode(provinces.getString("code"));
 
-            Integer provinceId = this.districtPersistencePort.save(province);
+            var provinceId = this.districtPersistencePort.save(province);
 
             var citiesPs = connection.prepareStatement("SELECT * FROM city WHERE provinceCode = ?");
             citiesPs.setString(1, province.getCode());
@@ -45,12 +45,12 @@ public class DistrictImportCommand implements Consumer<TextIO> {
             var cities = citiesPs.executeQuery();
 
             while (cities.next()) {
-                DistrictEntity city = new DistrictEntity();
+                var city = new DistrictEntity();
                 city.setParentId(provinceId);
                 city.setName(cities.getString("name"));
                 city.setCode(cities.getString("code"));
 
-                Integer cityId = this.districtPersistencePort.save(city);
+                var cityId = this.districtPersistencePort.save(city);
 
                 var areasPs = connection.prepareStatement("SELECT * FROM area WHERE cityCode = ?");
                 areasPs.setString(1, city.getCode());
@@ -58,12 +58,12 @@ public class DistrictImportCommand implements Consumer<TextIO> {
                 var areas = areasPs.executeQuery();
 
                 while (areas.next()) {
-                    DistrictEntity area = new DistrictEntity();
+                    var area = new DistrictEntity();
                     area.setParentId(cityId);
                     area.setName(areas.getString("name"));
                     area.setCode(areas.getString("code"));
 
-                    Integer areaId = this.districtPersistencePort.save(area);
+                    var areaId = this.districtPersistencePort.save(area);
 
                     var streetsPs = connection.prepareStatement("SELECT * FROM street WHERE areaCode = ?");
                     streetsPs.setString(1, area.getCode());
@@ -71,7 +71,7 @@ public class DistrictImportCommand implements Consumer<TextIO> {
                     var streets = streetsPs.executeQuery();
 
                     while (streets.next()) {
-                        DistrictEntity street = new DistrictEntity();
+                        var street = new DistrictEntity();
                         street.setParentId(areaId);
                         street.setName(streets.getString("name"));
                         street.setCode(streets.getString("code"));
@@ -86,7 +86,6 @@ public class DistrictImportCommand implements Consumer<TextIO> {
 
         provinces.close();
         connection.close();
-
     }
 
     @Override

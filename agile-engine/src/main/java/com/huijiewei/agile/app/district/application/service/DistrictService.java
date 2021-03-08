@@ -49,7 +49,7 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public DistrictEntity loadById(Integer id, Boolean withParents) {
-        DistrictEntity districtEntity = this.getById(id);
+        var districtEntity = this.getById(id);
 
         if (withParents != null && withParents && districtEntity.getParentId() > 0) {
             districtEntity.setParents(this.districtPersistencePort.getAncestorsById(districtEntity.getParentId()));
@@ -68,13 +68,13 @@ public class DistrictService implements DistrictUseCase {
             throw new ConflictException("选择的上级地区不允许添加下级地区");
         }
 
-        DistrictEntity districtEntity = this.districtRequestMapper.toDistrictEntity(districtRequest);
+        var districtEntity = this.districtRequestMapper.toDistrictEntity(districtRequest);
 
         if (!this.validatingService.validate(districtEntity)) {
             return null;
         }
 
-        Integer districtId = this.districtPersistencePort.save(districtEntity);
+        var districtId = this.districtPersistencePort.save(districtEntity);
         districtEntity.setId(districtId);
 
         return districtEntity;
@@ -90,7 +90,7 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public DistrictEntity update(Integer id, DistrictRequest districtRequest) {
-        DistrictEntity districtEntity = this.getById(id);
+        var districtEntity = this.getById(id);
 
         if (!this.validatingService.validate(districtRequest)) {
             return null;
@@ -106,7 +106,7 @@ public class DistrictService implements DistrictUseCase {
             return null;
         }
 
-        Integer districtId = this.districtPersistencePort.save(districtEntity);
+        var districtId = this.districtPersistencePort.save(districtEntity);
         districtEntity.setId(districtId);
 
         return districtEntity;
@@ -114,7 +114,7 @@ public class DistrictService implements DistrictUseCase {
 
     @Override
     public void deleteById(Integer id) {
-        DistrictEntity districtEntity = this.getById(id);
+        var districtEntity = this.getById(id);
 
         this.districtPersistencePort.delete(districtEntity);
     }

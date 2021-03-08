@@ -21,7 +21,7 @@ public class UserCreatedFrom extends ValueDescription<UserCreatedFrom, String> {
     }
 
     public static UserCreatedFrom valueOf(String value) {
-        UserCreatedFrom userCreatedFrom = valueOf(UserCreatedFrom.class, value);
+        var userCreatedFrom = valueOf(UserCreatedFrom.class, value);
 
         if (userCreatedFrom == null) {
             userCreatedFrom = new UserCreatedFrom(value, value);

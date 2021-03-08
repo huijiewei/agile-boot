@@ -43,7 +43,7 @@ class AdminAdapter implements AdminPersistencePort, AdminUniquePort {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(AdminEntity adminEntity) {
-        Admin admin = this.adminRepository.save(this.adminMapper.toAdmin(adminEntity));
+        var admin = this.adminRepository.save(this.adminMapper.toAdmin(adminEntity));
 
         return admin.getId();
     }

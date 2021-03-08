@@ -4,6 +4,7 @@ import org.springframework.beans.BeanWrapperImpl;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 /**
  * @author huijiewei
@@ -23,16 +24,10 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
 
     @Override
     public boolean isValid(final Object value, final ConstraintValidatorContext context) {
-        Object fieldValue = new BeanWrapperImpl(value).getPropertyValue(field);
-        Object fieldMatchValue = new BeanWrapperImpl(value).getPropertyValue(fieldMatch);
+        var fieldValue = new BeanWrapperImpl(value).getPropertyValue(field);
+        var fieldMatchValue = new BeanWrapperImpl(value).getPropertyValue(fieldMatch);
 
-        boolean valid;
-
-        if (fieldValue != null) {
-            valid = fieldValue.equals(fieldMatchValue);
-        } else {
-            valid = fieldMatchValue == null;
-        }
+        boolean valid = Objects.equals(fieldValue, fieldMatchValue);
 
         if (!valid) {
             context.disableDefaultConstraintViolation();

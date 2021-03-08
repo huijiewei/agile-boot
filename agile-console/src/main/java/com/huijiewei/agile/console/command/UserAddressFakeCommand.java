@@ -28,23 +28,23 @@ public class UserAddressFakeCommand implements Consumer<TextIO> {
     @Override
     @SuppressWarnings("unchecked")
     public void accept(TextIO textIO) {
-        Integer count = textIO.newIntInputReader().withDefaultValue(10).read("生成数量");
+        var count = textIO.newIntInputReader().withDefaultValue(10).read("生成数量");
 
-        Faker chineseFaker = new Faker(Locale.CHINA);
+        var chineseFaker = new Faker(Locale.CHINA);
 
-        List<User> users = (List<User>) this.entityManager
+        var users = (List<User>) this.entityManager
                 .createNativeQuery(String.format("SELECT * FROM %s ORDER BY RAND() LIMIT :count", User.tableName(User.class)), User.class)
                 .setParameter("count", count)
                 .getResultList();
 
-        List<District> districts = (List<District>) this.entityManager
+        var districts = (List<District>) this.entityManager
                 .createNativeQuery(String.format("SELECT * FROM %s WHERE LENGTH(code) = :length ORDER BY RAND() LIMIT :count", District.tableName(District.class)), District.class)
                 .setParameter("length", DistrictEntity.LEAF_CODE_LENGTH)
                 .setParameter("count", count)
                 .getResultList();
 
         for (int i = 0; i < count; i++) {
-            UserAddress userAddress = new UserAddress();
+            var userAddress = new UserAddress();
             userAddress.setUserId(users.get(i).getId());
             userAddress.setDistrictCode(districts.get(i).getCode());
             userAddress.setName(users.get(i).getName());

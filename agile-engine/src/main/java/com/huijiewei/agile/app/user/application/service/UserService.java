@@ -58,7 +58,7 @@ public class UserService implements UserUseCase {
             return null;
         }
 
-        UserEntity userEntity = this.userRequestMapper.toUserEntity(userRequest);
+        var userEntity = this.userRequestMapper.toUserEntity(userRequest);
         userEntity.setPassword(SecurityUtils.passwordEncode(userRequest.getPassword()));
 
         if (!this.validatingService.validate(userEntity)) {
@@ -68,7 +68,7 @@ public class UserService implements UserUseCase {
         userEntity.setCreatedIp(createdIp);
         userEntity.setCreatedFrom(createdFrom);
 
-        Integer userId = this.userPersistencePort.save(userEntity);
+        var userId = this.userPersistencePort.save(userEntity);
         userEntity.setId(userId);
 
         return userEntity;
@@ -76,7 +76,7 @@ public class UserService implements UserUseCase {
 
     @Override
     public UserEntity update(Integer id, UserRequest userRequest) {
-        UserEntity userEntity = this.getById(id);
+        var userEntity = this.getById(id);
 
         if (!this.validatingService.validate(userRequest, UserRequest.OnUpdate.class)) {
             return null;
