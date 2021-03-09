@@ -1,4 +1,4 @@
-package com.huijiewei.agile.serve.admin.config;
+package com.huijiewei.agile.core.config;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;

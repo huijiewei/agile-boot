@@ -1,7 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
 import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
-import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminMapper;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;

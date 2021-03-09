@@ -54,8 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/auth/login",
-                        "/open/**",
-                        "/druid/**"
+                        "/open/**"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -34,8 +34,6 @@ public class AdminLogController {
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @Operation(description = "操作日志", operationId = "userIndex", parameters = {
-            @Parameter(name = "page", description = "分页页码", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
-            @Parameter(name = "size", description = "分页大小", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
             @Parameter(name = "admin", description = "管理员", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
             @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     })
@@ -44,7 +42,7 @@ public class AdminLogController {
     public SearchPageResponse<AdminLogEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) AdminLogSearchRequest request,
-            @Parameter(hidden = true) Pageable pageable
+            Pageable pageable
     ) {
         return this.adminLogUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }

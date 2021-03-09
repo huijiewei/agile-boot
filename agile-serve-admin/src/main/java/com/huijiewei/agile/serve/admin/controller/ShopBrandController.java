@@ -35,15 +35,13 @@ public class ShopBrandController {
     )
     @Operation(description = "品牌列表", operationId = "shopBrandIndex", parameters = {
             @Parameter(name = "name", description = "品牌名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "page", description = "分页页码", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
-            @Parameter(name = "size", description = "分页大小", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
     })
     @ApiResponse(responseCode = "200", description = "商品品牌列表")
     @PreAuthorize("hasAnyAuthority('shop-brand/index')")
     public SearchPageResponse<ShopBrandEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) ShopBrandSearchRequest request,
-            @Parameter(hidden = true) Pageable pageable) {
+            Pageable pageable) {
         return this.shopBrandUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 

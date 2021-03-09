@@ -3,10 +3,8 @@ package com.huijiewei.agile.core.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.util.Set;
 
 /**
  * @author huijiewei

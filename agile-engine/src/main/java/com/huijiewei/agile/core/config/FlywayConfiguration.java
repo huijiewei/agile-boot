@@ -1,4 +1,4 @@
-package com.huijiewei.agile.core.adapter.config;
+package com.huijiewei.agile.core.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.flyway.FlywayConfigurationCustomizer;

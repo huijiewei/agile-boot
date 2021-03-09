@@ -43,8 +43,6 @@ public class UserController {
             @Parameter(name = "name", description = "名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
             @Parameter(name = "phone", description = "手机号码", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
             @Parameter(name = "email", description = "电子邮箱", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "page", description = "分页页码", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
-            @Parameter(name = "size", description = "分页大小", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
             @Parameter(name = "createdFrom", description = "创建来源", in = ParameterIn.QUERY, schema = @Schema(ref = "UserCreatedFromSearchRequestSchema")),
             @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     })
@@ -53,7 +51,7 @@ public class UserController {
     public SearchPageResponse<UserEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) UserSearchRequest request,
-            @Parameter(hidden = true) Pageable pageable
+            Pageable pageable
     ) {
         return this.userUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }

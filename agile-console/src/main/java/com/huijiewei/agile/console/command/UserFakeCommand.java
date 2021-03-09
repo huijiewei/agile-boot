@@ -7,7 +7,6 @@ import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import lombok.RequiredArgsConstructor;
 import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +14,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 

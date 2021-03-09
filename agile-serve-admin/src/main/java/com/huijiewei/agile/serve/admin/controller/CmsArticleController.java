@@ -38,16 +38,14 @@ public class CmsArticleController {
     )
     @Operation(description = "文章列表", operationId = "cmsArticleIndex", parameters = {
             @Parameter(name = "title", description = "文章标题", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema")),
-            @Parameter(name = "page", description = "分页页码", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
-            @Parameter(name = "size", description = "分页大小", in = ParameterIn.QUERY, schema = @Schema(type = "integer"))
+            @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     })
     @ApiResponse(responseCode = "200", description = "文章列表")
     @PreAuthorize("hasAnyAuthority('cms-article/index')")
     public SearchPageResponse<CmsArticleEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) CmsArticleSearchRequest request,
-            @Parameter(hidden = true) Pageable pageable) {
+            Pageable pageable) {
         return this.cmsArticlePersistencePort.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
 

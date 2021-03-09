@@ -5,32 +5,8 @@ spring:
     lazy-initialization: true
   application:
     name: agile-console
-  jpa:
-    hibernate:
-      ddl-auto: none
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        max_fetch_depth: 3
-        order_inserts: true
-        order_updates: true
-        default_batch_fetch_size: 100
-        jdbc:
-          batch_size: 100
-          fetch_size: 100
-          time_zone: Asia/Shanghai
-          batch_versioned_data: true
-      javax:
-        persistence:
-          validation:
-            mode: none
-    open-in-view: false
-    show-sql: false
-  datasource:
-    hikari:
-      max-lifetime: 120000
   profiles:
-    active: default
+    active: engine, default
   jmx:
     enabled: false
 logging:

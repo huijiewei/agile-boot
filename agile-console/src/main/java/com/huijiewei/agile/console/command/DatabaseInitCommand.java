@@ -1,6 +1,6 @@
 package com.huijiewei.agile.console.command;
 
-import com.huijiewei.agile.core.adapter.config.PrefixTableNamingStrategy;
+import com.huijiewei.agile.core.config.PrefixTableNamingStrategy;
 import lombok.RequiredArgsConstructor;
 import org.beryx.textio.TextIO;
 import org.flywaydb.core.Flyway;

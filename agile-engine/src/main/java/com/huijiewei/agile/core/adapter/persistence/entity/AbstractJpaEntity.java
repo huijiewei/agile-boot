@@ -1,6 +1,6 @@
 package com.huijiewei.agile.core.adapter.persistence.entity;
 
-import com.huijiewei.agile.core.adapter.config.PrefixTableNamingStrategy;
+import com.huijiewei.agile.core.config.PrefixTableNamingStrategy;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;

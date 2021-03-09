@@ -6,7 +6,6 @@ import com.huijiewei.agile.app.cms.application.port.inbound.CmsCategoryUseCase;
 import com.huijiewei.agile.app.cms.application.port.outbound.CmsArticlePersistencePort;
 import com.huijiewei.agile.app.cms.application.request.CmsArticleRequest;
 import com.huijiewei.agile.app.cms.domain.CmsArticleEntity;
-import com.huijiewei.agile.app.cms.domain.CmsCategoryEntity;
 import com.huijiewei.agile.core.application.service.ValidatingService;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

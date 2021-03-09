@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
  * @author huijiewei
  */
 
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface UserAddressMapper {
     @Mapping(target = "user.createdFrom", ignore = true)

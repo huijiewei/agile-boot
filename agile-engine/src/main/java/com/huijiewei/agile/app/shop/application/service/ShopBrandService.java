@@ -8,7 +8,6 @@ import com.huijiewei.agile.app.shop.application.port.outbound.ShopProductPersist
 import com.huijiewei.agile.app.shop.application.request.ShopBrandRequest;
 import com.huijiewei.agile.app.shop.application.request.ShopBrandSearchRequest;
 import com.huijiewei.agile.app.shop.domain.ShopBrandEntity;
-import com.huijiewei.agile.app.shop.domain.ShopCategoryEntity;
 import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.application.service.ValidatingService;
@@ -16,8 +15,6 @@ import com.huijiewei.agile.core.exception.ConflictException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author huijiewei

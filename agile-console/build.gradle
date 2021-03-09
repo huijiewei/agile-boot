@@ -13,4 +13,6 @@ dependencies {
     implementation libs.jpaEntityGraph
 
     implementation project(':agile-engine')
+
+    annotationProcessor "org.springframework:spring-context-indexer"
 }

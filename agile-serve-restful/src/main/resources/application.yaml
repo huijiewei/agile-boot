@@ -1,53 +1,18 @@
 spring:
   application:
     name: agile-serve-restful
-  jpa:
-    hibernate:
-      ddl-auto: none
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        max_fetch_depth: 3
-        order_inserts: true
-        order_updates: true
-        default_batch_fetch_size: 100
-        jdbc:
-          batch_size: 100
-          fetch_size: 100
-          time_zone: Asia/Shanghai
-          batch_versioned_data: true
-      javax:
-        persistence:
-          validation:
-            mode: none
-    open-in-view: false
-  data:
-    web:
-      pageable:
-        default-page-size: 20
-        size-parameter: size
-        page-parameter: page
-        one-indexed-parameters: true
-  datasource:
-    hikari:
-      max-lifetime: 120000
   mvc:
     throw-exception-if-no-handler-found: true
   profiles:
-    active: default
+    active: engine, default
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 100MB
   jmx:
     enabled: false
-  jackson:
-    date-format: yyyy-MM-dd HH:mm
-    time-zone: Asia/Shanghai
   main:
     lazy-initialization: true
-  flyway:
-    enabled: false
   web:
     resources:
       add-mappings: false
@@ -55,13 +20,3 @@ spring:
 springdoc:
   api-docs:
     enabled: false
-
-agile:
-  format:
-    date-format: yyyy-MM-dd
-    time-format: HH:mm
-    datetime-format: yyyy-MM-dd HH:mm
-
-logging:
-  level:
-    org.hibernate.persister.entity: ERROR

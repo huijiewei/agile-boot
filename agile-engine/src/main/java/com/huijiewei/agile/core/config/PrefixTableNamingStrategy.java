@@ -1,4 +1,4 @@
-package com.huijiewei.agile.core.adapter.config;
+package com.huijiewei.agile.core.config;
 
 import lombok.Getter;
 import lombok.Setter;

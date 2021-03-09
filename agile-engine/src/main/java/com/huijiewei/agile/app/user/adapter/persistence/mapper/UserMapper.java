@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
  * @author huijiewei
  */
 
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface UserMapper {
     UserEntity toUserEntity(User user);

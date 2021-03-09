@@ -38,16 +38,14 @@ public class UserAddressController {
             @Parameter(name = "phone", description = "联系方式", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
             @Parameter(name = "userName", description = "用户名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
             @Parameter(name = "userPhone", description = "用户手机号码", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "userEmail", description = "用户电子邮箱", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "page", description = "分页页码", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
-            @Parameter(name = "size", description = "分页大小", in = ParameterIn.QUERY, schema = @Schema(type = "integer"))
+            @Parameter(name = "userEmail", description = "用户电子邮箱", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
     })
     @ApiResponse(responseCode = "200", description = "用户地址列表")
     @PreAuthorize("hasAuthority('user-address/index')")
     public SearchPageResponse<UserAddressEntity> actionIndex(
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
             @Parameter(hidden = true) UserAddressSearchRequest request,
-            @Parameter(hidden = true) Pageable pageable
+            Pageable pageable
     ) {
         return this.userAddressUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }

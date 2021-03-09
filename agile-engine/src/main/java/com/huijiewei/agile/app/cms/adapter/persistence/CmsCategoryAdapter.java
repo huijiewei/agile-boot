@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.cms.adapter.persistence;
 
-import com.huijiewei.agile.app.cms.adapter.persistence.entity.CmsCategory;
 import com.huijiewei.agile.app.cms.adapter.persistence.mapper.CmsCategoryMapper;
 import com.huijiewei.agile.app.cms.adapter.persistence.repository.CmsCategoryRepository;
 import com.huijiewei.agile.app.cms.application.port.outbound.CmsCategoryExistsPort;

@@ -1,6 +1,5 @@
 package com.huijiewei.agile.app.shop.adapter.persistence;
 
-import com.huijiewei.agile.app.shop.adapter.persistence.entity.ShopCategory;
 import com.huijiewei.agile.app.shop.adapter.persistence.mapper.ShopCategoryMapper;
 import com.huijiewei.agile.app.shop.adapter.persistence.repository.ShopCategoryRepository;
 import com.huijiewei.agile.app.shop.application.port.outbound.ShopCategoryExistsPort;

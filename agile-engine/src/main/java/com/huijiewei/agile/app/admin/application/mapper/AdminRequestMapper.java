@@ -8,7 +8,6 @@ import org.mapstruct.*;
  * @author huijiewei
  */
 
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface AdminRequestMapper {
     @Mapping(target = "id", ignore = true)

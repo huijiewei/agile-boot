@@ -21,11 +21,6 @@ import org.springframework.data.repository.config.BootstrapMode;
 })
 @ComponentScan(basePackages = "com.huijiewei.agile")
 @EntityScan(basePackages = "com.huijiewei.agile")
-@EnableJpaRepositories(
-        repositoryFactoryBeanClass = EntityGraphJpaRepositoryFactoryBean.class,
-        basePackages = "com.huijiewei.agile",
-        bootstrapMode = BootstrapMode.DEFERRED
-)
 public class RestfulServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestfulServerApplication.class, args);

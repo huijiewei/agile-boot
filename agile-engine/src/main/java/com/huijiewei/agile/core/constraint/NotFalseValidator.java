@@ -1,6 +1,5 @@
 package com.huijiewei.agile.core.constraint;
 
-import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 
 import javax.validation.ConstraintValidator;

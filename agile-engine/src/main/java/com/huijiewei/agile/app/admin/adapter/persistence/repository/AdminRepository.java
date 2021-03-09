@@ -9,8 +9,6 @@ import com.huijiewei.agile.core.adapter.persistence.repository.IdentityJpaReposi
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.util.Optional;
 
 /**

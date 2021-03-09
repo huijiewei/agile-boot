@@ -25,4 +25,5 @@ dependencies {
     implementation project(':agile-engine')
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework:spring-context-indexer"
 }

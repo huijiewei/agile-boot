@@ -11,7 +11,6 @@ import org.mapstruct.MappingTarget;
  * @author huijiewei
  */
 
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface CmsCategoryRequestMapper {
     @Mapping(target = "id", ignore = true)

@@ -9,9 +9,7 @@ import org.springframework.util.ReflectionUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author huijiewei

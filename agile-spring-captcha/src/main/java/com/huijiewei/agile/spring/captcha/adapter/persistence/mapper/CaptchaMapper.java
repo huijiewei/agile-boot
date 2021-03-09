@@ -8,7 +8,6 @@ import org.mapstruct.Mapper;
  * @author huijiewei
  */
 
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Mapper
 public interface CaptchaMapper {
     CaptchaEntity toCaptchaEntity(Captcha captcha);
