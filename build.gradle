@@ -11,7 +11,6 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
         classpath "com.github.ben-manes:gradle-versions-plugin:${gradleVersionsVersion}"
         classpath "org.hibernate:hibernate-gradle-plugin:${hibernateVersion}"
-        classpath "org.springframework.experimental:spring-aot-gradle-plugin:${springNativeVersion}"
     }
 }
 
@@ -20,7 +19,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 allprojects {
     group = 'com.huijiewei'
-    version = '1.0.1'
+    version = '1.0.2'
 
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public' }
@@ -47,8 +46,6 @@ subprojects {
     dependencies {
         compileOnly "org.projectlombok:lombok"
         annotationProcessor "org.projectlombok:lombok"
-
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
     }
 
     configurations {

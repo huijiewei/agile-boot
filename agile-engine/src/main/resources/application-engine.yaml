@@ -36,6 +36,9 @@ spring:
         page-parameter: page
         one-indexed-parameters: true
 
+  aop:
+    proxy-target-class: false
+
 agile:
   format:
     date-format: yyyy-MM-dd
@@ -45,3 +48,4 @@ agile:
 logging:
   level:
     org.hibernate.persister.entity: ERROR
+

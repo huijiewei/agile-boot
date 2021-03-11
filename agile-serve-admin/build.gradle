@@ -1,22 +1,18 @@
 apply plugin: 'org.springframework.boot'
-// apply plugin: 'org.springframework.experimental.aot'
 
 bootJar {
     launchScript()
-}
-
-configurations.all {
-    exclude module: 'org.apache.tomcat.embed:tomcat-embed-core'
-    exclude module: 'org.apache.tomcat.embed:tomcat-embed-websocket'
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation ('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-core'
+        exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
+    }
     implementation "org.apache.tomcat.experimental:tomcat-embed-programmatic:${tomcatVersion}"
-    // implementation "org.springframework.experimental:spring-native:${springNativeVersion}"
 
     implementation libs.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
