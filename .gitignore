@@ -40,5 +40,5 @@ $RECYCLE.BIN/
 !.gitignore
 *~
 
-application-default.yaml
+application-default.*
 database/district.sqlite
