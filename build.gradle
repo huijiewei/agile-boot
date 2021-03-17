@@ -1,7 +1,6 @@
 buildscript {
     repositories {
-        maven { url 'https://repo.spring.io/m2' }
-        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/release' }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -22,8 +21,7 @@ allprojects {
     version = '1.0.2'
 
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/release' }
 
         mavenCentral()
         jcenter()

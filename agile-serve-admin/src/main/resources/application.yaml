@@ -16,6 +16,9 @@ spring:
   web:
     resources:
       add-mappings: false
+  aop:
+    proxy-target-class: false
+
 
 springdoc:
   api-docs:
