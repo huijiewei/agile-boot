@@ -23,6 +23,6 @@ public class AdminGroupEntity extends AbstractEntity {
     private String name;
 
     @Schema(description = "管理组权限")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<String> permissions = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> permissions;
 }
