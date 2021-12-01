@@ -7,11 +7,11 @@ import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,16 +33,13 @@ public class AdminLogController {
             value = "/admin-logs",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    @Operation(description = "操作日志", operationId = "userIndex", parameters = {
-            @Parameter(name = "admin", description = "管理员", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
-    })
+    @Operation(description = "操作日志", operationId = "userIndex")
     @ApiResponse(responseCode = "200", description = "操作日志")
     @PreAuthorize("hasAnyAuthority('admin-log/index')")
     public SearchPageResponse<AdminLogEntity> actionIndex(
-            @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
-            @Parameter(hidden = true) AdminLogSearchRequest request,
-            Pageable pageable
+            @ParameterObject AdminLogSearchRequest request,
+            @Parameter(schema = @Schema(ref = "PageableRequestSchema")) @RequestParam(required = false) Pageable pageable,
+            @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields
     ) {
         return this.adminLogUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }

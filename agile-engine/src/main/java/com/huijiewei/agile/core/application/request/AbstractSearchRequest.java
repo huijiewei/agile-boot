@@ -1,5 +1,6 @@
 package com.huijiewei.agile.core.application.request;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 public abstract class AbstractSearchRequest {
     @Schema(hidden = true)
+    @Parameter(hidden = true)
     private List<AbstractSearchField<?>> searchFields;
 
     public AbstractSearchRequest addSearchField(AbstractSearchField<?> searchField) {
