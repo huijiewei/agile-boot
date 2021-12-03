@@ -12,11 +12,12 @@ import com.huijiewei.agile.core.exception.BadRequestException;
 import com.huijiewei.agile.core.until.HttpUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,19 +40,13 @@ public class UserController {
             value = "/users",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    @Operation(description = "用户列表", operationId = "userIndex", parameters = {
-            @Parameter(name = "name", description = "名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "phone", description = "手机号码", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "email", description = "电子邮箱", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "createdFrom", description = "创建来源", in = ParameterIn.QUERY, schema = @Schema(ref = "UserCreatedFromSearchRequestSchema")),
-            @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
-    })
+    @Operation(description = "用户列表", operationId = "userIndex")
     @ApiResponse(responseCode = "200", description = "用户列表")
     @PreAuthorize("hasAuthority('user/index')")
     public SearchPageResponse<UserEntity> actionIndex(
-            @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields,
-            @Parameter(hidden = true) UserSearchRequest request,
-            Pageable pageable
+            @ParameterObject UserSearchRequest request,
+            @ParameterObject Pageable pageable,
+            @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields
     ) {
         return this.userUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);
     }
@@ -60,18 +55,11 @@ public class UserController {
             value = "/users/export",
             produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
     )
-    @Operation(description = "用户导出", operationId = "userExport", parameters = {
-            @Parameter(name = "name", description = "名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "phone", description = "手机号码", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "email", description = "电子邮箱", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "createdFrom", description = "创建来源", in = ParameterIn.QUERY, schema = @Schema(ref = "UserCreatedFromSearchRequestSchema")),
-            @Parameter(name = "createdRange", description = "创建日期区间", in = ParameterIn.QUERY, schema = @Schema(ref = "DateRangeSearchRequestSchema"))
-
-    })
+    @Operation(description = "用户导出", operationId = "userExport")
     @ApiResponse(responseCode = "200", description = "用户导出")
     @PreAuthorize("hasAuthority('user/export')")
     public void actionExport(
-            @Parameter(hidden = true) UserSearchRequest userSearchRequest,
+            @ParameterObject UserSearchRequest userSearchRequest,
             HttpServletResponse response
     ) {
         try {

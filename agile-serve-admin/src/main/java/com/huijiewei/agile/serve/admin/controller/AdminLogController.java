@@ -38,7 +38,7 @@ public class AdminLogController {
     @PreAuthorize("hasAnyAuthority('admin-log/index')")
     public SearchPageResponse<AdminLogEntity> actionIndex(
             @ParameterObject AdminLogSearchRequest request,
-            @Parameter(schema = @Schema(ref = "PageableRequestSchema")) @RequestParam(required = false) Pageable pageable,
+            @ParameterObject Pageable pageable,
             @Parameter(description = "是否返回搜索字段信息") @RequestParam(required = false) Boolean withSearchFields
     ) {
         return this.adminLogUseCase.search(request, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), withSearchFields);

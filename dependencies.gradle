@@ -2,6 +2,9 @@ ext.libs = [
         easyCaptcha       : [
                 "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
         ],
+        springdocCommon: [
+                "org.springdoc:springdoc-openapi-common:${springdocOpenApiVersion}"
+        ],
         springdocOpenApiUi: [
                 "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
         ],

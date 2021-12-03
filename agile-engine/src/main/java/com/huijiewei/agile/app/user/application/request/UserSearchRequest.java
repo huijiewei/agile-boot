@@ -3,6 +3,8 @@ package com.huijiewei.agile.app.user.application.request;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import com.huijiewei.agile.core.application.request.*;
 import com.huijiewei.agile.core.consts.DateTimeRange;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,10 +17,19 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserSearchRequest extends AbstractSearchRequest {
+    @Parameter(description = "名称")
     private String name;
+
+    @Parameter(description = "电话")
     private String phone;
+
+    @Parameter(description = "邮箱")
     private String email;
+
+    @Parameter(description = "创建来源", schema = @Schema(ref = "UserCreatedFromSearchRequestSchema"))
     private String[] createdFrom;
+
+    @Parameter(description = "创建日期区间", schema = @Schema(ref = "DateRangeSearchRequestSchema"))
     private String[] createdAtRange;
 
     public UserSearchRequest() {

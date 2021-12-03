@@ -11,6 +11,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }
+
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
 
     implementation libs.zalandoProblemWeb
@@ -22,4 +23,6 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor "org.springframework:spring-context-indexer"
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }

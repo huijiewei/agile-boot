@@ -28,6 +28,7 @@ dependencies {
 
     implementation libs.mapstruct
     implementation libs.swaggerAnnotations
+    implementation libs.springdocCommon
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
     implementation libs.easyPoiBase
