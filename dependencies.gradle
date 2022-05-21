@@ -29,8 +29,8 @@ ext.libs = [
         friendlyId        : [
                 "com.devskiller.friendly-id:friendly-id:${friendlyIdVersion}"
         ],
-        javaFaker         : [
-                "com.github.javafaker:javafaker:${javaFakerVersion}"
+        dataFaker         : [
+                "net.datafaker:datafaker:${dataFakerVersion}"
         ],
         easyPoiBase       : [
                 "cn.afterturn:easypoi-base:${easyPoiBaseVersion}"

@@ -9,7 +9,7 @@ dependencies {
     implementation "org.flywaydb:flyway-core"
 
     implementation libs.textIo
-    implementation libs.javaFaker
+    implementation libs.dataFaker
     implementation libs.jpaEntityGraph
 
     implementation project(':agile-engine')

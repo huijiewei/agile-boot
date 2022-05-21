@@ -1,10 +1,10 @@
 package com.huijiewei.agile.console.command;
 
-import com.github.javafaker.Faker;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.repository.UserRepository;
 import com.huijiewei.agile.app.user.consts.UserCreatedFrom;
 import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.beryx.textio.TextIO;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
