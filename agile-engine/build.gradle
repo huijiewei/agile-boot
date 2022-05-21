@@ -33,8 +33,6 @@ dependencies {
     implementation libs.friendlyId
     implementation libs.easyPoiBase
 
-    implementation "org.flywaydb:flyway-core"
-
     implementation project(':agile-spring-captcha')
 
     annotationProcessor libs.mapstructProcessor

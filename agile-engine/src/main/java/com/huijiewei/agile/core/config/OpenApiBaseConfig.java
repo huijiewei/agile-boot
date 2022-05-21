@@ -31,11 +31,11 @@ public class OpenApiBaseConfig {
                 System.out.println(schema.getName());
                 schema.getProperties().clear();
                 schema
-                        .addProperties(pageablePageParameter, new IntegerSchema()
+                        .addProperty(pageablePageParameter, new IntegerSchema()
                                 .description("页码")
                                 .minimum(BigDecimal.valueOf(pageableOneIndexedParameter ? 1 : 0))
                         )
-                        .addProperties(pageableSizeParameter, new IntegerSchema().description("分页大小")
+                        .addProperty(pageableSizeParameter, new IntegerSchema().description("分页大小")
                                 .minimum(BigDecimal.valueOf(1))
                         );
             }
