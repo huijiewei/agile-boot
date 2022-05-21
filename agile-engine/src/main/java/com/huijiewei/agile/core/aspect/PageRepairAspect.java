@@ -27,11 +27,9 @@ public class PageRepairAspect {
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         var result = joinPoint.proceed();
 
-        if (!(result instanceof PageResponse)) {
+        if (!(result instanceof PageResponse<?> pageResponse)) {
             return result;
         }
-
-        var pageResponse = (PageResponse<?>) result;
 
         if (pageResponse.getPages() == null) {
             return result;
@@ -49,8 +47,7 @@ public class PageRepairAspect {
 
         for (int i = 0; i < args.length; i++) {
             var arg = args[i];
-            if (arg instanceof PageRequest) {
-                var page = (PageRequest) arg;
+            if (arg instanceof PageRequest page) {
                 args[i] = PageRequest.of(pageResponse.getPages().getPageCount() - 1, page.getSize());
             }
         }

@@ -28,7 +28,6 @@ public class OpenApiBaseConfig {
     public OpenApiCustomiser openApiPageableCustomiser() {
         return openApi -> openApi.getComponents().getSchemas().values().forEach(schema -> {
             if (schema.getName() != null && schema.getName().equals("Pageable")) {
-                System.out.println(schema.getName());
                 schema.getProperties().clear();
                 schema
                         .addProperty(pageablePageParameter, new IntegerSchema()
