@@ -1,32 +1,29 @@
 package com.huijiewei.agile.serve.admin.config;
 
+import com.huijiewei.agile.serve.admin.security.AdminPreAuthenticationFilter;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetailsService;
-import com.huijiewei.agile.serve.admin.security.PreAuthenticationTokenFilter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-
-import java.util.Collections;
 
 /**
  * @author huijiewei
  */
 
 @Configuration(proxyBeanMethods = false)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import(SecurityProblemSupport.class)
-public class WebSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecurityProblemSupport problemSupport;
     private final AdminUserDetailsService adminUserDetailsService;
 
@@ -35,52 +32,43 @@ public class WebSecurityConfig {
         this.adminUserDetailsService = adminUserDetailsService;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager() {
+    @Override
+    protected void configure(AuthenticationManagerBuilder builder) {
         var provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(this.adminUserDetailsService);
 
-        return new ProviderManager(Collections.singletonList(provider));
+        builder.authenticationProvider(provider);
     }
 
-    @Bean
-    public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
-        var provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(this.adminUserDetailsService);
-
-        return provider;
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "**");
+        web.ignoring().antMatchers("/favicon.ico", "/files/**");
     }
 
-    @Bean
-    public AbstractPreAuthenticatedProcessingFilter preAuthenticatedProcessingFilter() throws Exception {
-        var filter = new PreAuthenticationTokenFilter();
-        filter.setAuthenticationManager(authenticationManager());
-        return filter;
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "**")
-                .antMatchers("/favicon.ico", "/files/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**");
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().disable();
-        http.csrf().disable();
-        http.cors();
-        http.requestCache();
-        http.logout().disable();
-        http.formLogin().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport);
-
-        http.authorizeRequests().antMatchers("/auth/login", "/open/**").permitAll();
-
-        http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(preAuthenticatedProcessingFilter());
-
-        return http.build();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers(
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/auth/login",
+                        "/open/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable()
+                .requestCache()
+                .and()
+                .logout().disable()
+                .formLogin().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
+                .and()
+                .addFilter(new AdminPreAuthenticationFilter(this.authenticationManager()));
     }
 }

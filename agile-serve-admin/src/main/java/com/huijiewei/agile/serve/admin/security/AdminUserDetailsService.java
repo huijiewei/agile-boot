@@ -25,8 +25,8 @@ public class AdminUserDetailsService implements AuthenticationUserDetailsService
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws AuthenticationException {
-        var clientId = token.getPrincipal().toString();
-        var accessToken = token.getCredentials().toString();
+        String clientId = (String) token.getPrincipal();
+        String accessToken = (String) token.getCredentials();
 
         if (StringUtils.isEmpty(accessToken)) {
             throw new BadCredentialsException("无效的 AccessToken");
