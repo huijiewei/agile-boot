@@ -6,6 +6,7 @@ import com.huijiewei.agile.core.exception.ForbiddenException;
 import com.huijiewei.agile.core.exception.NotFoundException;
 import org.apiguardian.api.API;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -33,6 +34,13 @@ public class ExceptionHandling implements ProblemHandling, SecurityAdviceTrait {
     @Override
     public boolean isCausalChainsEnabled() {
         return false;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleUnauthorized(
+            final BadCredentialsException exception,
+            final NativeWebRequest request) {
+        return create(Status.UNAUTHORIZED, exception, request);
     }
 
     @ExceptionHandler
