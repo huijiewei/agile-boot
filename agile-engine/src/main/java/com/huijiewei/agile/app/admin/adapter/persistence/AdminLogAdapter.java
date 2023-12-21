@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
-import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.cosium.spring.data.jpa.entity.graph.domain2.DynamicEntityGraph;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.AdminLog;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminLogMapper;
@@ -11,6 +11,8 @@ import com.huijiewei.agile.app.admin.domain.AdminLogEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.StringUtils;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,8 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -81,7 +81,7 @@ class AdminLogAdapter implements AdminLogPersistencePort {
         var adminLogPage = this.adminLogRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
-                EntityGraphUtils.fromAttributePaths("admin"));
+                DynamicEntityGraph.loading().addPath("admin").build());
 
         var adminLogEntityResponses = new SearchPageResponse<AdminLogEntity>();
 

@@ -6,8 +6,9 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,7 +47,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
             for (var item : (Collection<?>) object) {
                 String str = item.toString();
 
-                if (allowValueList.size() == 0 || !allowValueList.contains(str)) {
+                if (allowValueList.isEmpty() || !allowValueList.contains(str)) {
                     search.add(str);
                 }
             }
@@ -64,7 +65,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
             search.add(valueString);
         }
 
-        if (search.size() == 0) {
+        if (search.isEmpty()) {
             return true;
         }
 

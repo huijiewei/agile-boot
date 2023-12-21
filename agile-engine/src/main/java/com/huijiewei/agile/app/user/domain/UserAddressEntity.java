@@ -48,8 +48,8 @@ public class UserAddressEntity extends AbstractEntity {
     public String getDistrictAddress() {
         return this.getDistrictPath()
                 .stream()
-                .filter(districtEntity -> !districtEntity.getName().equals("市辖区"))
                 .map(DistrictEntity::getName)
+                .filter(districtEntityName -> !districtEntityName.equals("市辖区"))
                 .collect(Collectors.joining());
     }
 

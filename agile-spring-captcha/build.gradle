@@ -1,7 +1,7 @@
 apply plugin: 'org.hibernate.orm'
 
 hibernate {
-    enhance {
+    enhancement {
         enableLazyInitialization = true
         enableDirtyTracking = true
         enableAssociationManagement = true

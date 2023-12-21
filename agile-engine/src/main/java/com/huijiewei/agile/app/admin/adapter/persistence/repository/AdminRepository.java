@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence.repository;
 
-import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.cosium.spring.data.jpa.entity.graph.domain2.DynamicEntityGraph;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.admin.adapter.persistence.entity.Admin;
@@ -42,7 +42,7 @@ public interface AdminRepository extends
             return criteriaBuilder.and(root.get("id").in(subQuery));
         };
 
-        return this.findOne(adminSpecification, EntityGraphUtils.fromAttributePaths("adminGroup"));
+        return this.findOne(adminSpecification, DynamicEntityGraph.loading().addPath("adminGroup").build());
     }
 
     /**

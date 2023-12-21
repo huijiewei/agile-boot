@@ -10,7 +10,8 @@ import net.datafaker.Faker;
 import org.beryx.textio.TextIO;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;

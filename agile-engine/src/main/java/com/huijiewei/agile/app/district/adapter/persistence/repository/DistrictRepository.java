@@ -6,7 +6,8 @@ import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.core.adapter.persistence.repository.TreeClosureJpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.OrderBy;
+import jakarta.persistence.OrderBy;
+
 import java.util.List;
 import java.util.Map;
 

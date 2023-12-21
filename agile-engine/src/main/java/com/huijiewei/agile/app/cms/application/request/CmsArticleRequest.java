@@ -5,8 +5,9 @@ import com.huijiewei.agile.core.constraint.Exists;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 /**
@@ -15,29 +16,29 @@ import java.util.List;
 @Data
 public class CmsArticleRequest {
     @NotBlank
-    @Schema(description = "文章别名", required = true)
+    @Schema(description = "文章别名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String slug;
 
     @NotBlank
-    @Schema(description = "文章标题", required = true)
+    @Schema(description = "文章标题", requiredMode = Schema.RequiredMode.REQUIRED)
     private String title;
 
     @NotBlank
-    @Schema(description = "文章图片", required = true)
+    @Schema(description = "文章图片", requiredMode = Schema.RequiredMode.REQUIRED)
     private String image;
 
     @NotBlank
-    @Schema(description = "文章简介", required = true)
+    @Schema(description = "文章简介", requiredMode = Schema.RequiredMode.REQUIRED)
     private String description;
 
     @NotBlank
-    @Schema(description = "文章内容", required = true)
+    @Schema(description = "文章内容", requiredMode = Schema.RequiredMode.REQUIRED)
     private String content;
 
     private Integer adminId;
 
     @NotNull
-    @Schema(description = "内容分类", required = true)
+    @Schema(description = "内容分类", requiredMode = Schema.RequiredMode.REQUIRED)
     @Exists(existService = CmsCategoryExistsService.class, targetProperty = "id", allowValues = "0", message = "内容分类不存在")
     private Integer cmsCategoryId;
 

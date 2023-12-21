@@ -1,7 +1,7 @@
 package com.huijiewei.agile.core.config;
 
 import io.swagger.v3.oas.models.media.IntegerSchema;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ public class OpenApiBaseConfig {
     private Integer pageableDefaultPageSizeParameter = 20;
 
     @Bean
-    public OpenApiCustomiser openApiPageableCustomiser() {
+    public OpenApiCustomizer openApiPageableCustomizer() {
         return openApi -> openApi.getComponents().getSchemas().values().forEach(schema -> {
             if (schema.getName() != null && schema.getName().equals("Pageable")) {
                 schema.getProperties().clear();

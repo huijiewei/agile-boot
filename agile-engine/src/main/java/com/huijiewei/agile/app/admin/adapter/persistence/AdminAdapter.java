@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.admin.adapter.persistence;
 
-import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.cosium.spring.data.jpa.entity.graph.domain2.DynamicEntityGraph;
 import com.huijiewei.agile.app.admin.adapter.persistence.mapper.AdminMapper;
 import com.huijiewei.agile.app.admin.adapter.persistence.repository.AdminRepository;
 import com.huijiewei.agile.app.admin.application.port.outbound.AdminPersistencePort;
@@ -35,7 +35,7 @@ class AdminAdapter implements AdminPersistencePort, AdminUniquePort {
     @Override
     public Optional<AdminEntity> getByIdWithAdminGroup(Integer id) {
         return this.adminRepository
-                .findById(id, EntityGraphUtils.fromAttributePaths("adminGroup"))
+                .findById(id, DynamicEntityGraph.loading().addPath("adminGroup").build())
                 .map(this.adminMapper::toAdminEntityWithAdminGroup);
     }
 

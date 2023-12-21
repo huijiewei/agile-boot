@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 @Setter
 public class AdminGroupRequest {
     @NotBlank
-    @Schema(description = "管理组名称", required = true)
+    @Schema(description = "管理组名称", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
     @Schema(description = "管理组权限")

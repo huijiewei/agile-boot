@@ -5,8 +5,8 @@ import com.huijiewei.agile.core.constraint.Exists;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * @author huijiewei
@@ -15,16 +15,16 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CmsCategoryRequest {
     @NotNull
-    @Schema(description = "上级分类", required = true)
+    @Schema(description = "上级分类", requiredMode = Schema.RequiredMode.REQUIRED)
     @Exists(existService = CmsCategoryExistsService.class, targetProperty = "id", allowValues = "0", message = "内容分类不存在")
     private Integer parentId;
 
     @NotBlank
-    @Schema(description = "分类名称", required = true)
+    @Schema(description = "分类名称", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
     @NotBlank
-    @Schema(description = "分类别名", required = true)
+    @Schema(description = "分类别名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String slug;
 
     @NotNull

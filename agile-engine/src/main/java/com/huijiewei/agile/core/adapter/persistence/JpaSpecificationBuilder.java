@@ -4,7 +4,8 @@ import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 import com.huijiewei.agile.core.until.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Predicate;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;

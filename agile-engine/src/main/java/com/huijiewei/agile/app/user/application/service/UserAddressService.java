@@ -30,7 +30,7 @@ public class UserAddressService implements UserAddressUseCase {
     private final UserAddressRequestMapper userAddressRequestMapper;
 
     private UserAddressEntity fillDistrictPath(UserAddressEntity userAddressEntity) {
-        return this.fillDistrictPath(List.of(userAddressEntity)).get(0);
+        return this.fillDistrictPath(List.of(userAddressEntity)).getFirst();
     }
 
     private List<UserAddressEntity> fillDistrictPath(List<UserAddressEntity> userAddressEntities) {

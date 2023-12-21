@@ -2,11 +2,11 @@ ext.libs = [
         easyCaptcha       : [
                 "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
         ],
-        springdocCommon: [
-                "org.springdoc:springdoc-openapi-common:${springdocOpenApiVersion}"
+        springdocCommon   : [
+                "org.springdoc:springdoc-openapi-starter-common:${springdocOpenApiVersion}"
         ],
         springdocOpenApiUi: [
-                "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
+                "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocOpenApiVersion}"
         ],
         apacheCommonsIo   : [
                 "commons-io:commons-io:${apacheCommonsIoVersion}"
@@ -24,7 +24,8 @@ ext.libs = [
                 "org.mapstruct:mapstruct-processor:${mapstructVersion}"
         ],
         zalandoProblemWeb : [
-                "org.zalando:problem-spring-web:${zalandoProblemWebVersion}"
+                "org.zalando:problem-spring-web:${zalandoProblemWebVersion}",
+                "org.zalando:jackson-datatype-problem:${zalandoProblemVersion}"
         ],
         friendlyId        : [
                 "com.devskiller.friendly-id:friendly-id:${friendlyIdVersion}"

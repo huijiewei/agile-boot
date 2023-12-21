@@ -3,7 +3,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'org.xerial:sqlite-jdbc'
 
     implementation "org.flywaydb:flyway-core"

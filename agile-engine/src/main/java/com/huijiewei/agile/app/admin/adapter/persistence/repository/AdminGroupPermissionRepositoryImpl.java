@@ -21,7 +21,7 @@ public class AdminGroupPermissionRepositoryImpl implements BatchJpaRepository<Ad
 
     @Override
     public void batchInsert(List<AdminGroupPermission> adminGroupPermissions) {
-        if (adminGroupPermissions.size() == 0) {
+        if (adminGroupPermissions.isEmpty()) {
             return;
         }
 

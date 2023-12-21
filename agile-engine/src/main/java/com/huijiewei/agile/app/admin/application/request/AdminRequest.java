@@ -8,11 +8,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.groups.Default;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.groups.Default;
 
 /**
  * @author huijiewei
@@ -44,7 +44,7 @@ public class AdminRequest {
 
     @Positive(message = "请选择管理组")
     @Exists(existService = AdminGroupExistsService.class, targetProperty = "id", message = "你选择的管理组不存在")
-    @Schema(description = "所在管理组", required = true)
+    @Schema(description = "所在管理组", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer adminGroupId;
 
     public interface OnCreate extends Default {

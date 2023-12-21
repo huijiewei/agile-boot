@@ -2,8 +2,8 @@ package com.huijiewei.agile.core.constraint;
 
 import com.huijiewei.agile.core.until.StringUtils;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * @author huijiewei

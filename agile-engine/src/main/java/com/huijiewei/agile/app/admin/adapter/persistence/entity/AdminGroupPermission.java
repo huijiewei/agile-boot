@@ -4,7 +4,7 @@ import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 /**
  * @author huijiewei

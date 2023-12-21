@@ -11,7 +11,7 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
         classpath "com.github.ben-manes:gradle-versions-plugin:${gradleVersionsVersion}"
-        classpath "org.hibernate:hibernate-gradle-plugin:${hibernateVersion}"
+        classpath "org.hibernate.orm:hibernate-gradle-plugin:${hibernateVersion}"
     }
 }
 
@@ -20,7 +20,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 allprojects {
     group = 'com.huijiewei'
-    version = '1.0.2'
+    version = '3.0.1'
 
     repositories {
         maven { url 'https://repo.spring.io/release' }
@@ -32,12 +32,12 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 
     compileJava {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         options.encoding = 'UTF-8'
     }
 

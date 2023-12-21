@@ -3,7 +3,7 @@ package com.huijiewei.agile.core.adapter.persistence.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * @author huijiewei

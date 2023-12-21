@@ -1,18 +1,22 @@
 package com.huijiewei.agile.serve.admin.config;
 
-import com.huijiewei.agile.serve.admin.security.AdminPreAuthenticationFilter;
 import com.huijiewei.agile.serve.admin.security.AdminUserDetailsService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 /**
@@ -21,9 +25,9 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity()
 @Import(SecurityProblemSupport.class)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
     private final SecurityProblemSupport problemSupport;
     private final AdminUserDetailsService adminUserDetailsService;
 
@@ -32,43 +36,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.adminUserDetailsService = adminUserDetailsService;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder builder) {
-        var provider = new PreAuthenticatedAuthenticationProvider();
+    public RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter() {
+        RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter = new RequestHeaderAuthenticationFilter();
+        requestHeaderAuthenticationFilter.setPrincipalRequestHeader("X-Client-Id");
+        requestHeaderAuthenticationFilter.setCredentialsRequestHeader("X-Access-Token");
+        requestHeaderAuthenticationFilter.setExceptionIfHeaderMissing(false);
+        requestHeaderAuthenticationFilter.setAuthenticationManager(authenticationManager());
+
+
+        return requestHeaderAuthenticationFilter;
+    }
+
+    public AuthenticationProvider authenticationProvider() {
+        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(this.adminUserDetailsService);
 
-        builder.authenticationProvider(provider);
+        return provider;
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "**");
-        web.ignoring().antMatchers("/favicon.ico", "/files/**");
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(authenticationProvider());
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/auth/login",
-                        "/open/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .cors()
-                .and()
-                .csrf().disable()
-                .requestCache()
-                .and()
-                .logout().disable()
-                .formLogin().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
-                .and()
-                .addFilter(new AdminPreAuthenticationFilter(this.authenticationManager()));
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**")
+                        .permitAll()
+                        .requestMatchers("/favicon.ico", "/files/**")
+                        .permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**")
+                        .permitAll()
+                        .requestMatchers("/auth/login", "/open/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .logout(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .requestCache(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport))
+                .addFilter(requestHeaderAuthenticationFilter());
+
+        return http.build();
     }
 }

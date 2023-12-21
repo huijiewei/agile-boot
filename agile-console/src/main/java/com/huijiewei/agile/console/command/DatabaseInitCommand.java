@@ -33,7 +33,7 @@ public class DatabaseInitCommand implements Consumer<TextIO> {
 
         var flyway = Flyway.configure()
                 .dataSource(dataSource)
-                .locations((String) locations.get(0))
+                .locations((String) locations.getFirst())
                 .placeholders(Map.of("table-prefix", PrefixTableNamingStrategy.tablePrefix))
                 .load();
 

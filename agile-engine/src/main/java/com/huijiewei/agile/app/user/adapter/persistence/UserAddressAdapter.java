@@ -1,6 +1,6 @@
 package com.huijiewei.agile.app.user.adapter.persistence;
 
-import com.cosium.spring.data.jpa.entity.graph.domain.EntityGraphUtils;
+import com.cosium.spring.data.jpa.entity.graph.domain2.DynamicEntityGraph;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.app.district.adapter.persistence.repository.DistrictRepository;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.UserAddress;
@@ -12,6 +12,7 @@ import com.huijiewei.agile.app.user.domain.UserAddressEntity;
 import com.huijiewei.agile.core.adapter.persistence.JpaPaginationMapper;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
 import com.huijiewei.agile.core.until.StringUtils;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,7 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -78,7 +78,7 @@ public class UserAddressAdapter implements UserAddressPersistencePort {
         var userAddressPage = this.userAddressRepository.findAll(
                 this.buildSpecification(searchRequest),
                 PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), Sort.by(Sort.Direction.DESC, "id")),
-                EntityGraphUtils.fromAttributePaths("user")
+                DynamicEntityGraph.loading().addPath("user").build()
         );
 
         var userAddressEntityResponse = new SearchPageResponse<UserAddressEntity>();

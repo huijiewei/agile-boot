@@ -3,8 +3,9 @@ package com.huijiewei.agile.core.adapter.persistence.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+
 import java.time.LocalDateTime;
 
 /**

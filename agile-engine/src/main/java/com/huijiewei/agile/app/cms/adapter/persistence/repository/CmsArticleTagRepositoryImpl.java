@@ -23,7 +23,7 @@ public class CmsArticleTagRepositoryImpl implements BatchJpaRepository<CmsArticl
 
     @Override
     public void batchInsert(List<CmsArticleTag> entities) {
-        if (entities.size() == 0) {
+        if (entities.isEmpty()) {
             return;
         }
 

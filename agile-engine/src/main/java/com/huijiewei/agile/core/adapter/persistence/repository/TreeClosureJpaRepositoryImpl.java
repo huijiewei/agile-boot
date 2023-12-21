@@ -5,8 +5,9 @@ import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaTreeEntity
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 import java.util.Map;
 

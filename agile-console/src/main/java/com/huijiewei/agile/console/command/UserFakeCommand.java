@@ -40,7 +40,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
 
         long fakeCreatedAtTimestamp = users.getContent().isEmpty()
                 ? LocalDateTime.of(2019, 5, 1, 12, 20, 32).toEpochSecond(ZoneOffset.of("+8"))
-                : users.getContent().get(0).getCreatedAt().toEpochSecond(ZoneOffset.of("+8"));
+                : users.getContent().getFirst().getCreatedAt().toEpochSecond(ZoneOffset.of("+8"));
 
         var passwordEncoder = new BCryptPasswordEncoder();
 
@@ -75,7 +75,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
             user.setPassword(passwordEncoder.encode(englishFaker.internet().password()));
             user.setName(chineseFaker.name().fullName());
             user.setCreatedIp(chineseFaker.internet().ipV4Address());
-            user.setCreatedFrom(createdFromList.get(0));
+            user.setCreatedFrom(createdFromList.getFirst());
 
             fakeCreatedAtTimestamp += new Random().nextInt((28800 - 30) + 1) + 30;
 
@@ -99,7 +99,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
             this.userRepository.save(user);
         }
 
-        textIO.getTextTerminal().println("生成用户数据：" + count.toString());
+        textIO.getTextTerminal().println("生成用户数据：" + count);
         textIO.dispose();
     }
 

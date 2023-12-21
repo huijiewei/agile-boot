@@ -17,7 +17,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Predicate;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;

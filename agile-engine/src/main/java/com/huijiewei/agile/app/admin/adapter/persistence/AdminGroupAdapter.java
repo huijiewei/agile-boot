@@ -60,7 +60,7 @@ class AdminGroupAdapter implements AdminGroupPersistencePort, AdminGroupExistsPo
     }
 
     @Override
-    @Cacheable(cacheNames = AdminGroupCacheAdapter.ADMIN_GROUP_MENUS_CACHE_KEY, key = "#id")
+    @Cacheable(cacheNames = AdminGroupCacheAdapter.ADMIN_GROUP_MENUS_CACHE_KEY, key = "#a0")
     public List<AdminGroupMenuItem> getMenus(Integer id) {
         var all = AdminGroupMenus.getAll();
         var adminGroupPermissions = this.getPermissions(id);

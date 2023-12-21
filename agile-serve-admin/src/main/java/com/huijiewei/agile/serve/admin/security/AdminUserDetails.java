@@ -1,12 +1,14 @@
 package com.huijiewei.agile.serve.admin.security;
 
 import com.huijiewei.agile.app.admin.security.AdminIdentity;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -14,10 +16,17 @@ import java.util.stream.Collectors;
  */
 
 public class AdminUserDetails implements UserDetails {
+    @Getter
     private final AdminIdentity adminIdentity;
+    private final List<GrantedAuthority> authorities;
 
     AdminUserDetails(AdminIdentity adminIdentity) {
+
         this.adminIdentity = adminIdentity;
+        this.authorities = adminIdentity.getPermissions()
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     public static AdminIdentity getCurrentAdminIdentity() {
@@ -31,11 +40,7 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.getAdminIdentity()
-                .getPermissions()
-                .stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        return this.authorities;
     }
 
     @Override
@@ -46,10 +51,6 @@ public class AdminUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return this.adminIdentity.getAdminEntity().getName();
-    }
-
-    public AdminIdentity getAdminIdentity() {
-        return this.adminIdentity;
     }
 
     @Override

@@ -1,16 +1,14 @@
 package com.huijiewei.agile.app.admin.adapter.persistence.entity;
 
 import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaIdentityEntity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
