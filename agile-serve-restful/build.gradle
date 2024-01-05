@@ -1,4 +1,6 @@
-apply plugin: 'org.springframework.boot'
+plugins {
+    alias(libs.plugins.springBoot)
+}
 
 bootJar {
     launchScript()
@@ -14,7 +16,7 @@ dependencies {
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-    implementation libs.zalandoProblemWeb
+    implementation libs.bundles.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
     implementation libs.jpaEntityGraph
 
@@ -23,5 +25,4 @@ dependencies {
     implementation project(':agile-engine')
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    annotationProcessor "org.springframework:spring-context-indexer"
 }

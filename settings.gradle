@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'agile-boot'
 
 include 'agile-engine'

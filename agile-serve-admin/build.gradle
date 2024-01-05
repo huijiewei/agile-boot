@@ -1,4 +1,6 @@
-apply plugin: 'org.springframework.boot'
+plugins {
+    alias(libs.plugins.springBoot)
+}
 
 bootJar {
     launchScript()
@@ -14,7 +16,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
 
-    implementation libs.zalandoProblemWeb
+    implementation libs.bundles.zalandoProblemWeb
     implementation libs.springdocOpenApiUi
 
     implementation project(':agile-spring-upload')
@@ -24,7 +26,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    annotationProcessor "org.springframework:spring-context-indexer"
-
+   
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }

@@ -1,0 +1,49 @@
+[versions]
+apacheCommonsIo = "2.15.1"
+benManesVersions = "0.50.0"
+dataFaker = "2.0.2"
+dependencyManagement = "1.1.4"
+easyCaptcha = "1.6.2"
+easyPoiBase = "4.4.0"
+friendlyId = "1.1.0"
+hibernate = "6.4.1.Final"
+jpaEntityGraph = "3.2.2"
+mapstruct = "1.6.0.Beta1"
+springBoot = "3.2.1"
+springdocOpenApi = "2.3.0"
+swagger = "2.2.20"
+textIo = "3.4.1"
+thumbnailator = "0.4.20"
+versionCatalogUpdate = "0.8.3"
+zalandoProblem = "0.27.1"
+zalandoProblemWeb = "0.29.1"
+
+[libraries]
+apacheCommonsIo = { module = "commons-io:commons-io", version.ref = "apacheCommonsIo" }
+dataFaker = { module = "net.datafaker:datafaker", version.ref = "dataFaker" }
+easyCaptcha = { module = "com.github.whvcse:easy-captcha", version.ref = "easyCaptcha" }
+easyPoiBase = { module = "cn.afterturn:easypoi-base", version.ref = "easyPoiBase" }
+friendlyId = { module = "com.devskiller.friendly-id:friendly-id", version.ref = "friendlyId" }
+jpaEntityGraph = { module = "com.cosium.spring.data:spring-data-jpa-entity-graph", version.ref = "jpaEntityGraph" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstructProcessor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+springdocCommon = { module = "org.springdoc:springdoc-openapi-starter-common", version.ref = "springdocOpenApi" }
+springdocOpenApiUi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdocOpenApi" }
+swaggerAnnotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger" }
+textIo = { module = "org.beryx:text-io", version.ref = "textIo" }
+thumbnailator = { module = "net.coobird:thumbnailator", version.ref = "thumbnailator" }
+zalandoProblem = { module = "org.zalando:jackson-datatype-problem", version.ref = "zalandoProblem" }
+zalandoProblemWeb = { module = "org.zalando:problem-spring-web", version.ref = "zalandoProblemWeb" }
+
+[bundles]
+zalandoProblemWeb = [
+    "zalandoProblem",
+    "zalandoProblemWeb",
+]
+
+[plugins]
+benManesVersions = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
+dependencyManagement = { id = "io.spring.dependency-management", version.ref = "dependencyManagement" }
+hibernate = { id = "org.hibernate.orm", version.ref = "hibernate" }
+springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
+versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }

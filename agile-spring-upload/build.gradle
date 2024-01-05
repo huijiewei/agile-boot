@@ -9,5 +9,4 @@ dependencies {
     implementation libs.thumbnailator
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    annotationProcessor "org.springframework:spring-context-indexer"
 }

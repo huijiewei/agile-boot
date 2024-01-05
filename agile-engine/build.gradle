@@ -1,4 +1,6 @@
-apply plugin: 'org.hibernate.orm'
+plugins {
+    alias(libs.plugins.hibernate)
+}
 
 hibernate {
     enhancement {
@@ -38,7 +40,6 @@ dependencies {
     annotationProcessor libs.mapstructProcessor
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    annotationProcessor "org.springframework:spring-context-indexer"
 }
 
 compileJava {

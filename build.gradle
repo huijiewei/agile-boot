@@ -1,29 +1,17 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
-buildscript {
-    repositories {
-        maven { url 'https://repo.spring.io/release' }
-        mavenCentral()
-        gradlePluginPortal()
-    }
-
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
-        classpath "com.github.ben-manes:gradle-versions-plugin:${gradleVersionsVersion}"
-        classpath "org.hibernate.orm:hibernate-gradle-plugin:${hibernateVersion}"
-    }
+plugins {
+    alias(libs.plugins.springBoot).apply(false)
+    alias(libs.plugins.dependencyManagement).apply(false)
+    alias(libs.plugins.benManesVersions)
+    alias(libs.plugins.versionCatalogUpdate)
 }
-
-apply from: 'dependencies.gradle'
-apply plugin: 'com.github.ben-manes.versions'
 
 allprojects {
     group = 'com.huijiewei'
     version = '3.0.1'
 
     repositories {
-        maven { url 'https://repo.spring.io/release' }
         mavenCentral()
     }
 }
@@ -32,13 +20,10 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-
     compileJava {
+        options.encoding = 'UTF-8'
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-        options.encoding = 'UTF-8'
     }
 
     dependencies {
