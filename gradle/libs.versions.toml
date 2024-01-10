@@ -1,7 +1,7 @@
 [versions]
 apacheCommonsIo = "2.15.1"
 benManesVersions = "0.50.0"
-dataFaker = "2.0.2"
+dataFaker = "2.1.0"
 dependencyManagement = "1.1.4"
 easyCaptcha = "1.6.2"
 easyPoiBase = "4.4.0"
