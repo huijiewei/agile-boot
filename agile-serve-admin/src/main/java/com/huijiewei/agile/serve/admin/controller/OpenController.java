@@ -49,4 +49,10 @@ public class OpenController {
     public CaptchaResponse actionCaptcha(HttpServletRequest servletRequest) {
         return this.captchaUseCase.create(HttpUtils.getUserAgent(servletRequest), HttpUtils.getRemoteAddr(servletRequest));
     }
+
+    @GetMapping("/open/virtual")
+    public String virtual() {
+        System.out.println(Thread.currentThread());
+        return "虚拟线程";
+    }
 }
