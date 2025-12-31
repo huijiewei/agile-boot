@@ -5,10 +5,9 @@ import com.huijiewei.agile.app.user.application.service.UserExistsService;
 import com.huijiewei.agile.core.constraint.Exists;
 import com.huijiewei.agile.core.constraint.Phone;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import lombok.Data;
 
 /**
  * @author huijiewei

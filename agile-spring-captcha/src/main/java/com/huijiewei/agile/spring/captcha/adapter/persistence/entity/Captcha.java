@@ -1,10 +1,9 @@
 package com.huijiewei.agile.spring.captcha.adapter.persistence.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 

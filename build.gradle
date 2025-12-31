@@ -9,7 +9,7 @@ plugins {
 
 allprojects {
     group = 'com.huijiewei'
-    version = '3.1.0'
+    version = '4.0.0'
 
     repositories {
         mavenCentral()
@@ -22,8 +22,8 @@ subprojects {
 
     compileJava {
         options.encoding = 'UTF-8'
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
     }
 
     dependencies {
@@ -39,7 +39,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom SpringBootPlugin.BOM_COORDINATES
+            mavenBom(SpringBootPlugin.BOM_COORDINATES)
         }
     }
 }

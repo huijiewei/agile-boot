@@ -1,9 +1,8 @@
 package com.huijiewei.agile.core.constraint;
 
-import org.springframework.beans.PropertyAccessorFactory;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.beans.PropertyAccessorFactory;
 
 /**
  * @author huijiewei

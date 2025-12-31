@@ -2,12 +2,11 @@ package com.huijiewei.agile.core.constraint;
 
 import com.huijiewei.agile.core.application.port.inbound.ExistsUseCase;
 import com.huijiewei.agile.core.until.StringUtils;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;

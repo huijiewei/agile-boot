@@ -1,4 +1,4 @@
-SpringBoot 3.2+ 脚手架项目
+SpringBoot 4 脚手架项目
 
 [![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white&color=2e118a)](https://www.apple.com/macos)
 [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=intellij-idea)](https://jb.gg/OpenSourceSupport)

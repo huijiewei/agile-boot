@@ -4,9 +4,8 @@ import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaReposito
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaSpecificationExecutor;
 import com.huijiewei.agile.app.district.adapter.persistence.entity.District;
 import com.huijiewei.agile.core.adapter.persistence.repository.TreeClosureJpaRepository;
-import org.springframework.stereotype.Repository;
-
 import jakarta.persistence.OrderBy;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;

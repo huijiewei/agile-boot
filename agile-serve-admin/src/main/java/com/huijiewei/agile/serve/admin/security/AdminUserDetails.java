@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -30,12 +31,12 @@ public class AdminUserDetails implements UserDetails {
     }
 
     public static AdminIdentity getCurrentAdminIdentity() {
-        var adminUserDetails = (AdminUserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
+        var adminUserDetails = (AdminUserDetails) Objects.requireNonNull(SecurityContextHolder
+                        .getContext()
+                        .getAuthentication())
                 .getPrincipal();
 
-        return adminUserDetails.getAdminIdentity();
+        return Objects.requireNonNull(adminUserDetails).getAdminIdentity();
     }
 
     @Override
@@ -51,25 +52,5 @@ public class AdminUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return this.adminIdentity.getAdminEntity().getName();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

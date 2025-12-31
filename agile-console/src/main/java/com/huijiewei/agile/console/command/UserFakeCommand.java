@@ -72,7 +72,7 @@ public class UserFakeCommand implements Consumer<TextIO> {
             var user = new User();
             user.setPhone(fakePhone);
             user.setEmail(fakeEmail);
-            user.setPassword(passwordEncoder.encode(englishFaker.internet().password()));
+            user.setPassword(passwordEncoder.encode(englishFaker.credentials().password()));
             user.setName(chineseFaker.name().fullName());
             user.setCreatedIp(chineseFaker.internet().ipV4Address());
             user.setCreatedFrom(createdFromList.getFirst());

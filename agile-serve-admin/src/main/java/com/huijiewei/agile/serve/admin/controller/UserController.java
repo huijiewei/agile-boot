@@ -8,21 +8,18 @@ import com.huijiewei.agile.app.user.domain.UserEntity;
 import com.huijiewei.agile.core.application.request.PageRequest;
 import com.huijiewei.agile.core.application.response.MessageResponse;
 import com.huijiewei.agile.core.application.response.SearchPageResponse;
-import com.huijiewei.agile.core.exception.BadRequestException;
 import com.huijiewei.agile.core.until.HttpUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author huijiewei
@@ -50,29 +47,6 @@ public class UserController {
     }
 
     @GetMapping(
-            value = "/users/export",
-            produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
-    )
-    @Operation(description = "用户导出", operationId = "userExport")
-    @ApiResponse(responseCode = "200", description = "用户导出")
-    @PreAuthorize("hasAuthority('user/export')")
-    public void actionExport(
-            @ParameterObject UserSearchRequest userSearchRequest,
-            HttpServletResponse response
-    ) {
-        try {
-            HttpUtils.setExcelDownload("用户列表.xlsx", response);
-
-            this.userUseCase.export(userSearchRequest, response.getOutputStream());
-
-            response.getOutputStream().flush();
-            response.getOutputStream().close();
-        } catch (Exception ex) {
-            throw new BadRequestException("导出错误:" + ex.getMessage());
-        }
-    }
-
-    @GetMapping(
             value = "/users/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -80,7 +54,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "用户")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('user/view/:id', 'user/edit/:id')")
-    public UserEntity actionView(@PathVariable("id") Integer id) {
+    public UserEntity actionView(@PathVariable Integer id) {
         return this.userUseCase.loadById(id);
     }
 
@@ -107,7 +81,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @ApiResponse(responseCode = "422", ref = "UnprocessableEntityProblem")
     @PreAuthorize("hasAnyAuthority('user/edit/:id')")
-    public UserEntity actionEdit(@PathVariable("id") Integer id, @RequestBody UserRequest request) {
+    public UserEntity actionEdit(@PathVariable Integer id, @RequestBody UserRequest request) {
         return this.userUseCase.update(id, request);
     }
 
@@ -119,7 +93,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "删除成功")
     @ApiResponse(responseCode = "404", ref = "NotFoundProblem")
     @PreAuthorize("hasAnyAuthority('user/delete')")
-    public MessageResponse actionDelete(@PathVariable("id") Integer id) {
+    public MessageResponse actionDelete(@PathVariable Integer id) {
         this.userUseCase.deleteById(id);
 
         return MessageResponse.of("用户删除成功");

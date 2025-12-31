@@ -2,10 +2,9 @@ package com.huijiewei.agile.core.application.request;
 
 import com.huijiewei.agile.core.domain.AbstractIdentityEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author huijiewei

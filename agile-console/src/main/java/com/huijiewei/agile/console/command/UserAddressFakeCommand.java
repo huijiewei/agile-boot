@@ -5,12 +5,11 @@ import com.huijiewei.agile.app.district.domain.DistrictEntity;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.User;
 import com.huijiewei.agile.app.user.adapter.persistence.entity.UserAddress;
 import com.huijiewei.agile.app.user.adapter.persistence.repository.UserAddressRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.beryx.textio.TextIO;
 import org.springframework.stereotype.Component;
-
-import jakarta.persistence.EntityManager;
 
 import java.util.List;
 import java.util.Locale;

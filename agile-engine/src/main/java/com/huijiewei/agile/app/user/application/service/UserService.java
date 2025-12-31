@@ -2,7 +2,6 @@ package com.huijiewei.agile.app.user.application.service;
 
 import com.huijiewei.agile.app.user.application.mapper.UserRequestMapper;
 import com.huijiewei.agile.app.user.application.port.inbound.UserUseCase;
-import com.huijiewei.agile.app.user.application.port.outbound.UserExportPort;
 import com.huijiewei.agile.app.user.application.port.outbound.UserPersistencePort;
 import com.huijiewei.agile.app.user.application.request.UserRequest;
 import com.huijiewei.agile.app.user.application.request.UserSearchRequest;
@@ -17,9 +16,6 @@ import com.huijiewei.agile.core.until.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 /**
  * @author huijiewei
  */
@@ -30,16 +26,10 @@ public class UserService implements UserUseCase {
     private final UserPersistencePort userPersistencePort;
     private final ValidatingService validatingService;
     private final UserRequestMapper userRequestMapper;
-    private final UserExportPort userExportPort;
 
     @Override
     public SearchPageResponse<UserEntity> search(UserSearchRequest searchRequest, PageRequest pageRequest, Boolean withSearchFields) {
         return this.userPersistencePort.getAll(searchRequest, pageRequest, withSearchFields);
-    }
-
-    @Override
-    public void export(UserSearchRequest searchRequest, OutputStream outputStream) throws IOException {
-        this.userExportPort.export(this.userPersistencePort.getAll(searchRequest), outputStream);
     }
 
     private UserEntity getById(Integer id) {

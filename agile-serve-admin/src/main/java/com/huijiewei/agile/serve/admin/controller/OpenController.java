@@ -7,12 +7,11 @@ import com.huijiewei.agile.spring.upload.UploadService;
 import com.huijiewei.agile.spring.upload.request.ImageCropRequest;
 import com.huijiewei.agile.spring.upload.response.UploadResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author huijiewei

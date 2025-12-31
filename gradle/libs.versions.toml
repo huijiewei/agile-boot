@@ -1,20 +1,18 @@
 [versions]
-apacheCommonsIo = "2.20.0"
-benManesVersions = "0.52.0"
-dataFaker = "2.4.4"
+apacheCommonsIo = "2.21.0"
+benManesVersions = "0.53.0"
+dataFaker = "2.5.3"
 dependencyManagement = "1.1.7"
 easyCaptcha = "1.6.2"
-easyPoiBase = "4.5.0"
 friendlyId = "1.1.0"
-hibernate = "7.0.9.Final"
-jpaEntityGraph = "3.5.0"
+jpaEntityGraph = "4.0.2"
 mapstruct = "1.6.3"
-springBoot = "3.5.4"
-springdocOpenApi = "2.8.9"
-swagger = "2.2.35"
+springBoot = "4.0.1"
+springdocOpenApi = "3.0.0"
+swagger = "2.2.41"
 textIo = "3.4.1"
-thumbnailator = "0.4.20"
-versionCatalogUpdate = "1.0.0"
+thumbnailator = "0.4.21"
+versionCatalogUpdate = "1.0.1"
 zalandoProblem = "0.27.1"
 zalandoProblemWeb = "0.29.1"
 
@@ -22,7 +20,6 @@ zalandoProblemWeb = "0.29.1"
 apacheCommonsIo = { module = "commons-io:commons-io", version.ref = "apacheCommonsIo" }
 dataFaker = { module = "net.datafaker:datafaker", version.ref = "dataFaker" }
 easyCaptcha = { module = "com.github.whvcse:easy-captcha", version.ref = "easyCaptcha" }
-easyPoiBase = { module = "cn.afterturn:easypoi-base", version.ref = "easyPoiBase" }
 friendlyId = { module = "com.devskiller.friendly-id:friendly-id", version.ref = "friendlyId" }
 jpaEntityGraph = { module = "com.cosium.spring.data:spring-data-jpa-entity-graph", version.ref = "jpaEntityGraph" }
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
@@ -44,6 +41,5 @@ zalandoProblemWeb = [
 [plugins]
 benManesVersions = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
 dependencyManagement = { id = "io.spring.dependency-management", version.ref = "dependencyManagement" }
-hibernate = { id = "org.hibernate.orm", version.ref = "hibernate" }
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }

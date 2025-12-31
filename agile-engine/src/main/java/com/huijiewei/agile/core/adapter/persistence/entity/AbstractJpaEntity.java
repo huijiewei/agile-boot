@@ -1,12 +1,11 @@
 package com.huijiewei.agile.core.adapter.persistence.entity;
 
 import com.huijiewei.agile.core.config.PrefixTableNamingStrategy;
-import lombok.Data;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 
 /**
  * @author huijiewei

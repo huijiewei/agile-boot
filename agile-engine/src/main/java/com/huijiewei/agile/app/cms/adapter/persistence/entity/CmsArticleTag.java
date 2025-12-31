@@ -1,10 +1,9 @@
 package com.huijiewei.agile.app.cms.adapter.persistence.entity;
 
 import com.huijiewei.agile.core.adapter.persistence.entity.AbstractJpaEntity;
+import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import jakarta.persistence.Entity;
 
 /**
  * @author huijiewei

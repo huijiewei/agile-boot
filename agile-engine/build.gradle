@@ -1,21 +1,8 @@
-plugins {
-    alias(libs.plugins.hibernate)
-}
-
-hibernate {
-    enhancement {
-        enableLazyInitialization = true
-        enableDirtyTracking = true
-        enableAssociationManagement = true
-        enableExtendedEnhancement = false
-    }
-}
-
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-cache"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.boot:spring-boot-starter-aspectj"
 
     implementation "org.springframework:spring-web"
     implementation "org.springframework.security:spring-security-core"
@@ -23,7 +10,6 @@ dependencies {
     implementation "commons-codec:commons-codec"
     implementation "org.apache.commons:commons-lang3"
     implementation "com.fasterxml.jackson.core:jackson-annotations"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "com.github.ben-manes.caffeine:caffeine"
 
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -33,7 +19,6 @@ dependencies {
     implementation libs.springdocCommon
     implementation libs.jpaEntityGraph
     implementation libs.friendlyId
-    implementation libs.easyPoiBase
 
     implementation project(':agile-spring-captcha')
 
