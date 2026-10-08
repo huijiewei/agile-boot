@@ -1,6 +1,6 @@
 package com.huijiewei.agile.spring.captcha.application.service;
 
-import com.devskiller.friendly_id.FriendlyId;
+import com.devskiller.friendly_id.FriendlyIds;
 import com.huijiewei.agile.spring.captcha.CaptchaProperties;
 import com.huijiewei.agile.spring.captcha.application.port.inbound.CaptchaUseCase;
 import com.huijiewei.agile.spring.captcha.application.port.outbound.CaptchaPersistencePort;
@@ -58,7 +58,7 @@ public class CaptchaService implements CaptchaUseCase {
 
     @Override
     public CaptchaResponse create(String userAgent, String remoteAddr) {
-        var uuid = FriendlyId.createFriendlyId();
+        var uuid = FriendlyIds.createFriendlyId();
 
         var gifCaptcha = new GifCaptcha(captchaProperties.getWidth(),
                 captchaProperties.getHeight(),

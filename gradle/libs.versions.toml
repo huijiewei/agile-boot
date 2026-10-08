@@ -1,18 +1,18 @@
 [versions]
 apacheCommonsIo = "2.22.0"
-benManesVersions = "0.54.0"
-dataFaker = "2.6.0"
+benManesVersions = "0.65.0"
+dataFaker = "2.7.0"
 dependencyManagement = "1.1.7"
 easyCaptcha = "1.6.2"
-friendlyId = "1.1.0"
+friendlyId = "2.0.0-beta6"
 jpaEntityGraph = "4.0.4"
 mapstruct = "1.6.3"
-springBoot = "4.1.0"
-springdocOpenApi = "3.0.3"
-swagger = "2.2.51"
+springBoot = "4.1.1"
+springdocOpenApi = "3.1.1"
+swagger = "2.2.55"
 textIo = "3.4.1"
 thumbnailator = "0.4.21"
-versionCatalogUpdate = "1.1.0"
+versionCatalogUpdate = "1.1.1"
 zalandoProblem = "0.27.1"
 zalandoProblemWeb = "0.29.1"
 
@@ -39,7 +39,7 @@ zalandoProblemWeb = [
 ]
 
 [plugins]
-benManesVersions = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
+benManesVersions = { id = "io.github.ben-manes.versions", version.ref = "benManesVersions" }
 dependencyManagement = { id = "io.spring.dependency-management", version.ref = "dependencyManagement" }
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
